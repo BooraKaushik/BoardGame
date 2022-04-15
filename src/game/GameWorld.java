@@ -3,7 +3,7 @@ package game;
 /**
  * The interface which is used by the controller to communicate with the model.
  */
-public interface GameWorld {
+public interface GameWorld extends ReadOnlyModel {
   /**
    * Gets the information of a space like Name, items in the space and
    * neighbouring spaces.
@@ -33,17 +33,6 @@ public interface GameWorld {
    */
   public void addPlayer(String name, String startingSpaceName, boolean isHuman)
       throws IllegalArgumentException;
-
-  /**
-   * Returns the information of a player like name of the player, in which space
-   * he is currently present in and the items he is carrying as a string.
-   * 
-   * @param name Name of the player
-   * @return The information of the specified player
-   * @throws IllegalArgumentException when name is null or an empty strimg or when
-   *                                  player does not exist in the world
-   */
-  public String getPlayerInfo(String name) throws IllegalArgumentException;
 
   /**
    * Move the current turn player to the specified space.
@@ -82,17 +71,9 @@ public interface GameWorld {
    */
   public String lookAroundByPlayer();
 
-  /**
-   * Returns the name, type and space of the current turn player and the target's
-   * current space name as a string in the format:
-   * Name,Type,SpaceName,TargetSpaceName.
-   * 
-   * @return A string in the format: Name,Type,SpaceName,TargetSpaceName
-   */
-  public String getCurrentPlayerInfoAndTargetInfo();
 
   /**
-   * Performs an action as a computer contolled player and returns the summary.
+   * Performs an action as a computer controlled player and returns the summary.
    * 
    * @return Returns a string of the summary of the action performed.
    */
@@ -102,6 +83,7 @@ public interface GameWorld {
    * Moves the pet to the specified space name by the the current turn player.
    * 
    * @param spaceName The name of the space to move the pet to
+   * @return result String.
    * @throws IllegalArgumentException When space name is null or empty or if the
    *                                  pet's current space is the same space the
    *                                  player is trying to move the pet to or when
