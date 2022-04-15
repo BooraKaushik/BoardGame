@@ -61,7 +61,7 @@ public class WorldImplTest {
    * @return New instance of WorldImpl class
    */
   private World newWorldInstance(Readable data, RandomManual random) {
-    return new WorldImpl(data, random);
+    return new WorldImpl(data, random, 50);
   }
 
   /**

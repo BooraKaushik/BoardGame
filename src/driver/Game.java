@@ -37,7 +37,7 @@ public class Game {
         
         System.out.println("Creating the world...\n");
 
-        World world = new WorldImpl(mansionReadable, rand);
+        World world = new WorldImpl(mansionReadable, rand, numOfTurns);
       } else {
         System.out.println("Please specify the correct command.");
       }

@@ -33,6 +33,7 @@ public final class WorldImpl implements World {
   private boolean gameOver;
   private final Stack<Space> currentSpacesTrack;
   private final List<Space> visitedSpaces;
+  private int numOfTurns;
 
   /**
    * Constructs the instance of the world with the given data, with specified
@@ -49,7 +50,7 @@ public final class WorldImpl implements World {
    *                                  does not match the actual number of spaces
    *                                  or items in the text
    */
-  public WorldImpl(Readable worldData, RandomManual random)
+  public WorldImpl(Readable worldData, RandomManual random, int numOfTurns)
       throws IllegalArgumentException, InputMismatchException, NoSuchElementException {
     if (worldData == null) {
       throw new IllegalArgumentException("World data cannot be null.");
@@ -114,6 +115,10 @@ public final class WorldImpl implements World {
       throw new IllegalArgumentException("Columns cannot be less than zero");
     }
 
+    if (numOfTurns <= 0) {
+      throw new IllegalArgumentException("Number of turns cannot be less than one");
+    }
+
     if (worldName == null) {
       throw new IllegalArgumentException("Name cannot be null");
     }
@@ -170,6 +175,7 @@ public final class WorldImpl implements World {
     this.gameOver = false;
     this.currentSpacesTrack = new Stack<Space>();
     this.visitedSpaces = new ArrayList<Space>();
+    this.numOfTurns = numOfTurns;
   }
 
   @Override
