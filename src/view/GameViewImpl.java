@@ -1,16 +1,24 @@
 package view;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
+import game.ReadOnlyModel;
+import game.WorldImpl;
 
 /**
  * Creates a new Game frame by implementing Game View.
  */
 public class GameViewImpl extends JFrame implements GameView {
   private static final long serialVersionUID = -2179965453492637485L;
+
+  private ReadOnlyModel dataModel;
 
   /**
    * Constructor For GameViewImpl class, creates a frame.
@@ -20,11 +28,11 @@ public class GameViewImpl extends JFrame implements GameView {
   public GameViewImpl(String title) {
     super(title);
 
-    setSize(500, 300);
+    setMinimumSize(new Dimension(300, 300));
     setLocation(200, 200);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    this.setLayout(null);
+    this.setLayout(new BorderLayout());
 
     JMenu menu = new JMenu("File");
 
@@ -39,6 +47,7 @@ public class GameViewImpl extends JFrame implements GameView {
     JMenuBar menuBar = new JMenuBar();
     menuBar.add(menu);
     setJMenuBar(menuBar);
+    this.add(new AddPlayerPanel());
 
     pack();
     setVisible(true);

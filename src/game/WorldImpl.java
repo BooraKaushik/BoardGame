@@ -928,7 +928,7 @@ public final class WorldImpl implements World {
       data.add(player.getPlayerType());
       result.add(data);
     }
-    return null;
+    return result;
   }
 
 }
