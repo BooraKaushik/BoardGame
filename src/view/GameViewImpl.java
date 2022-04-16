@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,8 +12,17 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+/**
+ * Creates a new Game frame by implementing Game View.
+ */
 public class GameViewImpl extends JFrame implements GameView {
+  private static final long serialVersionUID = -2179965453492637485L;
 
+  /**
+   * Constructor For GameViewImpl class, creates a frame.
+   * 
+   * @param title String to appear on top of the window.
+   */
   public GameViewImpl(String title) {
     super(title);
 
@@ -25,7 +33,6 @@ public class GameViewImpl extends JFrame implements GameView {
     this.setLayout(new BorderLayout());
 
     JMenu menu = new JMenu("File");
-    JMenuBar menuBar = new JMenuBar();
 
     JMenuItem newGame = new JMenuItem("New Game");
     JMenuItem newWorld = new JMenuItem("New World");
@@ -35,6 +42,7 @@ public class GameViewImpl extends JFrame implements GameView {
     menu.add(newWorld);
     menu.add(exit);
 
+    JMenuBar menuBar = new JMenuBar();
     menuBar.add(menu);
     setJMenuBar(menuBar);
 

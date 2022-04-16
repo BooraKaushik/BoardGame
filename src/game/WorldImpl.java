@@ -39,8 +39,9 @@ public final class WorldImpl implements World {
    * Constructs the instance of the world with the given data, with specified
    * rows, columns, items and spaces.
    * 
-   * @param worldData The file which contains the world specification
-   * @param random    It is used to generate random numbers
+   * @param worldData  The file which contains the world specification
+   * @param random     It is used to generate random numbers
+   * @param numOfTurns Total Number of turns for each player.
    * @throws IllegalArgumentException when rows and columns is less than 1 or list
    *                                  of spaces is empty or name is empty string
    *                                  or when there is an overlap among spaces
@@ -915,6 +916,19 @@ public final class WorldImpl implements World {
   @Override
   public boolean isGameOver() {
     return gameOver;
+  }
+
+  @Override
+  public List<List<String>> getAllPlayers() {
+    List<List<String>> result = new ArrayList<List<String>>();
+    for (Player player : this.allPlayers) {
+      List<String> data = new ArrayList<String>();
+      data.add(player.getName());
+      data.add(this.allSpaces.get(player.getSpaceIndexOfPlayer()).getName());
+      data.add(player.getPlayerType());
+      result.add(data);
+    }
+    return null;
   }
 
 }
