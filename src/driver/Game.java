@@ -21,35 +21,33 @@ public class Game {
    *             turns
    */
   public static void main(String[] args) {
-//    try {
-//      if (args.length == 2) {
-//        String path = args[0];
-//
-//        System.out.println(String.format("Reading the world specifications from %s...\n", path));
-//
-//        Readable mansionReadable = null;
-//
-//        mansionReadable = new FileReader(path);
-//
-//        Readable input = new InputStreamReader(System.in);
-//        Appendable output = System.out;
-//        RandomManual rand = new RandomManual();
-//
-//        int numOfTurns = Integer.parseInt(args[1]);
-//        
-//        System.out.println("Creating the world...\n");
-//
-//        World world = new WorldImpl(mansionReadable, rand, numOfTurns);
-//      } else {
-//        System.out.println("Please specify the correct command.");
-//      }
-//    } catch (FileNotFoundException fne) {
-//      System.out.println("Unable to find the world specification text file.");
-//    } catch (NumberFormatException e) {
-//      System.out.println("Please specify a number for the maximum turns in the game.");
-//    }
-    
-    GameView worldView = new GameViewImpl("Test");
+    try {
+      if (args.length == 2) {
+        String path = args[0];
+
+        System.out.println(String.format("Reading the world specifications from %s...\n", path));
+
+        Readable mansionReadable = null;
+
+        mansionReadable = new FileReader(path);
+
+        Readable input = new InputStreamReader(System.in);
+        Appendable output = System.out;
+        RandomManual rand = new RandomManual();
+
+        int numOfTurns = Integer.parseInt(args[1]);
+
+        System.out.println("Creating the world...\n");
+
+        World world = new WorldImpl(mansionReadable, rand, numOfTurns);
+      } else {
+        System.out.println("Please specify the correct command.");
+      }
+    } catch (FileNotFoundException fne) {
+      System.out.println("Unable to find the world specification text file.");
+    } catch (NumberFormatException e) {
+      System.out.println("Please specify a number for the maximum turns in the game.");
+    }
   }
 
 }
