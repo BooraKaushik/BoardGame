@@ -30,12 +30,12 @@ public class GameViewPanel extends JPanel {
    * 
    * @param dataModel Read Only Model that is passed by the view.
    */
-  public GameViewPanel() {
-//    ReadOnlyModel dataModel
-//    if (dataModel == null) {
-//      throw new IllegalArgumentException("Data Model cant be Null");
-//    }
-//    this.dataModel = dataModel;
+  public GameViewPanel(ReadOnlyModel dataModel) {
+    
+    if (dataModel == null) {
+      throw new IllegalArgumentException("Data Model cant be Null");
+    }
+    this.dataModel = dataModel;
     this.setLayout(new BorderLayout(20, 15));
     this.setBackground(new Color(76, 17, 49));
 

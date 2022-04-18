@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -27,7 +28,8 @@ public class GameViewImpl extends JFrame implements GameView {
   /**
    * Constructor For GameViewImpl class, creates a frame.
    * 
-   * @param title String to appear on top of the window.
+   * @param title     String to appear on top of the window.
+   * @param dataModel Read Only Model that is passed by the view.
    */
   public GameViewImpl(String title, ReadOnlyModel dataModel) {
     super(title);
@@ -62,6 +64,7 @@ public class GameViewImpl extends JFrame implements GameView {
     this.dataModel = dataModel;
     this.addPlayerPanel = new AddPlayerPanel(dataModel);
     this.welcomePanel = new WelcomePanel();
+    displayPopupMessage("Kaushik", "Error");
   }
 
   @Override
@@ -72,14 +75,23 @@ public class GameViewImpl extends JFrame implements GameView {
 
   @Override
   public void displayAddPlayerScreen() {
-    // TODO Auto-generated method stub
-
+    add(addPlayerPanel);
+    addPlayerPanel.revalidate();
   }
 
   @Override
   public void displayPopupMessage(String message, String type) {
-    // TODO Auto-generated method stub
-
+    if (message == null) {
+      throw new IllegalArgumentException("Message cant be null");
+    }
+    if (type == null) {
+      throw new IllegalArgumentException("Type cant be null");
+    }
+    if ("Error".equals(type)) {
+      JOptionPane.showMessageDialog(this, message, type, JOptionPane.ERROR_MESSAGE);
+    } else {
+      JOptionPane.showMessageDialog(this, message, type, JOptionPane.PLAIN_MESSAGE);
+    }
   }
 
   @Override
@@ -90,8 +102,19 @@ public class GameViewImpl extends JFrame implements GameView {
 
   @Override
   public String displayInputPopup(String title, String[] options) {
-    // TODO Auto-generated method stub
-    return null;
+    if (title == null) {
+      throw new IllegalArgumentException("Title cant be null");
+    }
+    if (options == null) {
+      throw new IllegalArgumentException("Options cant be null");
+    }
+    if (options.length < 1) {
+      throw new IllegalArgumentException("Options cant be Empty");
+    }
+    String output = (String) JOptionPane.showInputDialog(this,
+        String.format("Choose an Option for %s", title), title, JOptionPane.INFORMATION_MESSAGE,
+        null, options, options[0]);
+    return output;
   }
 
 }
