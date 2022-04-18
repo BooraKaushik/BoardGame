@@ -1,13 +1,13 @@
 package driver;
 
+import controller.GameController;
+import controller.GameControllerImpl;
 import game.GameWorld;
 import game.World;
 import game.WorldImpl;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.InputStreamReader;
-import controller.GameController;
-import controller.GameControllerImpl;
 import utils.RandomManual;
 import view.GameView;
 import view.GameViewImpl;
@@ -47,7 +47,6 @@ public class Game {
         gameController.startGame();
 
       } else {
-        GameView view = new GameViewImpl("Test");
         System.out.println("Please specify the correct command.");
       }
     } catch (FileNotFoundException fne) {

@@ -60,7 +60,7 @@ public class GameViewImpl extends JFrame implements GameView {
     setVisible(true);
 
     this.dataModel = dataModel;
-    this.addPlayerPanel = new AddPlayerPanel();
+    this.addPlayerPanel = new AddPlayerPanel(dataModel);
     this.welcomePanel = new WelcomePanel();
   }
 
