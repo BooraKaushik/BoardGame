@@ -47,6 +47,7 @@ public class Game {
         gameController.startGame();
 
       } else {
+        GameView view = new GameViewImpl("Test");
         System.out.println("Please specify the correct command.");
       }
     } catch (FileNotFoundException fne) {
