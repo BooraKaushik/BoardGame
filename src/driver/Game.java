@@ -41,6 +41,7 @@ public class Game {
 
         World world = new WorldImpl(mansionReadable, rand, numOfTurns);
       } else {
+        GameView view = new GameViewImpl("Test");
         System.out.println("Please specify the correct command.");
       }
     } catch (FileNotFoundException fne) {

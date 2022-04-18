@@ -4,9 +4,7 @@ import game.ReadOnlyModel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,27 +17,20 @@ import javax.swing.border.EmptyBorder;
  */
 public class AddPlayerPanel extends JPanel {
 
+  private static final long serialVersionUID = 7525139079837574057L;
+
   private ReadOnlyModel dataModel;
 
   /**
-   * Constructor of AddPlayerPanel to create AddPlayer Screen. ReadOnlyModel
-   * dataModel
+   * Constructor of AddPlayerPanel to create AddPlayer Screen.
    * 
    * @param dataModel Read Only Model that is passed by the view.
    */
-  public AddPlayerPanel() {
-//    if (dataModel == null) {
-//      throw new IllegalArgumentException("Data Model cant be Null");
-//    }
-    List<List<String>> test = new ArrayList<List<String>>();
-    for (int i = 0; i < 10; i++) {
-      List<String> temp = new ArrayList<String>();
-      temp.add("1");
-      temp.add("2");
-      temp.add("3");
-      test.add(temp);
+  public AddPlayerPanel(ReadOnlyModel dataModel) {
+    if (dataModel == null) {
+      throw new IllegalArgumentException("Data Model cant be Null");
     }
-//    this.dataModel = dataModel;
+    this.dataModel = dataModel;
     this.setLayout(new BorderLayout(20, 15));
     this.setBackground(new Color(76, 17, 49));
 
@@ -59,7 +50,7 @@ public class AddPlayerPanel extends JPanel {
     // CENTER LAYOUT
     JPanel center = new JPanel();
     center.setLayout(new GridLayout(10, 3, 25, 10));
-    for (List<String> data : test) {
+    for (List<String> data : this.dataModel.getAllPlayers()) {
       center.add(
           new JLabel(String.format("<html><font size='3'>Name : %s</font></html>", data.get(0))));
       center.add(new JLabel(

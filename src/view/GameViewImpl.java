@@ -1,19 +1,13 @@
 package view;
 
+import game.ReadOnlyModel;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-
-import game.ReadOnlyModel;
-import game.WorldImpl;
 
 /**
  * Creates a new Game frame by implementing Game View.
@@ -50,10 +44,11 @@ public class GameViewImpl extends JFrame implements GameView {
     JMenuBar menuBar = new JMenuBar();
     menuBar.add(menu);
     setJMenuBar(menuBar);
-    this.add(new AddPlayerPanel());
-
-    JPanel wp = new WelcomePanel();
-    add(wp);
+//    this.add(new AddPlayerPanel(dataModel));
+//
+//    JPanel wp = new WelcomePanel();
+//    add(wp);
+    this.add(new GameViewPanel());
 
     pack();
     setVisible(true);
