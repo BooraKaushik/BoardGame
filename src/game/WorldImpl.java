@@ -43,8 +43,10 @@ public final class WorldImpl implements World {
    * @param random     It is used to generate random numbers
    * @param numOfTurns Total Number of turns for each player.
    * @throws IllegalArgumentException when rows and columns is less than 1 or list
-   *                                  of spaces is empty or name is empty string
-   *                                  or when there is an overlap among spaces
+   *                                  of spaces is empty or world/target/pet name
+   *                                  is null or empty string or when the target's
+   *                                  health is less than 1 or when there is an
+   *                                  overlap among spaces
    * @throws InputMismatchException   When the input world specification is not
    *                                  present in the required format
    * @throws NoSuchElementException   When the number of spaces or items specified
@@ -59,6 +61,10 @@ public final class WorldImpl implements World {
 
     if (random == null) {
       throw new IllegalArgumentException("RandomManual object cannot be null.");
+    }
+
+    if (numOfTurns <= 0) {
+      throw new IllegalArgumentException("Number of turns cannot be less than one");
     }
 
     Scanner mansionScanner = new Scanner(worldData);
@@ -116,20 +122,36 @@ public final class WorldImpl implements World {
       throw new IllegalArgumentException("Columns cannot be less than zero");
     }
 
-    if (numOfTurns <= 0) {
-      throw new IllegalArgumentException("Number of turns cannot be less than one");
-    }
-
     if (worldName == null) {
-      throw new IllegalArgumentException("Name cannot be null");
+      throw new IllegalArgumentException("World Name cannot be null");
     }
 
     if (worldName.length() == 0) {
-      throw new IllegalArgumentException("Name cannot be empty");
+      throw new IllegalArgumentException("World Name cannot be empty");
     }
 
     if (allSpaces.size() == 0) {
       throw new IllegalArgumentException("List of spaces cannot be empty");
+    }
+
+    if (targetName == null) {
+      throw new IllegalArgumentException("Target Name cannot be null");
+    }
+
+    if (targetName.length() == 0) {
+      throw new IllegalArgumentException("Target Name cannot be empty");
+    }
+
+    if (targetHealth <= 0) {
+      throw new IllegalArgumentException("Target health cannot be less than one");
+    }
+
+    if (petName == null) {
+      throw new IllegalArgumentException("Pet Name cannot be null");
+    }
+
+    if (petName.length() == 0) {
+      throw new IllegalArgumentException("Pet Name cannot be empty");
     }
 
     for (int i = 0; i < allSpaces.size(); i++) {
@@ -172,10 +194,10 @@ public final class WorldImpl implements World {
     this.pet = pet;
     this.allPlayers = new ArrayList<Player>();
     this.currentTurnIndex = 0;
-    this.random = random;
     this.gameOver = false;
     this.currentSpacesTrack = new Stack<Space>();
     this.visitedSpaces = new ArrayList<Space>();
+    this.random = random;
     this.numOfTurns = numOfTurns;
   }
 
@@ -406,8 +428,14 @@ public final class WorldImpl implements World {
       movePet();
     }
     this.currentTurnIndex = this.currentTurnIndex + 1;
+
     if (this.currentTurnIndex >= this.allPlayers.size()) {
       this.currentTurnIndex = 0;
+      numOfTurns = numOfTurns - 1;
+    }
+
+    if (numOfTurns <= 0) {
+      gameOver = true;
     }
   }
 
@@ -544,7 +572,7 @@ public final class WorldImpl implements World {
   }
 
   @Override
-  public String getCurrentPlayerInfoAndTargetInfo() {
+  public String getTurnInfo() {
     Player currentPlayer = allPlayers.get(currentTurnIndex);
     Space currentSpace = allSpaces.get(currentPlayer.getSpaceIndexOfPlayer());
     Space currentTargetSpace = allSpaces.get(target.getCurrentSpaceIndex());
@@ -929,6 +957,11 @@ public final class WorldImpl implements World {
       result.add(data);
     }
     return result;
+  }
+
+  @Override
+  public int getNumOfTurns() {
+    return numOfTurns;
   }
 
 }

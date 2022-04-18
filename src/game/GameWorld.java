@@ -71,7 +71,6 @@ public interface GameWorld extends ReadOnlyModel {
    */
   public String lookAroundByPlayer();
 
-
   /**
    * Performs an action as a computer controlled player and returns the summary.
    * 
@@ -114,4 +113,11 @@ public interface GameWorld extends ReadOnlyModel {
    * @return True/False based on if the game is completed or not
    */
   public boolean isGameOver();
+
+  /**
+   * Returns the number of turns that are remaining in the game.
+   * 
+   * @return The number of turns left in the game
+   */
+  public int getNumOfTurns();
 }

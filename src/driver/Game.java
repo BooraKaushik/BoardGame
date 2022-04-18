@@ -1,10 +1,13 @@
 package driver;
 
+import game.GameWorld;
 import game.World;
 import game.WorldImpl;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.InputStreamReader;
+import controller.GameController;
+import controller.GameControllerImpl;
 import utils.RandomManual;
 import view.GameView;
 import view.GameViewImpl;
@@ -31,15 +34,18 @@ public class Game {
 
         mansionReadable = new FileReader(path);
 
-        Readable input = new InputStreamReader(System.in);
-        Appendable output = System.out;
         RandomManual rand = new RandomManual();
 
         int numOfTurns = Integer.parseInt(args[1]);
 
         System.out.println("Creating the world...\n");
 
-        World world = new WorldImpl(mansionReadable, rand, numOfTurns);
+        GameWorld world = new WorldImpl(mansionReadable, rand, numOfTurns);
+        GameView gameView = new GameViewImpl("Killing Dr. Lucky", world);
+
+        GameController gameController = new GameControllerImpl(world, gameView);
+        gameController.startGame();
+
       } else {
         System.out.println("Please specify the correct command.");
       }

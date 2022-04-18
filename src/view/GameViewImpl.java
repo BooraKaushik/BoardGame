@@ -21,15 +21,26 @@ import game.WorldImpl;
 public class GameViewImpl extends JFrame implements GameView {
   private static final long serialVersionUID = -2179965453492637485L;
 
-  private ReadOnlyModel dataModel;
+  private final ReadOnlyModel dataModel;
+  private final JMenu menu;
+  private final JMenuItem newGame;
+  private final JMenuItem newWorld;
+  private final JMenuItem exit;
+  private final JMenuBar menuBar;
+  private final JPanel addPlayerPanel;
+  private final JPanel welcomePanel;
 
   /**
    * Constructor For GameViewImpl class, creates a frame.
    * 
    * @param title String to appear on top of the window.
    */
-  public GameViewImpl(String title) {
+  public GameViewImpl(String title, ReadOnlyModel dataModel) {
     super(title);
+
+    if (dataModel == null) {
+      throw new IllegalArgumentException("Read only data model cannot be empty");
+    }
 
     setMinimumSize(new Dimension(300, 300));
     setLocation(200, 200);
@@ -37,33 +48,32 @@ public class GameViewImpl extends JFrame implements GameView {
 
     this.setLayout(new BorderLayout());
 
-    JMenu menu = new JMenu("File");
+    menu = new JMenu("File");
 
-    JMenuItem newGame = new JMenuItem("New Game");
-    JMenuItem newWorld = new JMenuItem("New World");
-    JMenuItem exit = new JMenuItem("Exit");
+    newGame = new JMenuItem("New Game");
+    newWorld = new JMenuItem("New World");
+    exit = new JMenuItem("Exit");
 
     menu.add(newGame);
     menu.add(newWorld);
     menu.add(exit);
 
-    JMenuBar menuBar = new JMenuBar();
+    menuBar = new JMenuBar();
     menuBar.add(menu);
     setJMenuBar(menuBar);
-    this.add(new AddPlayerPanel());
-
-    JPanel wp = new WelcomePanel();
-    add(wp);
 
     pack();
     setVisible(true);
 
+    this.dataModel = dataModel;
+    this.addPlayerPanel = new AddPlayerPanel();
+    this.welcomePanel = new WelcomePanel();
   }
 
   @Override
   public void displayWelcomeScreen() {
-    // TODO Auto-generated method stub
-
+    add(welcomePanel);
+    welcomePanel.revalidate();
   }
 
   @Override

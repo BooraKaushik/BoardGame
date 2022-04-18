@@ -704,7 +704,7 @@ public class WorldImplTest {
   }
 
   @Test
-  public void testGetCurrentPlayerInfoAndTargetInfo() {
+  public void testgetTurnInfo() {
     worldSb = new StringBuilder("35 32 My World\n 59 Dr. Lucky\n Simba\n 8\n 4 10 11 12 Dining\n");
     worldSb.append("4 4 9 9 Master Bedroom\n 4 13 6 19 Music Room\n 17 0 24 3 Garage\n");
     worldSb.append("17 13 20 19 Bathroom\n 0 10 3 18 Home Office\n 2 0 16 3 Entrance Hall\n");
@@ -720,15 +720,15 @@ public class WorldImplTest {
     testWorld.addPlayer("KB", "Dining", true);
     testWorld.addPlayer("Subash", "Dining", true);
 
-    assertEquals("Pranith,Human,Dining,Dining", testWorld.getCurrentPlayerInfoAndTargetInfo());
+    assertEquals("Pranith,Human,Dining,Dining", testWorld.getTurnInfo());
 
     testWorld.lookAroundByPlayer();
     assertEquals("Tarun,Human,Dining,Master Bedroom",
-        testWorld.getCurrentPlayerInfoAndTargetInfo());
+        testWorld.getTurnInfo());
 
     testWorld.lookAroundByPlayer();
     testWorld.lookAroundByPlayer();
-    assertEquals("KK,Computer,Dining,Garage", testWorld.getCurrentPlayerInfoAndTargetInfo());
+    assertEquals("KK,Computer,Dining,Garage", testWorld.getTurnInfo());
   }
 
   @Test
@@ -1189,11 +1189,11 @@ public class WorldImplTest {
 
     testWorld.movePetByPlayer("Master Bedroom");
     assertEquals("Master Bedroom", testWorld.getCurrentSpaceOfPet());
-    assertEquals("Robot", testWorld.getCurrentPlayerInfoAndTargetInfo().split(",")[0]);
+    assertEquals("Robot", testWorld.getTurnInfo().split(",")[0]);
 
     testWorld.movePetByPlayer("Garage");
     assertEquals("Garage", testWorld.getCurrentSpaceOfPet());
-    assertEquals("Pranith", testWorld.getCurrentPlayerInfoAndTargetInfo().split(",")[0]);
+    assertEquals("Pranith", testWorld.getTurnInfo().split(",")[0]);
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -1293,7 +1293,7 @@ public class WorldImplTest {
         testWorld.getInfoOfaSpace("Home Office"));
 
     // if turn changed
-    assertEquals("Robot,Human,Attic,Home Office", testWorld.getCurrentPlayerInfoAndTargetInfo());
+    assertEquals("Robot,Human,Attic,Home Office", testWorld.getTurnInfo());
 
     // if item removed from player
     assertEquals("Name: Pranith\n" + "Current space: Bathroom\n" + "Items carrying:\n" + "None\n"
@@ -1319,7 +1319,7 @@ public class WorldImplTest {
         testWorld.getInfoOfaSpace("Dining"));
 
     // if turn changed
-    assertEquals("Pranith,Human,Bathroom,Dining", testWorld.getCurrentPlayerInfoAndTargetInfo());
+    assertEquals("Pranith,Human,Bathroom,Dining", testWorld.getTurnInfo());
 
     // If player won after success and target health is zero
     testWorld.lookAroundByPlayer();
@@ -1352,7 +1352,7 @@ public class WorldImplTest {
 
     // if turn changed
     assertEquals("Robot,Human,Dining,Master Bedroom",
-        testWorld.getCurrentPlayerInfoAndTargetInfo());
+        testWorld.getTurnInfo());
 
     testWorld.movePlayerInWorld("Home Office");
     testWorld.lookAroundByPlayer();

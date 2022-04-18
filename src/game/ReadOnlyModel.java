@@ -34,6 +34,6 @@ public interface ReadOnlyModel {
    * 
    * @return A string in the format: Name,Type,SpaceName,TargetSpaceName
    */
-  public String getCurrentPlayerInfoAndTargetInfo();
+  public String getTurnInfo();
 
 }
