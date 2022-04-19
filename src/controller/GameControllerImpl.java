@@ -51,22 +51,7 @@ public class GameControllerImpl implements GameController, Features {
     this.worldSpecification = "";
     this.currentCommand = null;
     this.inputList = new ArrayList<>();
-  }
-
-  private String executeCmd(GameWorld model) {
-    String result = "";
-    if (currentCommand != null) {
-      currentCommand.execute(model);
-      result = currentCommand.getOutput();
-      currentCommand = null;
-    }
-    inputList.clear();
-    return result;
-  }
-
-  @Override
-  public void startGame() {
-
+    
     commands.put(Command.MOVE, (list) -> {
       return new MovePlayer(list.get(0));
     });
@@ -111,6 +96,21 @@ public class GameControllerImpl implements GameController, Features {
       return new SetWorld(new StringReader(list.get(0)));
     });
 
+  }
+
+  private String executeCmd(GameWorld model) {
+    String result = "";
+    if (currentCommand != null) {
+      currentCommand.execute(model);
+      result = currentCommand.getOutput();
+      currentCommand = null;
+    }
+    inputList.clear();
+    return result;
+  }
+
+  @Override
+  public void startGame() {
     gameView.displayWelcomeScreen();
   }
 

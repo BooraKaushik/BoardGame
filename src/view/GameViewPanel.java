@@ -1,5 +1,6 @@
 package view;
 
+import controller.Features;
 import game.ReadOnlyModel;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -13,8 +14,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
-import controller.Features;
 
 /**
  * Creates a Panel which Displays Game Layout, Results of a turn and turn
@@ -73,7 +72,8 @@ public class GameViewPanel extends JPanel {
     } catch (IOException ioe) {
       throw new IllegalStateException("Cannot Read the Layout");
     }
-    
+  }
+
   /**
    * Sets the features of the controller as callbacks to event listeners that this
    * panel can use.
