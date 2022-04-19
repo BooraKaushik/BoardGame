@@ -119,6 +119,21 @@ public class GameControllerImpl implements GameController, Features {
       return new SetWorld(new StringReader(list.get(0)));
     });
 
+  }
+
+  private String executeCmd(GameWorld model) {
+    String result = "";
+    if (currentCommand != null) {
+      currentCommand.execute(model);
+      result = currentCommand.getOutput();
+      currentCommand = null;
+    }
+    inputList.clear();
+    return result;
+  }
+
+  @Override
+  public void startGame() {
     gameView.displayWelcomeScreen();
   }
 

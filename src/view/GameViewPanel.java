@@ -1,5 +1,6 @@
 package view;
 
+import controller.Features;
 import game.ReadOnlyModel;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -13,8 +14,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
-import controller.Features;
 
 /**
  * Creates a Panel which Displays Game Layout, Results of a turn and turn
