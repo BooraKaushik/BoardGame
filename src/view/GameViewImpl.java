@@ -81,7 +81,7 @@ public class GameViewImpl extends JFrame implements GameView {
     setVisible(true);
 
     this.dataModel = dataModel;
-    this.gameViewPanel = new GameViewPanel();
+    this.gameViewPanel = new GameViewPanel(dataModel);
     this.addPlayerPanel = new AddPlayerPanel(dataModel);
     this.welcomePanel = new WelcomePanel();
   }
@@ -152,6 +152,8 @@ public class GameViewImpl extends JFrame implements GameView {
     }
 
     this.welcomePanel.setFeatures(featuresController);
+    this.addPlayerPanel.setFeatures(featuresController);
+    this.gameViewPanel.setFeatures(featuresController);
 
     newGame.addActionListener(event -> {
       featuresController.startGameIsClicked();
@@ -173,5 +175,4 @@ public class GameViewImpl extends JFrame implements GameView {
       }
     });
   }
-
 }

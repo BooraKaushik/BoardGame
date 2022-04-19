@@ -180,4 +180,9 @@ public class GameControllerImpl implements GameController, Features {
     }
   }
 
+  @Override
+  public void showGameScreen() {
+    gameView.displayGameScreen();
+  }
+
 }

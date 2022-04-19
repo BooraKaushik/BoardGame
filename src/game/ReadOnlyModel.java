@@ -36,4 +36,12 @@ public interface ReadOnlyModel {
    */
   public String getTurnInfo();
 
+  /**
+   * Generates a List that contains names of all the spaces that can be used while
+   * prompting user to select a landing location.
+   * 
+   * @return a list that contains all the space names.
+   */
+  public String[] getAllSpaces();
+
 }

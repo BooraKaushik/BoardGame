@@ -14,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import controller.Features;
+
 /**
  * Creates a Panel which Displays Game Layout, Results of a turn and turn
  * information on the screen .
@@ -30,12 +32,12 @@ public class GameViewPanel extends JPanel {
    * 
    * @param dataModel Read Only Model that is passed by the view.
    */
-  public GameViewPanel() {
-//    ReadOnlyModel dataModel
-//    if (dataModel == null) {
-//      throw new IllegalArgumentException("Data Model cant be Null");
-//    }
-//    this.dataModel = dataModel;
+  public GameViewPanel(ReadOnlyModel dataModel) {
+
+    if (dataModel == null) {
+      throw new IllegalArgumentException("Data Model cant be Null");
+    }
+    this.dataModel = dataModel;
     this.setLayout(new BorderLayout(20, 15));
     this.setBackground(new Color(76, 17, 49));
 
@@ -71,6 +73,19 @@ public class GameViewPanel extends JPanel {
     } catch (IOException ioe) {
       throw new IllegalStateException("Cannot Read the Layout");
     }
+    
+  /**
+   * Sets the features of the controller as callbacks to event listeners that this
+   * panel can use.
+   * 
+   * @param featuresController The features controller that the panel uses
+   * @throws IllegalArgumentException When features controller is null
+   */
+  public void setFeatures(Features featuresController) throws IllegalArgumentException {
+    if (featuresController == null) {
+      throw new IllegalArgumentException("Features controller cannot be null");
+    }
+
   }
 
 }

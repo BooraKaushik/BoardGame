@@ -968,4 +968,9 @@ public final class WorldImpl implements World {
     return numOfTurns;
   }
 
+  @Override
+  public String[] getAllSpaces() {
+    return this.allSpaces.stream().map((space) -> space.getName()).toArray(String[]::new);
+  }
+
 }

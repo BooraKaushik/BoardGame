@@ -63,4 +63,9 @@ public interface Features {
    */
   public void startGameIsClicked();
 
+  /**
+   * Moves the screen from add player screen to Game screen.
+   */
+  public void showGameScreen();
+
 }
