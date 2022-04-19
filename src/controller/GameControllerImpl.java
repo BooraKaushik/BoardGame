@@ -3,6 +3,7 @@ package controller;
 import game.GameWorld;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +22,6 @@ public class GameControllerImpl implements GameController, Features {
   private final GameView gameView;
   private String worldSpecification;
   private final Map<Command, Function<List<String>, GameCommand>> commands;
-  private GameCommand currentCommand;
-  private List<String> inputList;
 
   /**
    * A contructor that is used to create an instance of the GameControllerImpl
@@ -49,18 +48,27 @@ public class GameControllerImpl implements GameController, Features {
     this.gameView = gameView;
     this.commands = new HashMap<Command, Function<List<String>, GameCommand>>();
     this.worldSpecification = "";
-    this.currentCommand = null;
-    this.inputList = new ArrayList<>();
   }
 
-  private String executeCmd(GameWorld model) {
-    String result = "";
-    if (currentCommand != null) {
-      currentCommand.execute(model);
-      result = currentCommand.getOutput();
-      currentCommand = null;
+  private String executeCmd(GameWorld model, Command currentCommand, List<String> args) {
+    if (model == null) {
+      throw new IllegalArgumentException("model cant be null");
     }
-    inputList.clear();
+    if (currentCommand == null) {
+      throw new IllegalArgumentException("Command cant be null");
+    }
+    if (args == null) {
+      throw new IllegalArgumentException("Arguments cant be null");
+    }
+
+    Function<List<String>, GameCommand> cmd;
+    String result = "";
+    cmd = commands.get(currentCommand);
+    GameCommand comandOut = cmd.apply(args);
+    if (comandOut != null) {
+      comandOut.execute(model);
+      result = comandOut.getOutput();
+    }
     return result;
   }
 
@@ -136,7 +144,14 @@ public class GameControllerImpl implements GameController, Features {
   @Override
   public void addPlayer(String name, String startingLocation, boolean isHuman)
       throws IllegalArgumentException {
-    // TODO Auto-generated method stub
+    if (name == null) {
+      throw new IllegalArgumentException("Name Cant be null");
+    }
+    if (startingLocation == null) {
+      throw new IllegalArgumentException("Starting Location Cant be null");
+    }
+    executeCmd(gameModel, Command.SET_WORLD,
+        new ArrayList<String>(Arrays.asList(name, startingLocation, isHuman ? "T" : "F")));
 
   }
 
@@ -160,21 +175,12 @@ public class GameControllerImpl implements GameController, Features {
   @Override
   public void startGameIsClicked() {
     try {
-      Function<List<String>, GameCommand> cmd;
-
       if (worldSpecification.length() != 0) {
-        cmd = commands.get(Command.SET_WORLD);
-        inputList.add(worldSpecification);
-        currentCommand = cmd.apply(inputList);
-        executeCmd(gameModel);
+        executeCmd(gameModel, Command.SET_WORLD,
+            new ArrayList<String>(Arrays.asList(worldSpecification)));
       }
-
-      cmd = commands.get(Command.DRAW_IMAGE);
-      currentCommand = cmd.apply(inputList);
-      executeCmd(gameModel);
-
+      executeCmd(gameModel, Command.DRAW_IMAGE, new ArrayList<String>());
       gameView.displayAddPlayerScreen();
-      gameView.displayGameScreen();
     } catch (IllegalArgumentException | NoSuchElementException e) {
       gameView.displayPopupMessage(e.getMessage(), "Error");
     }

@@ -153,10 +153,14 @@ public class AddPlayerPanel extends JPanel {
       if (name.getText().length() <= 0) {
         this.displayPopup("Invalid Name");
       } else {
-        this.featuresController.addPlayer(name.getText(), roomList.getSelectedItem().toString(),
-            typeList.getSelectedItem().toString().equals("Human"));
-        dataModel.getAllPlayers().stream().map(a -> a.get(0)).forEach(System.out::println);
-        this.updateAddPlayers();
+        try {
+          this.featuresController.addPlayer(name.getText(), roomList.getSelectedItem().toString(),
+              typeList.getSelectedItem().toString().equals("Human"));
+          dataModel.getAllPlayers().stream().map(a -> a.get(0)).forEach(System.out::println);
+          this.updateAddPlayers();
+        } catch (IllegalArgumentException iae) {
+          this.displayPopup(iae.getMessage());
+        }
       }
     }
   }

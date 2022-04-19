@@ -73,7 +73,8 @@ public class GameViewPanel extends JPanel {
     } catch (IOException ioe) {
       throw new IllegalStateException("Cannot Read the Layout");
     }
-    
+  }
+
   /**
    * Sets the features of the controller as callbacks to event listeners that this
    * panel can use.
