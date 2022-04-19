@@ -31,7 +31,7 @@ public class GameViewImpl extends JFrame implements GameView {
   private final AddPlayerPanel addPlayerPanel;
   private final WelcomePanel welcomePanel;
   private final JFileChooser worldChooser;
-  private JPanel gameViewPanel;
+  private final GameViewPanel gameViewPanel;
 
   /**
    * Constructor For GameViewImpl class, creates a frame.
@@ -80,7 +80,7 @@ public class GameViewImpl extends JFrame implements GameView {
     setVisible(true);
 
     this.dataModel = dataModel;
-    this.gameViewPanel = new GameViewPanel();
+    this.gameViewPanel = new GameViewPanel(dataModel);
     this.addPlayerPanel = new AddPlayerPanel(dataModel);
     this.welcomePanel = new WelcomePanel();
   }
@@ -144,8 +144,10 @@ public class GameViewImpl extends JFrame implements GameView {
     if (featuresController == null) {
       throw new IllegalArgumentException("Features controller cannot be null");
     }
-    
+
     this.welcomePanel.setFeatures(featuresController);
+    this.addPlayerPanel.setFeatures(featuresController);
+    this.gameViewPanel.setFeatures(featuresController);
 
     newGame.addActionListener(event -> {
       featuresController.startGameIsClicked();
@@ -164,5 +166,4 @@ public class GameViewImpl extends JFrame implements GameView {
       }
     });
   }
-
 }

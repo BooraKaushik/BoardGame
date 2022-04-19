@@ -66,7 +66,7 @@ public final class WorldImpl implements World {
     if (numOfTurns <= 0) {
       throw new IllegalArgumentException("Number of turns cannot be less than one");
     }
-    
+
     setWorldSpecification(worldData);
 
     this.random = random;
@@ -79,7 +79,7 @@ public final class WorldImpl implements World {
     if (worldData == null) {
       throw new IllegalArgumentException("World data cannot be empty");
     }
-    
+
     Scanner mansionScanner = new Scanner(worldData);
 
     final int rows = mansionScanner.nextInt();
@@ -973,6 +973,11 @@ public final class WorldImpl implements World {
   @Override
   public int getNumOfTurns() {
     return numOfTurns;
+  }
+
+  @Override
+  public String[] getAllSpaces() {
+    return this.allSpaces.stream().map((space) -> space.getName()).toArray(String[]::new);
   }
 
 }
