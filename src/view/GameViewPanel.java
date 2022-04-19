@@ -3,6 +3,7 @@ package view;
 import game.ReadOnlyModel;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -30,12 +31,12 @@ public class GameViewPanel extends JPanel {
    * 
    * @param dataModel Read Only Model that is passed by the view.
    */
-  public GameViewPanel(ReadOnlyModel dataModel) {
-    
-    if (dataModel == null) {
-      throw new IllegalArgumentException("Data Model cant be Null");
-    }
-    this.dataModel = dataModel;
+  public GameViewPanel() {
+//    ReadOnlyModel dataModel
+//    if (dataModel == null) {
+//      throw new IllegalArgumentException("Data Model cant be Null");
+//    }
+//    this.dataModel = dataModel;
     this.setLayout(new BorderLayout(20, 15));
     this.setBackground(new Color(76, 17, 49));
 
@@ -53,10 +54,12 @@ public class GameViewPanel extends JPanel {
     JPanel eastLayout = new JPanel();
     eastLayout.setLayout(new BoxLayout(eastLayout, BoxLayout.Y_AXIS));
     JLabel turnInfo = new JLabel("Lorem Ipsum");
+    turnInfo.setPreferredSize(new Dimension(200, 100));
     turnInfo.setBackground(Color.GRAY);
     turnInfo.setBounds(0, 0, 100, 100);
     eastLayout.add(turnInfo);
     JLabel resultInfo = new JLabel("Lorem Ipsum");
+    resultInfo.setPreferredSize(new Dimension(200, 100));
     resultInfo.setBackground(Color.GRAY);
     resultInfo.setBounds(0, 0, 100, 100);
     eastLayout.add(resultInfo);

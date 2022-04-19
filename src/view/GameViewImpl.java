@@ -22,6 +22,7 @@ public class GameViewImpl extends JFrame implements GameView {
   private final JMenuItem newWorld;
   private final JMenuItem exit;
   private final JMenuBar menuBar;
+  private JPanel gameViewPanel;
   private final JPanel addPlayerPanel;
   private final JPanel welcomePanel;
 
@@ -62,9 +63,9 @@ public class GameViewImpl extends JFrame implements GameView {
     setVisible(true);
 
     this.dataModel = dataModel;
+    this.gameViewPanel = new GameViewPanel();
     this.addPlayerPanel = new AddPlayerPanel(dataModel);
     this.welcomePanel = new WelcomePanel();
-    displayPopupMessage("Kaushik", "Error");
   }
 
   @Override
@@ -75,6 +76,7 @@ public class GameViewImpl extends JFrame implements GameView {
 
   @Override
   public void displayAddPlayerScreen() {
+    remove(welcomePanel);
     add(addPlayerPanel);
     addPlayerPanel.revalidate();
   }
@@ -96,7 +98,10 @@ public class GameViewImpl extends JFrame implements GameView {
 
   @Override
   public void displayGameScreen() {
-    // TODO Auto-generated method stub
+    remove(addPlayerPanel);
+    remove(gameViewPanel);
+    add(gameViewPanel);
+    gameViewPanel.revalidate();
 
   }
 
