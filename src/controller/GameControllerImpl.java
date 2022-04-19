@@ -44,6 +44,7 @@ public class GameControllerImpl implements GameController, Features {
 
   @Override
   public void startGame() {
+//    gameView.displayWelcomeScreen();
     gameView.displayGameScreen();
   }
 
@@ -89,7 +90,7 @@ public class GameControllerImpl implements GameController, Features {
   @Override
   public void startGameIsClicked() {
     if (mansionReadable != null) {
-      //TODO use commands here
+      // TODO use commands here
       gameModel.setWorldSpecification(mansionReadable);
     }
 
