@@ -1,5 +1,6 @@
 package view;
 
+import controller.Features;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -34,6 +35,7 @@ public class WelcomePanel extends JPanel {
    * A constructor which creates the Welcome panel of the game.
    */
   public WelcomePanel() {
+
     setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
     setBackground(new Color(76, 17, 49));
 
@@ -114,6 +116,24 @@ public class WelcomePanel extends JPanel {
     add(designedBy);
     add(firstName);
     add(secondName);
+
+  }
+
+  /**
+   * Sets the features of the controller as callbacks to event listeners that this
+   * panel can use.
+   * 
+   * @param featuresController The features controller that the panel uses
+   * @throws IllegalArgumentException When features controller is null
+   */
+  public void setFeatures(Features featuresController) throws IllegalArgumentException {
+    if (featuresController == null) {
+      throw new IllegalArgumentException("Features controller cannot be null");
+    }
+
+    startButton.addActionListener(event -> {
+      featuresController.startGameIsClicked();
+    });
   }
 
 }

@@ -22,6 +22,15 @@ public interface GameWorld extends ReadOnlyModel {
   public String drawImage() throws IllegalStateException;
 
   /**
+   * Sets the model's world specification using the world data sent.
+   * 
+   * @param worldData The Readable world data which is used to set the world
+   *                  specifications
+   * @throws IllegalArgumentException When worldData is null
+   */
+  public void setWorldSpecification(Readable worldData) throws IllegalArgumentException;
+
+  /**
    * Add a player to the world.
    * 
    * @param name              Name of the player

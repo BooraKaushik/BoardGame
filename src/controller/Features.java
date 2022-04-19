@@ -10,9 +10,11 @@ public interface Features {
    * Updates the path of the world specification file that must be used to build
    * the world.
    * 
-   * @param path The path which contains the new world specification file
+   * @param mansionReadable The readable type which contains the new world
+   *                        specifications
+   * @throws IllegalArgumentException When file readable is null
    */
-  public void updateWorldPath(String path);
+  public void updateWorldFile(Readable mansionReadable) throws IllegalArgumentException;
 
   /**
    * Used to exit the game.
@@ -25,8 +27,12 @@ public interface Features {
    * @param name             The name of the player to be added
    * @param startingLocation The starting space of the player to be added
    * @param isHuman          Whether the player is human or a bot
+   * 
+   * @throws IllegalArgumentException When name or startingLocation is null or
+   *                                  empty
    */
-  public void addPlayer(String name, String startingLocation, boolean isHuman);
+  public void addPlayer(String name, String startingLocation, boolean isHuman)
+      throws IllegalArgumentException;
 
   /**
    * Used to perform an action based on the key that is pressed.
@@ -51,5 +57,10 @@ public interface Features {
    * @param actionName The name/type of the action that was triggered
    */
   public void actionIsPerformed(String actionName);
+
+  /**
+   * Used to tell the controller that the user has clicked on start game.
+   */
+  public void startGameIsClicked();
 
 }

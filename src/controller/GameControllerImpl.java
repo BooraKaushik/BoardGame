@@ -12,7 +12,7 @@ public class GameControllerImpl implements GameController, Features {
 
   private final GameWorld gameModel;
   private final GameView gameView;
-  private String worldPath;
+  private Readable mansionReadable;
   private final GameCommand commands;
 
   /**
@@ -34,10 +34,12 @@ public class GameControllerImpl implements GameController, Features {
       throw new IllegalArgumentException("Game view cannot be null");
     }
 
+    gameView.setFeatures(this);
+
     this.gameModel = gameModel;
     this.gameView = gameView;
     this.commands = null;
-    this.worldPath = "";
+    this.mansionReadable = null;
   }
 
   @Override
@@ -46,8 +48,12 @@ public class GameControllerImpl implements GameController, Features {
   }
 
   @Override
-  public void updateWorldPath(String path) {
-    this.worldPath = path;
+  public void updateWorldFile(Readable mansionReadable) throws IllegalArgumentException {
+    if (mansionReadable == null) {
+      throw new IllegalArgumentException("File readable cannot be null");
+    }
+
+    this.mansionReadable = mansionReadable;
   }
 
   @Override
@@ -57,7 +63,8 @@ public class GameControllerImpl implements GameController, Features {
   }
 
   @Override
-  public void addPlayer(String name, String startingLocation, boolean isHuman) {
+  public void addPlayer(String name, String startingLocation, boolean isHuman)
+      throws IllegalArgumentException {
     // TODO Auto-generated method stub
 
   }
@@ -75,9 +82,18 @@ public class GameControllerImpl implements GameController, Features {
   }
 
   @Override
-  public void actionIsPerformed(String actionName) {
-    // TODO Auto-generated method stub
+  public void actionIsPerformed(String actionName) throws IllegalArgumentException {
+    // TODO
+  }
 
+  @Override
+  public void startGameIsClicked() {
+    if (mansionReadable != null) {
+      //TODO use commands here
+      gameModel.setWorldSpecification(mansionReadable);
+    }
+
+    gameView.displayAddPlayerScreen();
   }
 
 }

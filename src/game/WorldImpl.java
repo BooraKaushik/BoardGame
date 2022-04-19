@@ -21,18 +21,18 @@ import utils.RandomManual;
  */
 public final class WorldImpl implements World {
 
-  private final int rows;
-  private final int columns;
-  private final String name;
-  private final List<Space> allSpaces;
-  private final Target target;
-  private final Pet pet;
+  private int rows;
+  private int columns;
+  private String name;
+  private List<Space> allSpaces;
+  private Target target;
+  private Pet pet;
   private List<Player> allPlayers;
   private int currentTurnIndex;
   private final RandomManual random;
   private boolean gameOver;
-  private final Stack<Space> currentSpacesTrack;
-  private final List<Space> visitedSpaces;
+  private Stack<Space> currentSpacesTrack;
+  private List<Space> visitedSpaces;
   private int numOfTurns;
 
   /**
@@ -66,7 +66,20 @@ public final class WorldImpl implements World {
     if (numOfTurns <= 0) {
       throw new IllegalArgumentException("Number of turns cannot be less than one");
     }
+    
+    setWorldSpecification(worldData);
 
+    this.random = random;
+    this.numOfTurns = numOfTurns;
+  }
+
+  @Override
+  public void setWorldSpecification(Readable worldData) throws IllegalArgumentException {
+
+    if (worldData == null) {
+      throw new IllegalArgumentException("World data cannot be empty");
+    }
+    
     Scanner mansionScanner = new Scanner(worldData);
 
     final int rows = mansionScanner.nextInt();
@@ -197,8 +210,6 @@ public final class WorldImpl implements World {
     this.gameOver = false;
     this.currentSpacesTrack = new Stack<Space>();
     this.visitedSpaces = new ArrayList<Space>();
-    this.random = random;
-    this.numOfTurns = numOfTurns;
   }
 
   @Override
