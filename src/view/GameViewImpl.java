@@ -6,14 +6,15 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -31,7 +32,7 @@ public class GameViewImpl extends JFrame implements GameView {
   private final AddPlayerPanel addPlayerPanel;
   private final WelcomePanel welcomePanel;
   private final JFileChooser worldChooser;
-  private JPanel gameViewPanel;
+  private final GameViewPanel gameViewPanel;
 
   /**
    * Constructor For GameViewImpl class, creates a frame.
@@ -93,9 +94,14 @@ public class GameViewImpl extends JFrame implements GameView {
 
   @Override
   public void displayAddPlayerScreen() {
-    remove(welcomePanel);
-    add(addPlayerPanel);
-    addPlayerPanel.revalidate();
+    try {
+      gameViewPanel.createWorldLayout();
+      remove(welcomePanel);
+      add(addPlayerPanel);
+      addPlayerPanel.revalidate();
+    } catch (IllegalStateException ie) {
+      displayPopupMessage(ie.getMessage(), "Error");
+    }
   }
 
   @Override
@@ -144,7 +150,7 @@ public class GameViewImpl extends JFrame implements GameView {
     if (featuresController == null) {
       throw new IllegalArgumentException("Features controller cannot be null");
     }
-    
+
     this.welcomePanel.setFeatures(featuresController);
 
     newGame.addActionListener(event -> {
@@ -154,12 +160,15 @@ public class GameViewImpl extends JFrame implements GameView {
     newWorld.addActionListener(event -> {
       int response = worldChooser.showOpenDialog(this);
       if (response == JFileChooser.APPROVE_OPTION) {
-        Readable mansionReadable;
+        String mansionReadable;
         try {
-          mansionReadable = new FileReader(worldChooser.getSelectedFile());
-          featuresController.updateWorldFile(mansionReadable);
+          mansionReadable = Files
+              .readString(Paths.get(worldChooser.getSelectedFile().getAbsolutePath()));
+          featuresController.updateWorldSpecification(mansionReadable);
         } catch (FileNotFoundException e) {
-          // TODO display error message
+          displayPopupMessage("File not found", "Error");
+        } catch (IOException ie) {
+          displayPopupMessage("Cannot read the content of file", "Error");
         }
       }
     });

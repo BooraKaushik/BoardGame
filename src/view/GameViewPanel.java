@@ -10,7 +10,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -40,16 +39,6 @@ public class GameViewPanel extends JPanel {
     this.setLayout(new BorderLayout(20, 15));
     this.setBackground(new Color(76, 17, 49));
 
-    // CENTER LAYOUT
-    try {
-      BufferedImage worldImage = ImageIO.read(new File("res/TheWorld.png"));
-      JLabel worldIcon = new JLabel(new ImageIcon(worldImage));
-      JScrollPane scrollableWorld = new JScrollPane(worldIcon);
-      this.add(scrollableWorld, BorderLayout.CENTER);
-    } catch (IOException ioe) {
-      throw new IllegalStateException("Cannot Read the Layout");
-    }
-
     // EAST LAYOUT
     JPanel eastLayout = new JPanel();
     eastLayout.setLayout(new BoxLayout(eastLayout, BoxLayout.Y_AXIS));
@@ -65,6 +54,23 @@ public class GameViewPanel extends JPanel {
     eastLayout.add(resultInfo);
     this.add(eastLayout, BorderLayout.EAST);
 
+  }
+
+  /**
+   * Method used for creating the image of the world and setting it in the centre
+   * of GameView panel.
+   * 
+   * @throws IllegalStateException When the layout cannot be created
+   */
+  public void createWorldLayout() throws IllegalStateException {
+    try {
+      BufferedImage worldImage = ImageIO.read(new File("res/TheWorld.png"));
+      JLabel worldIcon = new JLabel(new ImageIcon(worldImage));
+      JScrollPane scrollableWorld = new JScrollPane(worldIcon);
+      this.add(scrollableWorld, BorderLayout.CENTER);
+    } catch (IOException ioe) {
+      throw new IllegalStateException("Cannot Read the Layout");
+    }
   }
 
 }

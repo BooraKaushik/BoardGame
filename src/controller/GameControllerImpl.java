@@ -1,9 +1,12 @@
 package controller;
 
 import game.GameWorld;
+import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.function.Function;
 import view.GameView;
 
@@ -16,9 +19,10 @@ public class GameControllerImpl implements GameController, Features {
 
   private final GameWorld gameModel;
   private final GameView gameView;
-  private Readable mansionReadable;
+  private String worldSpecification;
   private final Map<Command, Function<List<String>, GameCommand>> commands;
   private GameCommand currentCommand;
+  private List<String> inputList;
 
   /**
    * A contructor that is used to create an instance of the GameControllerImpl
@@ -44,8 +48,9 @@ public class GameControllerImpl implements GameController, Features {
     this.gameModel = gameModel;
     this.gameView = gameView;
     this.commands = new HashMap<Command, Function<List<String>, GameCommand>>();
-    this.mansionReadable = null;
+    this.worldSpecification = "";
     this.currentCommand = null;
+    this.inputList = new ArrayList<>();
   }
 
   private String executeCmd(GameWorld model) {
@@ -55,6 +60,7 @@ public class GameControllerImpl implements GameController, Features {
       result = currentCommand.getOutput();
       currentCommand = null;
     }
+    inputList.clear();
     return result;
   }
 
@@ -101,16 +107,24 @@ public class GameControllerImpl implements GameController, Features {
       return new PerformComputerAction();
     });
 
+    commands.put(Command.SET_WORLD, (list) -> {
+      return new SetWorld(new StringReader(list.get(0)));
+    });
+
     gameView.displayWelcomeScreen();
   }
 
   @Override
-  public void updateWorldFile(Readable mansionReadable) throws IllegalArgumentException {
-    if (mansionReadable == null) {
-      throw new IllegalArgumentException("File readable cannot be null");
+  public void updateWorldSpecification(String worldSpecification) throws IllegalArgumentException {
+    if (worldSpecification == null) {
+      throw new IllegalArgumentException("World string cannot be null");
     }
 
-    this.mansionReadable = mansionReadable;
+    if (worldSpecification.length() == 0) {
+      throw new IllegalArgumentException("World string cannot be empty");
+    }
+
+    this.worldSpecification = worldSpecification;
   }
 
   @Override
@@ -145,12 +159,25 @@ public class GameControllerImpl implements GameController, Features {
 
   @Override
   public void startGameIsClicked() {
-    if (mansionReadable != null) {
-      // TODO use commands here
-      gameModel.setWorldSpecification(mansionReadable);
-    }
+    try {
+      Function<List<String>, GameCommand> cmd;
 
-    gameView.displayAddPlayerScreen();
+      if (worldSpecification.length() != 0) {
+        cmd = commands.get(Command.SET_WORLD);
+        inputList.add(worldSpecification);
+        currentCommand = cmd.apply(inputList);
+        executeCmd(gameModel);
+      }
+
+      cmd = commands.get(Command.DRAW_IMAGE);
+      currentCommand = cmd.apply(inputList);
+      executeCmd(gameModel);
+
+      gameView.displayAddPlayerScreen();
+      gameView.displayGameScreen();
+    } catch (IllegalArgumentException | NoSuchElementException e) {
+      gameView.displayPopupMessage(e.getMessage(), "Error");
+    }
   }
 
 }

@@ -6,6 +6,7 @@ import game.GameWorld;
 import game.WorldImpl;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.NoSuchElementException;
 import utils.RandomManual;
 import view.GameView;
 import view.GameViewImpl;
@@ -51,6 +52,8 @@ public class Game {
       System.out.println("Unable to find the world specification text file.");
     } catch (NumberFormatException e) {
       System.out.println("Please specify a number for the maximum turns in the game.");
+    } catch (IllegalArgumentException | NoSuchElementException ne) {
+      System.out.println(ne.getMessage());
     }
   }
 

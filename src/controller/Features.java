@@ -14,7 +14,7 @@ public interface Features {
    *                        specifications
    * @throws IllegalArgumentException When file readable is null
    */
-  public void updateWorldFile(Readable mansionReadable) throws IllegalArgumentException;
+  public void updateWorldSpecification(String worldSpecification) throws IllegalArgumentException;
 
   /**
    * Used to exit the game.

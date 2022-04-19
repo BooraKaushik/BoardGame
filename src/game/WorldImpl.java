@@ -42,16 +42,8 @@ public final class WorldImpl implements World {
    * @param worldData  The file which contains the world specification
    * @param random     It is used to generate random numbers
    * @param numOfTurns Total Number of turns for each player.
-   * @throws IllegalArgumentException when rows and columns is less than 1 or list
-   *                                  of spaces is empty or world/target/pet name
-   *                                  is null or empty string or when the target's
-   *                                  health is less than 1 or when there is an
-   *                                  overlap among spaces
-   * @throws InputMismatchException   When the input world specification is not
-   *                                  present in the required format
-   * @throws NoSuchElementException   When the number of spaces or items specified
-   *                                  does not match the actual number of spaces
-   *                                  or items in the text
+   * @throws IllegalArgumentException When worldData or random is null or when
+   *                                  numOfTurns is less than one
    */
   public WorldImpl(Readable worldData, RandomManual random, int numOfTurns)
       throws IllegalArgumentException, InputMismatchException, NoSuchElementException {
@@ -66,7 +58,7 @@ public final class WorldImpl implements World {
     if (numOfTurns <= 0) {
       throw new IllegalArgumentException("Number of turns cannot be less than one");
     }
-    
+
     setWorldSpecification(worldData);
 
     this.random = random;
@@ -74,12 +66,13 @@ public final class WorldImpl implements World {
   }
 
   @Override
-  public void setWorldSpecification(Readable worldData) throws IllegalArgumentException {
+  public void setWorldSpecification(Readable worldData)
+      throws IllegalArgumentException, NoSuchElementException, InputMismatchException {
 
     if (worldData == null) {
       throw new IllegalArgumentException("World data cannot be empty");
     }
-    
+
     Scanner mansionScanner = new Scanner(worldData);
 
     final int rows = mansionScanner.nextInt();
@@ -399,7 +392,7 @@ public final class WorldImpl implements World {
 
     theWorldGraphics.setColor(Color.black);
 
-    String path = "TheWorld.png";
+    String path = "res/TheWorld.png";
 
     for (Space space : allSpaces) {
       theWorldGraphics.drawRect(space.getTopLeftY() * scaleFactor + buffer,

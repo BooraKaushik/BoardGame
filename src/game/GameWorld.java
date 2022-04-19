@@ -1,5 +1,8 @@
 package game;
 
+import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
+
 /**
  * The interface which is used by the controller to communicate with the model.
  */
@@ -26,9 +29,20 @@ public interface GameWorld extends ReadOnlyModel {
    * 
    * @param worldData The Readable world data which is used to set the world
    *                  specifications
-   * @throws IllegalArgumentException When worldData is null
+   * @throws IllegalArgumentException When worldData is null or when rows and
+   *                                  columns is less than 1 or list of spaces is
+   *                                  empty or world/target/pet name is null or
+   *                                  empty string or when the target's health is
+   *                                  less than 1 or when there is an overlap
+   *                                  among spaces
+   * @throws InputMismatchException   When the input world specification is not
+   *                                  present in the required format
+   * @throws NoSuchElementException   When the number of spaces or items specified
+   *                                  does not match the actual number of spaces
+   *                                  or items in the text
    */
-  public void setWorldSpecification(Readable worldData) throws IllegalArgumentException;
+  public void setWorldSpecification(Readable worldData)
+      throws IllegalArgumentException, NoSuchElementException, InputMismatchException;
 
   /**
    * Add a player to the world.

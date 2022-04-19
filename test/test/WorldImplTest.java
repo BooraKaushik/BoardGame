@@ -565,7 +565,7 @@ public class WorldImplTest {
     RandomManual random = new RandomManual();
     World testWorld = newWorldInstance(worldData, random);
     try {
-      assertEquals(testWorld.drawImage(), "TheWorld.png");
+      assertEquals(testWorld.drawImage(), "res/TheWorld.png");
     } catch (IllegalStateException e) {
       throw new IllegalStateException("Error in drawing image.");
     }
