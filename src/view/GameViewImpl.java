@@ -13,6 +13,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  * Creates a new Game frame by implementing Game View.
@@ -29,11 +31,13 @@ public class GameViewImpl extends JFrame implements GameView {
   private final AddPlayerPanel addPlayerPanel;
   private final WelcomePanel welcomePanel;
   private final JFileChooser worldChooser;
+  private JPanel gameViewPanel;
 
   /**
    * Constructor For GameViewImpl class, creates a frame.
    * 
-   * @param title String to appear on top of the window.
+   * @param title     String to appear on top of the window.
+   * @param dataModel Read Only Model that is passed by the view.
    */
   public GameViewImpl(String title, ReadOnlyModel dataModel) {
     super(title);
@@ -76,6 +80,7 @@ public class GameViewImpl extends JFrame implements GameView {
     setVisible(true);
 
     this.dataModel = dataModel;
+    this.gameViewPanel = new GameViewPanel();
     this.addPlayerPanel = new AddPlayerPanel(dataModel);
     this.welcomePanel = new WelcomePanel();
   }
@@ -94,21 +99,44 @@ public class GameViewImpl extends JFrame implements GameView {
   }
 
   @Override
-  public void displayPopupMessage(String message, String type) throws IllegalArgumentException {
-    // TODO Auto-generated method stub
-
+  public void displayPopupMessage(String message, String type) {
+    if (message == null) {
+      throw new IllegalArgumentException("Message cant be null");
+    }
+    if (type == null) {
+      throw new IllegalArgumentException("Type cant be null");
+    }
+    if ("Error".equals(type)) {
+      JOptionPane.showMessageDialog(this, message, type, JOptionPane.ERROR_MESSAGE);
+    } else {
+      JOptionPane.showMessageDialog(this, message, type, JOptionPane.PLAIN_MESSAGE);
+    }
   }
 
   @Override
   public void displayGameScreen() {
-    // TODO Auto-generated method stub
+    remove(addPlayerPanel);
+    remove(gameViewPanel);
+    add(gameViewPanel);
+    gameViewPanel.revalidate();
 
   }
 
   @Override
-  public String displayInputPopup(String title, String[] options) throws IllegalArgumentException {
-    // TODO Auto-generated method stub
-    return null;
+  public String displayInputPopup(String title, String[] options) {
+    if (title == null) {
+      throw new IllegalArgumentException("Title cant be null");
+    }
+    if (options == null) {
+      throw new IllegalArgumentException("Options cant be null");
+    }
+    if (options.length < 1) {
+      throw new IllegalArgumentException("Options cant be Empty");
+    }
+    String output = (String) JOptionPane.showInputDialog(this,
+        String.format("Choose an Option for %s", title), title, JOptionPane.INFORMATION_MESSAGE,
+        null, options, options[0]);
+    return output;
   }
 
   @Override

@@ -44,7 +44,7 @@ public class GameControllerImpl implements GameController, Features {
 
   @Override
   public void startGame() {
-    gameView.displayWelcomeScreen();
+    gameView.displayGameScreen();
   }
 
   @Override
