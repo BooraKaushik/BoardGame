@@ -110,7 +110,11 @@ public class AddPlayerPanel extends JPanel {
     }
     this.featuresController = featuresController;
     this.startGame.addActionListener(event -> {
-      featuresController.showGameScreen();
+      if (this.dataModel.getAllPlayers().length > 1) {
+        featuresController.showGameScreen();
+      } else {
+        this.displayPopup("Cant start the Game with less than 2 Players");
+      }
     });
 
     this.addPlayers.addActionListener(event -> {

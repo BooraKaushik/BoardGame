@@ -88,6 +88,8 @@ public class GameViewImpl extends JFrame implements GameView {
 
   @Override
   public void displayWelcomeScreen() {
+    this.newGame.setEnabled(true);
+    this.newWorld.setEnabled(true);
     add(welcomePanel);
     welcomePanel.revalidate();
   }
@@ -95,6 +97,8 @@ public class GameViewImpl extends JFrame implements GameView {
   @Override
   public void displayAddPlayerScreen() {
     try {
+      this.newGame.setEnabled(false);
+      this.newWorld.setEnabled(false);
       gameViewPanel.createWorldLayout();
       remove(welcomePanel);
       add(addPlayerPanel);
@@ -121,6 +125,8 @@ public class GameViewImpl extends JFrame implements GameView {
 
   @Override
   public void displayGameScreen() {
+    this.newGame.setEnabled(false);
+    this.newWorld.setEnabled(false);
     remove(addPlayerPanel);
     remove(gameViewPanel);
     add(gameViewPanel);
