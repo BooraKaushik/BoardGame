@@ -27,6 +27,7 @@ public class AddPlayerPanel extends JPanel {
   private final ReadOnlyModel dataModel;
   private final JButton addPlayers;
   private final JButton startGame;
+  private JPanel center;
   private Features featuresController;
 
   /**
@@ -53,6 +54,7 @@ public class AddPlayerPanel extends JPanel {
     north.add(heading, BorderLayout.CENTER);
     north.setBorder(new EmptyBorder(10, 50, 10, 10));
 
+    center = new JPanel();
     add(north, BorderLayout.NORTH);
 
     // CENTER LAYOUT
@@ -156,7 +158,6 @@ public class AddPlayerPanel extends JPanel {
         try {
           this.featuresController.addPlayer(name.getText(), roomList.getSelectedItem().toString(),
               typeList.getSelectedItem().toString().equals("Human"));
-          dataModel.getAllPlayers().stream().map(a -> a.get(0)).forEach(System.out::println);
           this.updateAddPlayers();
         } catch (IllegalArgumentException iae) {
           this.displayPopup(iae.getMessage());
@@ -176,7 +177,8 @@ public class AddPlayerPanel extends JPanel {
 
   private void updateAddPlayers() {
 
-    JPanel center = new JPanel();
+    this.remove(center);
+    this.center = new JPanel();
     center.setLayout(new GridLayout(10, 3, 25, 10));
     for (List<String> data : this.dataModel.getAllPlayers()) {
       center.add(
@@ -190,6 +192,7 @@ public class AddPlayerPanel extends JPanel {
     center.setBorder(new EmptyBorder(100, 10, 100, 10));
 
     this.add(center, BorderLayout.CENTER);
+    center.revalidate();
   }
 
 }
