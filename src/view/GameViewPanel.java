@@ -75,6 +75,15 @@ public class GameViewPanel extends JPanel {
   }
 
   /**
+   * Update the position of the players in the world.
+   * 
+   * @throws IllegalStateException When the update cannot happen
+   */
+  public void update() throws IllegalStateException {
+
+  }
+
+  /**
    * Sets the features of the controller as callbacks to event listeners that this
    * panel can use.
    * 
