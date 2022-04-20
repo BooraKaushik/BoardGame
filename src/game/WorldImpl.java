@@ -951,7 +951,7 @@ public final class WorldImpl implements World {
   }
 
   @Override
-  public List<List<String>> getAllPlayers() {
+  public String[][] getAllPlayers() {
     List<List<String>> result = new ArrayList<List<String>>();
     for (Player player : this.allPlayers) {
       List<String> data = new ArrayList<String>();
@@ -960,7 +960,11 @@ public final class WorldImpl implements World {
       data.add(player.getPlayerType());
       result.add(data);
     }
-    return result;
+    return this.allPlayers.stream()
+        .map((element) -> new String[] { element.getName(),
+            this.allSpaces.get(element.getSpaceIndexOfPlayer()).getName(),
+            element.getPlayerType() })
+        .toArray(String[][]::new);
   }
 
   @Override
