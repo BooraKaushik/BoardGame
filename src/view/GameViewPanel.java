@@ -5,10 +5,8 @@ import game.ReadOnlyModel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
+import java.awt.GridBagLayout;
+import java.awt.Image;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -25,6 +23,7 @@ public class GameViewPanel extends JPanel {
   private static final long serialVersionUID = 7525139079837574057L;
 
   private ReadOnlyModel dataModel;
+  private JLabel worldLabel;
 
   /**
    * Constructor for GameViewPanel to create a new Game Screen.
@@ -64,14 +63,28 @@ public class GameViewPanel extends JPanel {
    * @throws IllegalStateException When the layout cannot be created
    */
   public void createWorldLayout() throws IllegalStateException {
-    try {
-      BufferedImage worldImage = ImageIO.read(new File("res/TheWorld.png"));
-      JLabel worldIcon = new JLabel(new ImageIcon(worldImage));
-      JScrollPane scrollableWorld = new JScrollPane(worldIcon);
-      this.add(scrollableWorld, BorderLayout.CENTER);
-    } catch (IOException ioe) {
-      throw new IllegalStateException("Cannot Read the Layout");
-    }
+    worldLabel = new JLabel(new ImageIcon("res/TheWorld.png"));
+    worldLabel.setLayout(null);
+    JPanel worldIcon = new JPanel();
+    worldIcon.setLayout(new GridBagLayout());
+    worldIcon.add(worldLabel);
+    JScrollPane scrollableWorld = new JScrollPane(worldIcon);
+    this.add(scrollableWorld, BorderLayout.CENTER);
+    update();
+  }
+
+  /**
+   * Update the position of the players in the world.
+   */
+  public void update() {
+    ImageIcon playerIcon = new ImageIcon("res/triangle1.png");
+    Image playerImage = playerIcon.getImage();
+    Image newPlayerImage = playerImage.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+    playerIcon = new ImageIcon(newPlayerImage);
+    JLabel playerIconLabel = new JLabel(playerIcon);
+    playerIconLabel.setToolTipText("Test");
+    playerIconLabel.setBounds(210, 430, 20, 20);
+    worldLabel.add(playerIconLabel);
   }
 
   /**

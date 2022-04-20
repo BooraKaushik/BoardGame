@@ -1,7 +1,5 @@
 package game;
 
-import java.util.List;
-
 /**
  * Defines methods used by the View to read details directly from the model.
  *
