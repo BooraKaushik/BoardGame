@@ -14,7 +14,7 @@ public interface ReadOnlyModel {
    * 
    * @return the List that consists of all players' information.
    */
-  public List<List<String>> getAllPlayers();
+  public String[][] getAllPlayers();
 
   /**
    * Returns the information of a player like name of the player, in which space

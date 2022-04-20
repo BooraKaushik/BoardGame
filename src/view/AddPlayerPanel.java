@@ -5,6 +5,7 @@ import game.ReadOnlyModel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.Arrays;
 import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -12,6 +13,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -107,11 +110,15 @@ public class AddPlayerPanel extends JPanel {
     }
     this.featuresController = featuresController;
     this.startGame.addActionListener(event -> {
-      featuresController.showGameScreen();
+      if (this.dataModel.getAllPlayers().length > 1) {
+        featuresController.showGameScreen();
+      } else {
+        this.displayPopup("Cant start the Game with less than 2 Players");
+      }
     });
 
     this.addPlayers.addActionListener(event -> {
-      if (this.dataModel.getAllPlayers().size() < 10) {
+      if (this.dataModel.getAllPlayers().length < 10) {
         this.displayAddPlayerPopup();
       } else {
         this.displayPopup("Cannot add more than 10 Players");
@@ -141,7 +148,7 @@ public class AddPlayerPanel extends JPanel {
     myPanel.add(landingLocationLabel);
     myPanel.add(roomList);
 
-    JLabel typeLabel = new JLabel("Select a Landing Location");
+    JLabel typeLabel = new JLabel("Select a Player Type");
     typeLabel.setBorder(new EmptyBorder(10, 0, 10, 0));
     JComboBox<String> typeList = new JComboBox<String>(new String[] { "Computer", "Human" });
     typeList.setSelectedIndex(0);
@@ -167,9 +174,9 @@ public class AddPlayerPanel extends JPanel {
   }
 
   /**
-   * Displays Error Messages with a Popup.
+   * Displays Error Messages with a Pop up.
    * 
-   * @param message message that has to be displayed in popup.
+   * @param message message that has to be displayed in pop up.
    */
   private void displayPopup(String message) {
     JOptionPane.showMessageDialog(this, message, "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -179,18 +186,14 @@ public class AddPlayerPanel extends JPanel {
 
     this.remove(center);
     this.center = new JPanel();
-    center.setLayout(new GridLayout(10, 3, 25, 10));
-    for (List<String> data : this.dataModel.getAllPlayers()) {
-      center.add(
-          new JLabel(String.format("<html><font size='3'>Name : %s</font></html>", data.get(0))));
-      center.add(new JLabel(
-          String.format("<html><font size='3'>Location : %s</font></html>", data.get(1))));
-      center.add(
-          new JLabel(String.format("<html><font size='3'>Type : %s</font></html>", data.get(2))));
-    }
+    String[] header = { "Name", "Landing Location", "Type" };
+    JTable table = new JTable(this.dataModel.getAllPlayers(), header);
+    table.setBackground(new Color(255, 242, 205));
+    table.setRowHeight(table.getRowHeight() + 28);
+    JScrollPane data = new JScrollPane(table);
+    center.setLayout(new BorderLayout());
+    center.add(data, BorderLayout.CENTER);
     center.setBackground(new Color(255, 242, 205));
-    center.setBorder(new EmptyBorder(100, 10, 100, 10));
-
     this.add(center, BorderLayout.CENTER);
     center.revalidate();
   }
