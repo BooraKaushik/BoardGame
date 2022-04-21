@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -37,6 +36,8 @@ public class GameViewPanel extends JPanel {
   private JLabel worldLabel;
   private List<ImageIcon> playerIcons;
   private JPanel worldPanel;
+  private JScrollPane scrollableWorld;
+  private List<JLabel> playerLabelIcons;
 
   /**
    * Constructor for GameViewPanel to create a new Game Screen.
@@ -53,6 +54,8 @@ public class GameViewPanel extends JPanel {
     this.setBackground(new Color(76, 17, 49));
 
     this.playerIcons = new ArrayList<ImageIcon>();
+    this.playerLabelIcons = new ArrayList<JLabel>();
+    this.scrollableWorld = new JScrollPane();
     for (int player = 0; player < 10; player++) {
       playerIcons.add(new ImageIcon(String.format("res/%d.png", player + 1)));
     }
@@ -88,9 +91,8 @@ public class GameViewPanel extends JPanel {
     worldLabel.setLayout(null);
     this.worldPanel.setLayout(new GridBagLayout());
     this.worldPanel.add(worldLabel);
-    JScrollPane scrollableWorld = new JScrollPane(worldPanel);
+    scrollableWorld = new JScrollPane(worldPanel);
     this.add(scrollableWorld, BorderLayout.CENTER);
-    update();
   }
 
   /**
@@ -99,6 +101,11 @@ public class GameViewPanel extends JPanel {
   public void update() {
     int buffer = 30;
     int multiplicationFactor = 20;
+
+    for (JLabel playerIconLabel : playerLabelIcons) {
+      worldLabel.remove(playerIconLabel);
+    }
+
     Map<String, List<Integer>> roomsInfo = new HashMap<>();
     String[][] playerList = dataModel.getAllPlayers();
 
@@ -163,8 +170,9 @@ public class GameViewPanel extends JPanel {
         } else {
           accomodatesx += 1;
         }
-        worldLabel.add(playerIconLabel);
 
+        playerLabelIcons.add(playerIconLabel);
+        worldLabel.add(playerIconLabel);
       }
     }
   }

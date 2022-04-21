@@ -167,9 +167,13 @@ public class GameControllerImpl implements GameController, Features {
       throw new IllegalArgumentException("Coordinates cannot be negative");
     }
 
-    String result = executeCmd(gameModel, Command.MOVE,
-        new ArrayList<String>(Arrays.asList(String.valueOf(xcoord), String.valueOf(ycoord))));
-    gameView.updateGameScreen();
+    try {
+      String result = executeCmd(gameModel, Command.MOVE,
+          new ArrayList<String>(Arrays.asList(String.valueOf(xcoord), String.valueOf(ycoord))));
+      gameView.updateGameScreen();
+    } catch (IllegalStateException ise) {
+      gameView.displayPopupMessage(ise.getMessage(), "Error");
+    }
   }
 
   @Override

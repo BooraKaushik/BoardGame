@@ -198,5 +198,6 @@ public class GameViewImpl extends JFrame implements GameView {
   @Override
   public void updateGameScreen() {
     gameViewPanel.update();
+    gameViewPanel.repaint();
   }
 }

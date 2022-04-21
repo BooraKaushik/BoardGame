@@ -606,8 +606,8 @@ public final class WorldImpl implements World {
 
     String spaceName = "";
 
-    int newx = (xcoord / 20) - buffer;
-    int newy = (ycoord / 20) - buffer;
+    int newy = (xcoord - buffer) / 20;
+    int newx = (ycoord - buffer) / 20;
 
     for (Space space : allSpaces) {
       if (space.getTopLeftX() <= newx && space.getTopLeftY() <= newy
@@ -640,7 +640,7 @@ public final class WorldImpl implements World {
     boolean isNeighbour = isNeighbour(neighbours, spaceName);
 
     if (!isNeighbour) {
-      throw new IllegalStateException("Given space is not a neighbour of the current space");
+      throw new IllegalStateException("Clicked space is not a neighbour of the current space");
     }
 
     int spaceIndex = 0;
