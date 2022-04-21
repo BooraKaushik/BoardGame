@@ -1014,4 +1014,39 @@ public final class WorldImpl implements World {
         this.allSpaces.get(spaceIndex).getBottomRightY() };
   }
 
+  private String[] getItemNamesFromList(List<Item> items) {
+    List<String> itemNames = new ArrayList<String>();
+
+    for (Item item : items) {
+      itemNames.add(item.getName());
+    }
+
+    String[] names = new String[itemNames.size()];
+
+    return itemNames.toArray(names);
+  }
+
+  @Override
+  public String[] getCurrentSpaceItems() {
+    int currentSpaceIndex = allPlayers.get(currentTurnIndex).getSpaceIndexOfPlayer();
+    List<Item> currentSpaceItems = allSpaces.get(currentSpaceIndex).getItemsInSpace();
+
+    return getItemNamesFromList(currentSpaceItems);
+  }
+
+  @Override
+  public String[] getCurrentPlayerItems() {
+    List<Item> currentPlayerItems = allPlayers.get(currentTurnIndex).getPlayerItems();
+    String[] names = getItemNamesFromList(currentPlayerItems);
+    String[] itemsNames = new String[names.length + 1];
+
+    for (int i = 0; i < itemsNames.length - 1; i++) {
+      itemsNames[i] = names[i];
+    }
+
+    itemsNames[itemsNames.length - 1] = "hand";
+
+    return itemsNames;
+  }
+
 }

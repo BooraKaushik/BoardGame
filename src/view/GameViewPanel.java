@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -272,6 +273,44 @@ public class GameViewPanel extends JPanel {
     this.eastLayout.add(this.eastResultLayout);
     this.eastLayout.revalidate();
 
+   * Creates a Pop up that lets the user select from one of the oprions.
+   * 
+   * @param title   String that has to be displayed in the pop up.
+   * @param options List of options that has to be given to the user.
+   * @return the option selected by the user.
+   * 
+   * @throws IllegalArgumentException When title is null or empty or options array
+   *                                  is null
+   */
+  private String displayInputPopup(String title, String[] options) {
+    if (title == null) {
+      throw new IllegalArgumentException("Title cant be null");
+    }
+    if (options == null) {
+      throw new IllegalArgumentException("Options cant be null");
+    }
+    if (options.length < 1) {
+      throw new IllegalArgumentException("Options cant be Empty");
+    }
+
+    Object output = JOptionPane.showInputDialog(this,
+        String.format("Choose an Option for %s", title), title, JOptionPane.INFORMATION_MESSAGE,
+        null, options, options[0]);
+
+    if (output == null) {
+      return "";
+    }
+
+    return output.toString();
+  }
+
+  /**
+   * Displays Error Messages with a Pop up.
+   * 
+   * @param message message that has to be displayed in pop up.
+   */
+  private void displayErrorPopup(String message) {
+    JOptionPane.showMessageDialog(this, message, "ERROR", JOptionPane.ERROR_MESSAGE);
   }
 
   /**
@@ -300,7 +339,43 @@ public class GameViewPanel extends JPanel {
       @Override
       public void keyTyped(KeyEvent e) {
         if ("p".equals(String.valueOf(e.getKeyChar()))) {
-//          featuresController.pickItemIsPressed();
+          String[] options = dataModel.getCurrentSpaceItems();
+          if (options.length < 1) {
+            displayErrorPopup("No items in the space");
+            return;
+          }
+          String selectedOption = displayInputPopup("Item", options);
+          if (!"".equals(selectedOption)) {
+            featuresController.pickItem(selectedOption);
+          }
+        }
+
+        if ("l".equals(String.valueOf(e.getKeyChar()))) {
+          featuresController.lookAround();
+        }
+
+        if ("a".equals(String.valueOf(e.getKeyChar()))) {
+          List<String> turnInfo = dataModel.getTurnInfo();
+
+          if (!turnInfo.get(2).equals(turnInfo.get(3))) {
+            displayErrorPopup("Target is not present in the space");
+            return;
+          }
+          String selectedOption = displayInputPopup("Item", dataModel.getCurrentPlayerItems());
+          if (!"".equals(selectedOption)) {
+            featuresController.attackTarget(selectedOption);
+          }
+        }
+
+        if ("m".equals(String.valueOf(e.getKeyChar()))) {
+          String selectedOption = displayInputPopup("Space", dataModel.getAllSpaces());
+          if (!"".equals(selectedOption)) {
+            try {
+              featuresController.movePet(selectedOption);
+            } catch (IllegalArgumentException ie) {
+              displayErrorPopup(ie.getMessage());
+            }
+          }
         }
       }
     });

@@ -50,20 +50,10 @@ public interface GameView {
 
   /**
    * Updates the game screen after a turn has been performed.
-   */
-  public void updateGameScreen();
-
-  /**
-   * Creates a Pop up that lets the user select from one of the oprions.
    * 
-   * @param title   String that has to be displayed in the pop up.
-   * @param options List of options that has to be given to the user.
-   * @return the option selected by the user.
-   * 
-   * @throws IllegalArgumentException When title is null or empty or options array
-   *                                  is null
+   * @param delay The time to wait for before updating the UI
    */
-  public String displayInputPopup(String title, String[] options) throws IllegalArgumentException;
+  public void updateGameScreen(int delay);
 
   /**
    * Sets the features of the controller as call backs to event listeners that the
