@@ -7,6 +7,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -24,6 +28,7 @@ public class GameViewPanel extends JPanel {
 
   private ReadOnlyModel dataModel;
   private JLabel worldLabel;
+  private JPanel worldPanel;
 
   /**
    * Constructor for GameViewPanel to create a new Game Screen.
@@ -53,7 +58,9 @@ public class GameViewPanel extends JPanel {
     resultInfo.setBounds(0, 0, 100, 100);
     eastLayout.add(resultInfo);
     this.add(eastLayout, BorderLayout.EAST);
-
+    this.worldPanel = new JPanel();
+    this.worldLabel = new JLabel();
+    this.setFocusable(true);
   }
 
   /**
@@ -65,10 +72,9 @@ public class GameViewPanel extends JPanel {
   public void createWorldLayout() throws IllegalStateException {
     worldLabel = new JLabel(new ImageIcon("res/TheWorld.png"));
     worldLabel.setLayout(null);
-    JPanel worldIcon = new JPanel();
-    worldIcon.setLayout(new GridBagLayout());
-    worldIcon.add(worldLabel);
-    JScrollPane scrollableWorld = new JScrollPane(worldIcon);
+    worldPanel.setLayout(new GridBagLayout());
+    worldPanel.add(worldLabel);
+    JScrollPane scrollableWorld = new JScrollPane(worldPanel);
     this.add(scrollableWorld, BorderLayout.CENTER);
     update();
   }
@@ -77,7 +83,7 @@ public class GameViewPanel extends JPanel {
    * Update the position of the players in the world.
    */
   public void update() {
-    ImageIcon playerIcon = new ImageIcon("res/triangle1.png");
+    ImageIcon playerIcon = new ImageIcon("res/1.png");
     Image playerImage = playerIcon.getImage();
     Image newPlayerImage = playerImage.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
     playerIcon = new ImageIcon(newPlayerImage);
@@ -95,10 +101,27 @@ public class GameViewPanel extends JPanel {
    * @throws IllegalArgumentException When features controller is null
    */
   public void setFeatures(Features featuresController) throws IllegalArgumentException {
+
     if (featuresController == null) {
       throw new IllegalArgumentException("Features controller cannot be null");
     }
 
-  }
+    this.requestFocus();
 
+    this.worldLabel.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        featuresController.spaceIsClicked(e.getX(), e.getY());
+      }
+    });
+
+    this.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyTyped(KeyEvent e) {
+        if ("p".equals(String.valueOf(e.getKeyChar()))) {
+//          featuresController.pickItemIsPressed();
+        }
+      }
+    });
+  }
 }

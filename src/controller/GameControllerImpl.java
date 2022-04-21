@@ -50,7 +50,7 @@ public class GameControllerImpl implements GameController, Features {
     this.worldSpecification = "";
 
     commands.put(Command.MOVE, (list) -> {
-      return new MovePlayer(list.get(0));
+      return new MovePlayer(Integer.parseInt(list.get(0)), Integer.parseInt(list.get(1)));
     });
 
     commands.put(Command.PICK_ITEM, (list) -> {
@@ -119,7 +119,7 @@ public class GameControllerImpl implements GameController, Features {
 
   @Override
   public void startGame() {
-    gameView.displayWelcomeScreen();
+    gameView.displayWelcomeScreen(this);
   }
 
   @Override
@@ -162,9 +162,14 @@ public class GameControllerImpl implements GameController, Features {
   }
 
   @Override
-  public void mouseIsClicked(int xcoord, int ycoord) {
-    // TODO Auto-generated method stub
+  public void spaceIsClicked(int xcoord, int ycoord) throws IllegalArgumentException {
+    if (xcoord < 0 || ycoord < 0) {
+      throw new IllegalArgumentException("Coordinates cannot be negative");
+    }
 
+    String result = executeCmd(gameModel, Command.MOVE,
+        new ArrayList<String>(Arrays.asList(String.valueOf(xcoord), String.valueOf(ycoord))));
+    gameView.updateGameScreen();
   }
 
   @Override
@@ -180,8 +185,7 @@ public class GameControllerImpl implements GameController, Features {
             new ArrayList<String>(Arrays.asList(worldSpecification)));
       }
       executeCmd(gameModel, Command.DRAW_IMAGE, new ArrayList<String>());
-      gameView.displayAddPlayerScreen();
-      gameView.displayGameScreen();
+      gameView.displayAddPlayerScreen(this);
     } catch (IllegalArgumentException | NoSuchElementException e) {
       gameView.displayPopupMessage(e.getMessage(), "Error");
     }
@@ -189,7 +193,12 @@ public class GameControllerImpl implements GameController, Features {
 
   @Override
   public void showGameScreen() {
-    gameView.displayGameScreen();
+    gameView.displayGameScreen(this);
   }
+
+//  @Override
+//  public void pickItemIsPressed() {
+//    gameView.displayInputPopup("Item", [""]);
+//  }
 
 }

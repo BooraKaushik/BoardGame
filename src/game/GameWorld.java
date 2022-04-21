@@ -60,16 +60,12 @@ public interface GameWorld extends ReadOnlyModel {
   /**
    * Move the current turn player to the specified space.
    * 
-   * @param spaceName Name of the space to which the player should be moved to
+   * @param xcoord The x coordinate of the mouse click
+   * @param ycoord The y coordinate of the mouse click
    * @return return a string which gives the summary of the action performed
-   * @throws IllegalArgumentException when the space name is null or an empty
-   *                                  string or when the space name is not present
-   *                                  in the world
-   * @throws IllegalStateException    when the specified space is not a neighbour
-   *                                  of the current space
+   * @throws IllegalArgumentException when the coordinates are negative
    */
-  public String movePlayerInWorld(String spaceName)
-      throws IllegalArgumentException, IllegalStateException;
+  public String movePlayerInWorld(int xcoord, int ycoord) throws IllegalArgumentException;
 
   /**
    * Adds the specified item to the player's items list.
