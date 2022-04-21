@@ -42,4 +42,14 @@ public interface ReadOnlyModel {
    */
   public String[] getAllSpaces();
 
+  /**
+   * Generates a List of all the coordinates of a given space in the following
+   * order, top-left-x, top-left-y, bottom-right-x, bottom-right-y.
+   * 
+   * @param spaceName Name of the space whose coordinates are required.
+   * 
+   * @return a list that contains 4 coordinates of the space.
+   */
+  public int[] getCoordinates(String spaceName);
+
 }

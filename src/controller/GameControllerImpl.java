@@ -181,7 +181,6 @@ public class GameControllerImpl implements GameController, Features {
       }
       executeCmd(gameModel, Command.DRAW_IMAGE, new ArrayList<String>());
       gameView.displayAddPlayerScreen();
-      gameView.displayGameScreen();
     } catch (IllegalArgumentException | NoSuchElementException e) {
       gameView.displayPopupMessage(e.getMessage(), "Error");
     }

@@ -47,7 +47,7 @@ public interface GameView {
   public String displayInputPopup(String title, String[] options) throws IllegalArgumentException;
 
   /**
-   * Sets the features of the controller as callbacks to event listeners that the
+   * Sets the features of the controller as call backs to event listeners that the
    * view can use.
    * 
    * @param featuresController The features controller that the view uses
