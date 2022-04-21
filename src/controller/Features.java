@@ -48,8 +48,10 @@ public interface Features {
    *               window
    * @param ycoord The y coordinate of the location where mouse was clicked on the
    *               window
+   * @throws IllegalArgumentException When coordinates are negative
+   *
    */
-  public void mouseIsClicked(int xcoord, int ycoord);
+  public void spaceIsClicked(int xcoord, int ycoord) throws IllegalArgumentException;
 
   /**
    * Used to perform an action based on the type of action that is triggered.
@@ -64,8 +66,13 @@ public interface Features {
   public void startGameIsClicked();
 
   /**
-   * Moves the screen from add player screen to Game screen.
+   * Used to move the screen from add player screen to Game screen.
    */
   public void showGameScreen();
+
+//  /**
+//   * Performs corresponding action when the key for picking an item is pressed.
+//   */
+//  public void pickItemIsPressed();
 
 }

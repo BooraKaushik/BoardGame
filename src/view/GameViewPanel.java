@@ -7,13 +7,16 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -34,6 +37,8 @@ public class GameViewPanel extends JPanel {
   private List<ImageIcon> playerIcons;
   private JPanel worldPanel;
   private JLabel targetLabel;
+  private JScrollPane scrollableWorld;
+  private List<JLabel> playerLabelIcons;
 
   /**
    * Constructor for GameViewPanel to create a new Game Screen.
@@ -50,6 +55,8 @@ public class GameViewPanel extends JPanel {
     this.setBackground(new Color(76, 17, 49));
 
     this.playerIcons = new ArrayList<ImageIcon>();
+    this.playerLabelIcons = new ArrayList<JLabel>();
+    this.scrollableWorld = new JScrollPane();
     for (int player = 0; player < 10; player++) {
       playerIcons.add(new ImageIcon(String.format("res/%d.png", player + 1)));
     }
@@ -69,7 +76,9 @@ public class GameViewPanel extends JPanel {
     resultInfo.setBounds(0, 0, 100, 100);
     eastLayout.add(resultInfo);
     this.add(eastLayout, BorderLayout.EAST);
-
+    this.worldPanel = new JPanel();
+    this.worldLabel = new JLabel();
+    this.setFocusable(true);
   }
 
   /**
@@ -83,7 +92,7 @@ public class GameViewPanel extends JPanel {
     worldLabel.setLayout(null);
     this.worldPanel.setLayout(new GridBagLayout());
     this.worldPanel.add(worldLabel);
-    JScrollPane scrollableWorld = new JScrollPane(worldPanel);
+    scrollableWorld = new JScrollPane(worldPanel);
     this.add(scrollableWorld, BorderLayout.CENTER);
   }
 
@@ -91,6 +100,8 @@ public class GameViewPanel extends JPanel {
    * Update the position of the players in the world.
    */
   public void update() {
+    
+    worldLabel.remove(this.targetLabel);
     // adding Target character.
     ImageIcon targetIcon = new ImageIcon("res/TargetCharacter.png");
     Image targetImage = targetIcon.getImage();
@@ -107,6 +118,10 @@ public class GameViewPanel extends JPanel {
     worldLabel.add(targetLabel);
 
     // adding players.
+    for (JLabel playerIconLabel : playerLabelIcons) {
+      worldLabel.remove(playerIconLabel);
+    }
+
     Map<String, List<Integer>> roomsInfo = new HashMap<>();
     String[][] playerList = dataModel.getAllPlayers();
 
@@ -171,8 +186,9 @@ public class GameViewPanel extends JPanel {
         } else {
           accomodatesx += 1;
         }
-        worldLabel.add(playerIconLabel);
 
+        playerLabelIcons.add(playerIconLabel);
+        worldLabel.add(playerIconLabel);
       }
     }
   }
@@ -185,10 +201,27 @@ public class GameViewPanel extends JPanel {
    * @throws IllegalArgumentException When features controller is null
    */
   public void setFeatures(Features featuresController) throws IllegalArgumentException {
+
     if (featuresController == null) {
       throw new IllegalArgumentException("Features controller cannot be null");
     }
 
-  }
+    this.requestFocus();
 
+    this.worldLabel.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        featuresController.spaceIsClicked(e.getX(), e.getY());
+      }
+    });
+
+    this.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyTyped(KeyEvent e) {
+        if ("p".equals(String.valueOf(e.getKeyChar()))) {
+//          featuresController.pickItemIsPressed();
+        }
+      }
+    });
+  }
 }

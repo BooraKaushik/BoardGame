@@ -8,25 +8,24 @@ import game.GameWorld;
  */
 public class MovePlayer implements GameCommand {
 
-  private final String spaceName;
+  private final int xcoord;
+  private final int ycoord;
   private String output;
 
   /**
    * A constructor to create instance of the class with the specified space name.
    * 
-   * @param spaceName The name of the space to move the player to
-   * @throws IllegalArgumentException When spaceName is null or empty
+   * @param xcoord The x coordinate of the mouse click on the world
+   * @param ycoord The y coordinate of the mouse click on the world
+   * @throws IllegalArgumentException When coordinates are negative
    */
-  public MovePlayer(String spaceName) throws IllegalArgumentException {
-    if (spaceName == null) {
-      throw new IllegalArgumentException("Space name cannot be null");
+  public MovePlayer(int xcoord, int ycoord) throws IllegalArgumentException {
+    if (xcoord < 0 || ycoord < 0) {
+      throw new IllegalArgumentException("Coordinates cannot be negative");
     }
 
-    if (spaceName.length() == 0) {
-      throw new IllegalArgumentException("Space name cannot be empty string");
-    }
-
-    this.spaceName = spaceName;
+    this.xcoord = xcoord;
+    this.ycoord = ycoord;
     this.output = "";
   }
 
@@ -37,7 +36,7 @@ public class MovePlayer implements GameCommand {
       throw new IllegalArgumentException("GameWorld cannot be null");
     }
 
-    this.output = model.movePlayerInWorld(spaceName);
+    this.output = model.movePlayerInWorld(xcoord, ycoord);
 
   }
 

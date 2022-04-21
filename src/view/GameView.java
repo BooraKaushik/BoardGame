@@ -9,14 +9,23 @@ import controller.Features;
 public interface GameView {
 
   /**
-   * Creates a Welcome Screen View.
+   * Creates a Welcome Screen View and sets the event listeners for that panel
+   * using Features.
+   * 
+   * @param featuresController The features controller that the welcome panel uses
+   * @throws IllegalArgumentException When features controller is null
    */
-  public void displayWelcomeScreen();
+  public void displayWelcomeScreen(Features featuresController) throws IllegalArgumentException;
 
   /**
-   * Creates Add Player Screen View.
+   * Creates Add Player Screen View and sets the event listeners for that panel
+   * using Features.
+   * 
+   * @param featuresController The features controller that the add player panel
+   *                           uses
+   * @throws IllegalArgumentException When features controller is null
    */
-  public void displayAddPlayerScreen();
+  public void displayAddPlayerScreen(Features featuresController) throws IllegalArgumentException;
 
   /**
    * Creates a Pop up with the message provided.
@@ -30,9 +39,19 @@ public interface GameView {
   public void displayPopupMessage(String message, String type) throws IllegalArgumentException;
 
   /**
-   * Creates a Game Screen View.
+   * Creates a Game Screen View and sets the event listeners for that panel using
+   * Features.
+   * 
+   * @param featuresController The features controller that the game view panel
+   *                           uses
+   * @throws IllegalArgumentException When features controller is null
    */
-  public void displayGameScreen();
+  public void displayGameScreen(Features featuresController) throws IllegalArgumentException;
+
+  /**
+   * Updates the game screen after a turn has been performed.
+   */
+  public void updateGameScreen();
 
   /**
    * Creates a Pop up that lets the user select from one of the oprions.

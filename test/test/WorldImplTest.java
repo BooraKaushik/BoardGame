@@ -731,97 +731,97 @@ public class WorldImplTest {
     assertEquals("KK,Computer,Dining,Garage", testWorld.getTurnInfo());
   }
 
-  @Test
-  public void testMovePlayerInWorld() {
-    worldSb = new StringBuilder("35 32 My World\n 59 Dr. Lucky\n Simba\n 8\n 4 10 11 12 Dining\n");
-    worldSb.append("4 4 9 9 Master Bedroom\n 4 13 6 19 Music Room\n 17 0 24 3 Garage\n");
-    worldSb.append("17 13 20 19 Bathroom\n 0 10 3 18 Home Office\n 2 0 16 3 Entrance Hall\n");
-    worldSb.append(" 0 4 3 9 Attic\n 3\n 3 10 Pan\n 4 7 Broom\n 5 15 Knife\n");
-    worldData = new StringReader(worldSb.toString());
-    RandomManual random = new RandomManual();
-    World testWorld = newWorldInstance(worldData, random);
-
-    testWorld.addPlayer("Pranith", "Attic", true);
-
-    testWorld.movePlayerInWorld("Master Bedroom");
-    assertEquals("Name: Pranith\nCurrent space: Master Bedroom\n"
-        + "Items carrying:\nNone\nIs Human player: Yes\n", testWorld.getPlayerInfo("Pranith"));
-  }
-
-  @Test(expected = IllegalStateException.class)
-  public void testMovePlayerToaSpaceWithPet() {
-    worldSb = new StringBuilder("35 32 My World\n 59 Dr. Lucky\n Simba\n 8\n 4 10 11 12 Dining\n");
-    worldSb.append("4 4 9 9 Master Bedroom\n 4 13 6 19 Music Room\n 17 0 24 3 Garage\n");
-    worldSb.append("17 13 20 19 Bathroom\n 0 10 3 18 Home Office\n 2 0 16 3 Entrance Hall\n");
-    worldSb.append(" 0 4 3 9 Attic\n 3\n 3 10 Pan\n 4 7 Broom\n 5 15 Knife\n");
-    worldData = new StringReader(worldSb.toString());
-    RandomManual random = new RandomManual();
-    World testWorld = newWorldInstance(worldData, random);
-
-    testWorld.addPlayer("Pranith", "Attic", true);
-
-    testWorld.movePlayerInWorld("Dining");
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testMovePlayerInWorldWhenSpaceIsNull() {
-    worldSb = new StringBuilder("35 32 My World\n 59 Dr. Lucky\n Simba\n 8\n 4 10 11 12 Dining\n");
-    worldSb.append("4 4 9 9 Master Bedroom\n 4 13 6 19 Music Room\n 17 0 24 3 Garage\n");
-    worldSb.append("17 13 20 19 Bathroom\n 0 10 3 18 Home Office\n 2 0 16 3 Entrance Hall\n");
-    worldSb.append(" 0 4 3 9 Attic\n 3\n 3 10 Pan\n 4 7 Broom\n 5 15 Knife\n");
-    worldData = new StringReader(worldSb.toString());
-    RandomManual random = new RandomManual();
-    World testWorld = newWorldInstance(worldData, random);
-
-    testWorld.addPlayer("Pranith", "Attic", true);
-
-    testWorld.movePlayerInWorld(null);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testMovePlayerInWorldWhenSpaceIsEmpty() {
-    worldSb = new StringBuilder("35 32 My World\n 59 Dr. Lucky\n Simba\n 8\n 4 10 11 12 Dining\n");
-    worldSb.append("4 4 9 9 Master Bedroom\n 4 13 6 19 Music Room\n 17 0 24 3 Garage\n");
-    worldSb.append("17 13 20 19 Bathroom\n 0 10 3 18 Home Office\n 2 0 16 3 Entrance Hall\n");
-    worldSb.append(" 0 4 3 9 Attic\n 3\n 3 10 Pan\n 4 7 Broom\n 5 15 Knife\n");
-    worldData = new StringReader(worldSb.toString());
-    RandomManual random = new RandomManual();
-    World testWorld = newWorldInstance(worldData, random);
-
-    testWorld.addPlayer("Pranith", "Attic", true);
-
-    testWorld.movePlayerInWorld("");
-  }
-
-  @Test(expected = IllegalStateException.class)
-  public void testMovePlayerInWorldWhenSpaceIsInvalid() {
-    worldSb = new StringBuilder("35 32 My World\n 59 Dr. Lucky\n Simba\n 8\n 4 10 11 12 Dining\n");
-    worldSb.append("4 4 9 9 Master Bedroom\n 4 13 6 19 Music Room\n 17 0 24 3 Garage\n");
-    worldSb.append("17 13 20 19 Bathroom\n 0 10 3 18 Home Office\n 2 0 16 3 Entrance Hall\n");
-    worldSb.append(" 0 4 3 9 Attic\n 3\n 3 10 Pan\n 4 7 Broom\n 5 15 Knife\n");
-    worldData = new StringReader(worldSb.toString());
-    RandomManual random = new RandomManual();
-    World testWorld = newWorldInstance(worldData, random);
-
-    testWorld.addPlayer("Pranith", "Attic", true);
-
-    testWorld.movePlayerInWorld("Test room");
-  }
-
-  @Test(expected = IllegalStateException.class)
-  public void testMovePlayerInWorldWhenSpaceIsNotNeighbour() {
-    worldSb = new StringBuilder("35 32 My World\n 59 Dr. Lucky\n Simba\n 8\n 4 10 11 12 Dining\n");
-    worldSb.append("4 4 9 9 Master Bedroom\n 4 13 6 19 Music Room\n 17 0 24 3 Garage\n");
-    worldSb.append("17 13 20 19 Bathroom\n 0 10 3 18 Home Office\n 2 0 16 3 Entrance Hall\n");
-    worldSb.append(" 0 4 3 9 Attic\n 3\n 3 10 Pan\n 4 7 Broom\n 5 15 Knife\n");
-    worldData = new StringReader(worldSb.toString());
-    RandomManual random = new RandomManual();
-    World testWorld = newWorldInstance(worldData, random);
-
-    testWorld.addPlayer("Pranith", "Attic", true);
-
-    testWorld.movePlayerInWorld("Music Room");
-  }
+//  @Test
+//  public void testMovePlayerInWorld() {
+//    worldSb = new StringBuilder("35 32 My World\n 59 Dr. Lucky\n Simba\n 8\n 4 10 11 12 Dining\n");
+//    worldSb.append("4 4 9 9 Master Bedroom\n 4 13 6 19 Music Room\n 17 0 24 3 Garage\n");
+//    worldSb.append("17 13 20 19 Bathroom\n 0 10 3 18 Home Office\n 2 0 16 3 Entrance Hall\n");
+//    worldSb.append(" 0 4 3 9 Attic\n 3\n 3 10 Pan\n 4 7 Broom\n 5 15 Knife\n");
+//    worldData = new StringReader(worldSb.toString());
+//    RandomManual random = new RandomManual();
+//    World testWorld = newWorldInstance(worldData, random);
+//
+//    testWorld.addPlayer("Pranith", "Attic", true);
+//
+//    testWorld.movePlayerInWorld("Master Bedroom");
+//    assertEquals("Name: Pranith\nCurrent space: Master Bedroom\n"
+//        + "Items carrying:\nNone\nIs Human player: Yes\n", testWorld.getPlayerInfo("Pranith"));
+//  }
+//
+//  @Test(expected = IllegalStateException.class)
+//  public void testMovePlayerToaSpaceWithPet() {
+//    worldSb = new StringBuilder("35 32 My World\n 59 Dr. Lucky\n Simba\n 8\n 4 10 11 12 Dining\n");
+//    worldSb.append("4 4 9 9 Master Bedroom\n 4 13 6 19 Music Room\n 17 0 24 3 Garage\n");
+//    worldSb.append("17 13 20 19 Bathroom\n 0 10 3 18 Home Office\n 2 0 16 3 Entrance Hall\n");
+//    worldSb.append(" 0 4 3 9 Attic\n 3\n 3 10 Pan\n 4 7 Broom\n 5 15 Knife\n");
+//    worldData = new StringReader(worldSb.toString());
+//    RandomManual random = new RandomManual();
+//    World testWorld = newWorldInstance(worldData, random);
+//
+//    testWorld.addPlayer("Pranith", "Attic", true);
+//
+//    testWorld.movePlayerInWorld("Dining");
+//  }
+//
+//  @Test(expected = IllegalArgumentException.class)
+//  public void testMovePlayerInWorldWhenSpaceIsNull() {
+//    worldSb = new StringBuilder("35 32 My World\n 59 Dr. Lucky\n Simba\n 8\n 4 10 11 12 Dining\n");
+//    worldSb.append("4 4 9 9 Master Bedroom\n 4 13 6 19 Music Room\n 17 0 24 3 Garage\n");
+//    worldSb.append("17 13 20 19 Bathroom\n 0 10 3 18 Home Office\n 2 0 16 3 Entrance Hall\n");
+//    worldSb.append(" 0 4 3 9 Attic\n 3\n 3 10 Pan\n 4 7 Broom\n 5 15 Knife\n");
+//    worldData = new StringReader(worldSb.toString());
+//    RandomManual random = new RandomManual();
+//    World testWorld = newWorldInstance(worldData, random);
+//
+//    testWorld.addPlayer("Pranith", "Attic", true);
+//
+//    testWorld.movePlayerInWorld(null);
+//  }
+//
+//  @Test(expected = IllegalArgumentException.class)
+//  public void testMovePlayerInWorldWhenSpaceIsEmpty() {
+//    worldSb = new StringBuilder("35 32 My World\n 59 Dr. Lucky\n Simba\n 8\n 4 10 11 12 Dining\n");
+//    worldSb.append("4 4 9 9 Master Bedroom\n 4 13 6 19 Music Room\n 17 0 24 3 Garage\n");
+//    worldSb.append("17 13 20 19 Bathroom\n 0 10 3 18 Home Office\n 2 0 16 3 Entrance Hall\n");
+//    worldSb.append(" 0 4 3 9 Attic\n 3\n 3 10 Pan\n 4 7 Broom\n 5 15 Knife\n");
+//    worldData = new StringReader(worldSb.toString());
+//    RandomManual random = new RandomManual();
+//    World testWorld = newWorldInstance(worldData, random);
+//
+//    testWorld.addPlayer("Pranith", "Attic", true);
+//
+//    testWorld.movePlayerInWorld("");
+//  }
+//
+//  @Test(expected = IllegalStateException.class)
+//  public void testMovePlayerInWorldWhenSpaceIsInvalid() {
+//    worldSb = new StringBuilder("35 32 My World\n 59 Dr. Lucky\n Simba\n 8\n 4 10 11 12 Dining\n");
+//    worldSb.append("4 4 9 9 Master Bedroom\n 4 13 6 19 Music Room\n 17 0 24 3 Garage\n");
+//    worldSb.append("17 13 20 19 Bathroom\n 0 10 3 18 Home Office\n 2 0 16 3 Entrance Hall\n");
+//    worldSb.append(" 0 4 3 9 Attic\n 3\n 3 10 Pan\n 4 7 Broom\n 5 15 Knife\n");
+//    worldData = new StringReader(worldSb.toString());
+//    RandomManual random = new RandomManual();
+//    World testWorld = newWorldInstance(worldData, random);
+//
+//    testWorld.addPlayer("Pranith", "Attic", true);
+//
+//    testWorld.movePlayerInWorld("Test room");
+//  }
+//
+//  @Test(expected = IllegalStateException.class)
+//  public void testMovePlayerInWorldWhenSpaceIsNotNeighbour() {
+//    worldSb = new StringBuilder("35 32 My World\n 59 Dr. Lucky\n Simba\n 8\n 4 10 11 12 Dining\n");
+//    worldSb.append("4 4 9 9 Master Bedroom\n 4 13 6 19 Music Room\n 17 0 24 3 Garage\n");
+//    worldSb.append("17 13 20 19 Bathroom\n 0 10 3 18 Home Office\n 2 0 16 3 Entrance Hall\n");
+//    worldSb.append(" 0 4 3 9 Attic\n 3\n 3 10 Pan\n 4 7 Broom\n 5 15 Knife\n");
+//    worldData = new StringReader(worldSb.toString());
+//    RandomManual random = new RandomManual();
+//    World testWorld = newWorldInstance(worldData, random);
+//
+//    testWorld.addPlayer("Pranith", "Attic", true);
+//
+//    testWorld.movePlayerInWorld("Music Room");
+//  }
 
   @Test
   public void testPickItemByPlayer() {
@@ -963,80 +963,80 @@ public class WorldImplTest {
 
   }
 
-  @Test
-  public void testPerformComputerActionForAttack() {
-    worldSb = new StringBuilder("35 32 My World\n 59 Dr. Lucky\n Simba\n 8\n 4 10 11 12 Dining\n");
-    worldSb.append("4 4 9 9 Master Bedroom\n 4 13 6 19 Music Room\n 17 0 24 3 Garage\n");
-    worldSb.append("17 13 20 19 Bathroom\n 0 10 3 18 Home Office\n 2 0 16 3 Entrance Hall\n");
-    worldSb.append(" 0 4 3 9 Attic\n 3\n 3 10 Pan\n 4 7 Broom\n 5 15 Knife\n");
-    worldData = new StringReader(worldSb.toString());
-    RandomManual random = new RandomManual(1, 0, 2, 2, 2, 2, 2, 2, 2);
-    World testWorld = newWorldInstance(worldData, random);
-    testWorld.addPlayer("Pranith", "Attic", true);
-    testWorld.addPlayer("Robot", "Garage", false);
-
-    // Testing if computer player attacks target when in same ]
-    // space and with an item with highest damage
-    testWorld.lookAroundByPlayer();
-    assertEquals("The Player Robot has picked up the item Pan from the space Garage\n",
-        testWorld.performComputerAction());
-    testWorld.lookAroundByPlayer();
-    assertEquals("Attack completed! The target's health has decreased. Removing item...\n",
-        testWorld.performComputerAction());
-    assertEquals(
-        "Name: Bathroom\n" + "All Items in space:\n" + "Item(Name = Broom, Damage = 7)\n"
-            + "All neighbouring spaces:\n" + "No neighbouring spaces\n"
-            + "All players in the space:\n" + "No players in space\n"
-            + "The target Dr. Lucky is currently present in this space with health 49.\n",
-        testWorld.getInfoOfaSpace("Bathroom"));
-
-    // Testing if computer player attacks target with hand when no items are present
-    // with it
-    testWorld.lookAroundByPlayer();
-    testWorld.performComputerAction();
-    testWorld.lookAroundByPlayer();
-    testWorld.performComputerAction();
-    testWorld.lookAroundByPlayer();
-    testWorld.performComputerAction();
-    testWorld.lookAroundByPlayer();
-    assertEquals("Attack completed! The target's health has decreased. Removing item...\n",
-        testWorld.performComputerAction());
-    assertEquals(
-        "Name: Bathroom\n" + "All Items in space:\n" + "Item(Name = Broom, Damage = 7)\n"
-            + "All neighbouring spaces:\n" + "No neighbouring spaces\n"
-            + "All players in the space:\n" + "No players in space\n"
-            + "The target Dr. Lucky is currently present in this space with health 48.\n",
-        testWorld.getInfoOfaSpace("Bathroom"));
-
-    // Testing if computer player attacks target when it is visible to a player
-    testWorld.movePlayerInWorld("Entrance Hall");
-    testWorld.performComputerAction();
-    testWorld.lookAroundByPlayer();
-    testWorld.performComputerAction();
-    testWorld.lookAroundByPlayer();
-    testWorld.performComputerAction();
-    testWorld.lookAroundByPlayer();
-    assertEquals(
-        "Looking around...\n" + "Current space: \n" + "Name: Garage\n" + "All Items in space:\n"
-            + "No items in space\n" + "All neighbouring spaces:\n"
-            + "[Space(Name = Entrance Hall, Top left = (2, 0), Bottom right = (16, 3))]\n"
-            + "All players in the space:\n" + "[Player(Name: Robot, Items carrying: 0)]\n"
-            + "The target Dr. Lucky is currently present in this space with health 48.\n" + "\n"
-            + "Neighbouring spaces:\n" + "Name: Entrance Hall\n" + "All Items in space:\n"
-            + "No items in space\n" + "All neighbouring spaces:\n"
-            + "[Space(Name = Master Bedroom, Top left = (4, 4), Bottom right = (9, 9)), "
-            + "Space(Name = Garage, Top left = (17, 0), Bottom right = (24, 3)), "
-            + "Space(Name = Attic, Top left = (0, 4), Bottom right = (3, 9))]\n"
-            + "All players in the space:\n" + "[Player(Name: Pranith, Items carrying: 0)]\n" + "\n",
-        testWorld.performComputerAction());
-    assertEquals(
-        "Name: Bathroom\n" + "All Items in space:\n" + "Item(Name = Broom, Damage = 7)\n"
-            + "All neighbouring spaces:\n" + "No neighbouring spaces\n"
-            + "All players in the space:\n" + "No players in space\n"
-            + "The target Dr. Lucky is currently present in this space with health 48.\n",
-        testWorld.getInfoOfaSpace("Bathroom"));
-
-  }
+//  @Test
+//  public void testPerformComputerActionForAttack() {
+//    worldSb = new StringBuilder("35 32 My World\n 59 Dr. Lucky\n Simba\n 8\n 4 10 11 12 Dining\n");
+//    worldSb.append("4 4 9 9 Master Bedroom\n 4 13 6 19 Music Room\n 17 0 24 3 Garage\n");
+//    worldSb.append("17 13 20 19 Bathroom\n 0 10 3 18 Home Office\n 2 0 16 3 Entrance Hall\n");
+//    worldSb.append(" 0 4 3 9 Attic\n 3\n 3 10 Pan\n 4 7 Broom\n 5 15 Knife\n");
+//    worldData = new StringReader(worldSb.toString());
+//    RandomManual random = new RandomManual(1, 0, 2, 2, 2, 2, 2, 2, 2);
+//    World testWorld = newWorldInstance(worldData, random);
+//    testWorld.addPlayer("Pranith", "Attic", true);
+//    testWorld.addPlayer("Robot", "Garage", false);
+//
+//    // Testing if computer player attacks target when in same ]
+//    // space and with an item with highest damage
+//    testWorld.lookAroundByPlayer();
+//    assertEquals("The Player Robot has picked up the item Pan from the space Garage\n",
+//        testWorld.performComputerAction());
+//    testWorld.lookAroundByPlayer();
+//    assertEquals("Attack completed! The target's health has decreased. Removing item...\n",
+//        testWorld.performComputerAction());
+//    assertEquals(
+//        "Name: Bathroom\n" + "All Items in space:\n" + "Item(Name = Broom, Damage = 7)\n"
+//            + "All neighbouring spaces:\n" + "No neighbouring spaces\n"
+//            + "All players in the space:\n" + "No players in space\n"
+//            + "The target Dr. Lucky is currently present in this space with health 49.\n",
+//        testWorld.getInfoOfaSpace("Bathroom"));
+//
+//    // Testing if computer player attacks target with hand when no items are present
+//    // with it
+//    testWorld.lookAroundByPlayer();
+//    testWorld.performComputerAction();
+//    testWorld.lookAroundByPlayer();
+//    testWorld.performComputerAction();
+//    testWorld.lookAroundByPlayer();
+//    testWorld.performComputerAction();
+//    testWorld.lookAroundByPlayer();
+//    assertEquals("Attack completed! The target's health has decreased. Removing item...\n",
+//        testWorld.performComputerAction());
+//    assertEquals(
+//        "Name: Bathroom\n" + "All Items in space:\n" + "Item(Name = Broom, Damage = 7)\n"
+//            + "All neighbouring spaces:\n" + "No neighbouring spaces\n"
+//            + "All players in the space:\n" + "No players in space\n"
+//            + "The target Dr. Lucky is currently present in this space with health 48.\n",
+//        testWorld.getInfoOfaSpace("Bathroom"));
+//
+//    // Testing if computer player attacks target when it is visible to a player
+//    testWorld.movePlayerInWorld("Entrance Hall");
+//    testWorld.performComputerAction();
+//    testWorld.lookAroundByPlayer();
+//    testWorld.performComputerAction();
+//    testWorld.lookAroundByPlayer();
+//    testWorld.performComputerAction();
+//    testWorld.lookAroundByPlayer();
+//    assertEquals(
+//        "Looking around...\n" + "Current space: \n" + "Name: Garage\n" + "All Items in space:\n"
+//            + "No items in space\n" + "All neighbouring spaces:\n"
+//            + "[Space(Name = Entrance Hall, Top left = (2, 0), Bottom right = (16, 3))]\n"
+//            + "All players in the space:\n" + "[Player(Name: Robot, Items carrying: 0)]\n"
+//            + "The target Dr. Lucky is currently present in this space with health 48.\n" + "\n"
+//            + "Neighbouring spaces:\n" + "Name: Entrance Hall\n" + "All Items in space:\n"
+//            + "No items in space\n" + "All neighbouring spaces:\n"
+//            + "[Space(Name = Master Bedroom, Top left = (4, 4), Bottom right = (9, 9)), "
+//            + "Space(Name = Garage, Top left = (17, 0), Bottom right = (24, 3)), "
+//            + "Space(Name = Attic, Top left = (0, 4), Bottom right = (3, 9))]\n"
+//            + "All players in the space:\n" + "[Player(Name: Pranith, Items carrying: 0)]\n" + "\n",
+//        testWorld.performComputerAction());
+//    assertEquals(
+//        "Name: Bathroom\n" + "All Items in space:\n" + "Item(Name = Broom, Damage = 7)\n"
+//            + "All neighbouring spaces:\n" + "No neighbouring spaces\n"
+//            + "All players in the space:\n" + "No players in space\n"
+//            + "The target Dr. Lucky is currently present in this space with health 48.\n",
+//        testWorld.getInfoOfaSpace("Bathroom"));
+//
+//  }
 
   @Test
   public void testGetCurrentSpaceOfPet() {
@@ -1260,145 +1260,145 @@ public class WorldImplTest {
     testWorld.movePetByPlayer("Invalid");
   }
 
-  @Test
-  public void testAttackTargetSuccess() {
-    worldSb = new StringBuilder("35 32 My World\n 12 Dr. Lucky\n Simba\n 8\n 4 10 11 12 Dining\n");
-    worldSb.append("4 4 9 9 Master Bedroom\n 4 13 6 19 Music Room\n 17 0 24 3 Garage\n");
-    worldSb.append("17 13 20 19 Bathroom\n 0 10 3 18 Home Office\n 2 0 16 3 Entrance Hall\n");
-    worldSb.append(" 0 4 3 9 Attic\n 3\n 4 10 Pan\n 4 7 Broom\n 5 15 Knife\n");
-    worldData = new StringReader(worldSb.toString());
-    RandomManual random = new RandomManual();
-    World testWorld = newWorldInstance(worldData, random);
-
-    testWorld.addPlayer("Pranith", "Bathroom", true);
-    testWorld.addPlayer("Robot", "Master Bedroom", true);
-
-    testWorld.pickItemByPlayer("Pan");
-    testWorld.movePetByPlayer("Garage");
-    testWorld.lookAroundByPlayer();
-    testWorld.movePlayerInWorld("Attic");
-
-    // if attack successful
-    assertEquals("Attack completed! The target's health has decreased. Removing item...\n",
-        testWorld.attackTarget("Pan"));
-
-    // if health decreased
-    assertEquals(
-        "Name: Home Office\n" + "All Items in space:\n" + "Item(Name = Knife, Damage = 15)\n"
-            + "All neighbouring spaces:\n"
-            + "[Space(Name = Music Room, Top left = (4, 13), Bottom right = (6, 19)), "
-            + "Space(Name = Attic, Top left = (0, 4), Bottom right = (3, 9))]\n"
-            + "All players in the space:\n" + "No players in space\n"
-            + "The target Dr. Lucky is currently present in this space with health 2.\n",
-        testWorld.getInfoOfaSpace("Home Office"));
-
-    // if turn changed
-    assertEquals("Robot,Human,Attic,Home Office", testWorld.getTurnInfo());
-
-    // if item removed from player
-    assertEquals("Name: Pranith\n" + "Current space: Bathroom\n" + "Items carrying:\n" + "None\n"
-        + "Is Human player: Yes\n", testWorld.getPlayerInfo("Pranith"));
-
-    // If item is hand
-    testWorld.lookAroundByPlayer();
-    testWorld.lookAroundByPlayer();
-
-    // if attack successful
-    assertEquals("Attack completed! The target's health has decreased. Removing item...\n",
-        testWorld.attackTarget("hand"));
-
-    // if health decreased
-    assertEquals(
-        "Name: Dining\n" + "All Items in space:\n" + "No items in space\n"
-            + "All neighbouring spaces:\n"
-            + "[Space(Name = Master Bedroom, Top left = (4, 4), Bottom right = (9, 9)), "
-            + "Space(Name = Music Room, Top left = (4, 13), Bottom right = (6, 19)), "
-            + "Space(Name = Home Office, Top left = (0, 10), Bottom right = (3, 18))]\n"
-            + "All players in the space:\n" + "No players in space\n"
-            + "The target Dr. Lucky is currently present in this space with health 1.\n",
-        testWorld.getInfoOfaSpace("Dining"));
-
-    // if turn changed
-    assertEquals("Pranith,Human,Bathroom,Dining", testWorld.getTurnInfo());
-
-    // If player won after success and target health is zero
-    testWorld.lookAroundByPlayer();
-    testWorld.lookAroundByPlayer();
-    testWorld.lookAroundByPlayer();
-    testWorld.movePlayerInWorld("Home Office");
-    testWorld.lookAroundByPlayer();
-
-    // if attack successful and player won
-    assertEquals("Attack completed! The target is dead. Player Robot has won the game!\n",
-        testWorld.attackTarget("hand"));
-  }
-
-  @Test
-  public void testAttackTargetUnsuccessful() {
-    worldSb = new StringBuilder("35 32 My World\n 12 Dr. Lucky\n Simba\n 8\n 4 10 11 12 Dining\n");
-    worldSb.append("4 4 9 9 Master Bedroom\n 4 13 6 19 Music Room\n 17 0 24 3 Garage\n");
-    worldSb.append("17 13 20 19 Bathroom\n 0 10 3 18 Home Office\n 2 0 16 3 Entrance Hall\n");
-    worldSb.append(" 0 4 3 9 Attic\n 3\n 4 10 Pan\n 4 7 Broom\n 5 15 Knife\n");
-    worldData = new StringReader(worldSb.toString());
-    RandomManual random = new RandomManual();
-    World testWorld = newWorldInstance(worldData, random);
-
-    testWorld.addPlayer("Pranith", "Dining", true);
-    testWorld.addPlayer("Robot", "Dining", true);
-
-    // if attack unsuccessful as a player is in same space
-    assertEquals("Attack failed! The attack was seen by another player. Removing item...\n",
-        testWorld.attackTarget("hand"));
-
-    // if turn changed
-    assertEquals("Robot,Human,Dining,Master Bedroom",
-        testWorld.getTurnInfo());
-
-    testWorld.movePlayerInWorld("Home Office");
-    testWorld.lookAroundByPlayer();
-    testWorld.pickItemByPlayer("Knife");
-    testWorld.lookAroundByPlayer();
-
-    // if attack unsuccessful as a player is in neighbouring space
-    assertEquals("Attack failed! The attack was seen by another player. Removing item...\n",
-        testWorld.attackTarget("Knife"));
-
-    // if item removed from player
-    assertEquals("Name: Robot\n" + "Current space: Home Office\n" + "Items carrying:\n" + "None\n"
-        + "Is Human player: Yes\n", testWorld.getPlayerInfo("Robot"));
-
-  }
-
-  @Test
-  public void testAttackTargetWithPet() {
-    worldSb = new StringBuilder("35 32 My World\n 12 Dr. Lucky\n Simba\n 8\n 4 10 11 12 Dining\n");
-    worldSb.append("4 4 9 9 Master Bedroom\n 4 13 6 19 Music Room\n 17 0 24 3 Garage\n");
-    worldSb.append("17 13 20 19 Bathroom\n 0 10 3 18 Home Office\n 2 0 16 3 Entrance Hall\n");
-    worldSb.append(" 0 4 3 9 Attic\n 3\n 4 10 Pan\n 4 7 Broom\n 5 15 Knife\n");
-    worldData = new StringReader(worldSb.toString());
-    RandomManual random = new RandomManual();
-    World testWorld = newWorldInstance(worldData, random);
-
-    testWorld.addPlayer("Pranith", "Dining", true);
-    testWorld.addPlayer("Robot", "Master Bedroom", true);
-
-    // if attack successful as a pet is in same space even when neighbouring space
-    // has a player
-    assertEquals("Attack completed! The target's health has decreased. Removing item...\n",
-        testWorld.attackTarget("hand"));
-
-    testWorld.movePlayerInWorld("Attic");
-    testWorld.movePlayerInWorld("Master Bedroom");
-    testWorld.movePetByPlayer("Attic");
-    testWorld.movePlayerInWorld("Entrance Hall");
-    testWorld.lookAroundByPlayer();
-
-    // if attack unsuccessful when a pet is in neighbouring space and it contains a
-    // player
-    assertEquals("Attack failed! The attack was seen by another player. Removing item...\n",
-        testWorld.attackTarget("hand"));
-
-  }
+//  @Test
+//  public void testAttackTargetSuccess() {
+//    worldSb = new StringBuilder("35 32 My World\n 12 Dr. Lucky\n Simba\n 8\n 4 10 11 12 Dining\n");
+//    worldSb.append("4 4 9 9 Master Bedroom\n 4 13 6 19 Music Room\n 17 0 24 3 Garage\n");
+//    worldSb.append("17 13 20 19 Bathroom\n 0 10 3 18 Home Office\n 2 0 16 3 Entrance Hall\n");
+//    worldSb.append(" 0 4 3 9 Attic\n 3\n 4 10 Pan\n 4 7 Broom\n 5 15 Knife\n");
+//    worldData = new StringReader(worldSb.toString());
+//    RandomManual random = new RandomManual();
+//    World testWorld = newWorldInstance(worldData, random);
+//
+//    testWorld.addPlayer("Pranith", "Bathroom", true);
+//    testWorld.addPlayer("Robot", "Master Bedroom", true);
+//
+//    testWorld.pickItemByPlayer("Pan");
+//    testWorld.movePetByPlayer("Garage");
+//    testWorld.lookAroundByPlayer();
+//    testWorld.movePlayerInWorld("Attic");
+//
+//    // if attack successful
+//    assertEquals("Attack completed! The target's health has decreased. Removing item...\n",
+//        testWorld.attackTarget("Pan"));
+//
+//    // if health decreased
+//    assertEquals(
+//        "Name: Home Office\n" + "All Items in space:\n" + "Item(Name = Knife, Damage = 15)\n"
+//            + "All neighbouring spaces:\n"
+//            + "[Space(Name = Music Room, Top left = (4, 13), Bottom right = (6, 19)), "
+//            + "Space(Name = Attic, Top left = (0, 4), Bottom right = (3, 9))]\n"
+//            + "All players in the space:\n" + "No players in space\n"
+//            + "The target Dr. Lucky is currently present in this space with health 2.\n",
+//        testWorld.getInfoOfaSpace("Home Office"));
+//
+//    // if turn changed
+//    assertEquals("Robot,Human,Attic,Home Office", testWorld.getTurnInfo());
+//
+//    // if item removed from player
+//    assertEquals("Name: Pranith\n" + "Current space: Bathroom\n" + "Items carrying:\n" + "None\n"
+//        + "Is Human player: Yes\n", testWorld.getPlayerInfo("Pranith"));
+//
+//    // If item is hand
+//    testWorld.lookAroundByPlayer();
+//    testWorld.lookAroundByPlayer();
+//
+//    // if attack successful
+//    assertEquals("Attack completed! The target's health has decreased. Removing item...\n",
+//        testWorld.attackTarget("hand"));
+//
+//    // if health decreased
+//    assertEquals(
+//        "Name: Dining\n" + "All Items in space:\n" + "No items in space\n"
+//            + "All neighbouring spaces:\n"
+//            + "[Space(Name = Master Bedroom, Top left = (4, 4), Bottom right = (9, 9)), "
+//            + "Space(Name = Music Room, Top left = (4, 13), Bottom right = (6, 19)), "
+//            + "Space(Name = Home Office, Top left = (0, 10), Bottom right = (3, 18))]\n"
+//            + "All players in the space:\n" + "No players in space\n"
+//            + "The target Dr. Lucky is currently present in this space with health 1.\n",
+//        testWorld.getInfoOfaSpace("Dining"));
+//
+//    // if turn changed
+//    assertEquals("Pranith,Human,Bathroom,Dining", testWorld.getTurnInfo());
+//
+//    // If player won after success and target health is zero
+//    testWorld.lookAroundByPlayer();
+//    testWorld.lookAroundByPlayer();
+//    testWorld.lookAroundByPlayer();
+//    testWorld.movePlayerInWorld("Home Office");
+//    testWorld.lookAroundByPlayer();
+//
+//    // if attack successful and player won
+//    assertEquals("Attack completed! The target is dead. Player Robot has won the game!\n",
+//        testWorld.attackTarget("hand"));
+//  }
+//
+//  @Test
+//  public void testAttackTargetUnsuccessful() {
+//    worldSb = new StringBuilder("35 32 My World\n 12 Dr. Lucky\n Simba\n 8\n 4 10 11 12 Dining\n");
+//    worldSb.append("4 4 9 9 Master Bedroom\n 4 13 6 19 Music Room\n 17 0 24 3 Garage\n");
+//    worldSb.append("17 13 20 19 Bathroom\n 0 10 3 18 Home Office\n 2 0 16 3 Entrance Hall\n");
+//    worldSb.append(" 0 4 3 9 Attic\n 3\n 4 10 Pan\n 4 7 Broom\n 5 15 Knife\n");
+//    worldData = new StringReader(worldSb.toString());
+//    RandomManual random = new RandomManual();
+//    World testWorld = newWorldInstance(worldData, random);
+//
+//    testWorld.addPlayer("Pranith", "Dining", true);
+//    testWorld.addPlayer("Robot", "Dining", true);
+//
+//    // if attack unsuccessful as a player is in same space
+//    assertEquals("Attack failed! The attack was seen by another player. Removing item...\n",
+//        testWorld.attackTarget("hand"));
+//
+//    // if turn changed
+//    assertEquals("Robot,Human,Dining,Master Bedroom",
+//        testWorld.getTurnInfo());
+//
+//    testWorld.movePlayerInWorld("Home Office");
+//    testWorld.lookAroundByPlayer();
+//    testWorld.pickItemByPlayer("Knife");
+//    testWorld.lookAroundByPlayer();
+//
+//    // if attack unsuccessful as a player is in neighbouring space
+//    assertEquals("Attack failed! The attack was seen by another player. Removing item...\n",
+//        testWorld.attackTarget("Knife"));
+//
+//    // if item removed from player
+//    assertEquals("Name: Robot\n" + "Current space: Home Office\n" + "Items carrying:\n" + "None\n"
+//        + "Is Human player: Yes\n", testWorld.getPlayerInfo("Robot"));
+//
+//  }
+//
+//  @Test
+//  public void testAttackTargetWithPet() {
+//    worldSb = new StringBuilder("35 32 My World\n 12 Dr. Lucky\n Simba\n 8\n 4 10 11 12 Dining\n");
+//    worldSb.append("4 4 9 9 Master Bedroom\n 4 13 6 19 Music Room\n 17 0 24 3 Garage\n");
+//    worldSb.append("17 13 20 19 Bathroom\n 0 10 3 18 Home Office\n 2 0 16 3 Entrance Hall\n");
+//    worldSb.append(" 0 4 3 9 Attic\n 3\n 4 10 Pan\n 4 7 Broom\n 5 15 Knife\n");
+//    worldData = new StringReader(worldSb.toString());
+//    RandomManual random = new RandomManual();
+//    World testWorld = newWorldInstance(worldData, random);
+//
+//    testWorld.addPlayer("Pranith", "Dining", true);
+//    testWorld.addPlayer("Robot", "Master Bedroom", true);
+//
+//    // if attack successful as a pet is in same space even when neighbouring space
+//    // has a player
+//    assertEquals("Attack completed! The target's health has decreased. Removing item...\n",
+//        testWorld.attackTarget("hand"));
+//
+//    testWorld.movePlayerInWorld("Attic");
+//    testWorld.movePlayerInWorld("Master Bedroom");
+//    testWorld.movePetByPlayer("Attic");
+//    testWorld.movePlayerInWorld("Entrance Hall");
+//    testWorld.lookAroundByPlayer();
+//
+//    // if attack unsuccessful when a pet is in neighbouring space and it contains a
+//    // player
+//    assertEquals("Attack failed! The attack was seen by another player. Removing item...\n",
+//        testWorld.attackTarget("hand"));
+//
+//  }
 
   @Test(expected = IllegalArgumentException.class)
   public void testAttackTargetWhenItemNameIsNull() {

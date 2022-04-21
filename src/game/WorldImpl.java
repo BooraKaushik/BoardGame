@@ -22,6 +22,9 @@ import utils.RandomManual;
  */
 public final class WorldImpl implements World {
 
+  private final int scaleFactor;
+  private final int buffer;
+
   private int rows;
   private int columns;
   private String name;
@@ -64,6 +67,8 @@ public final class WorldImpl implements World {
 
     this.random = random;
     this.numOfTurns = numOfTurns;
+    this.scaleFactor = 20;
+    this.buffer = 30;
   }
 
   @Override
@@ -381,8 +386,6 @@ public final class WorldImpl implements World {
 
   @Override
   public String drawImage() throws IllegalStateException {
-    int scaleFactor = 20;
-    int buffer = 30;
 
     BufferedImage theWorldBuffer = new BufferedImage(800, 800, BufferedImage.TYPE_INT_RGB);
 
@@ -599,15 +602,34 @@ public final class WorldImpl implements World {
     return neighbour;
   }
 
-  @Override
-  public String movePlayerInWorld(String spaceName)
-      throws IllegalArgumentException, IllegalStateException {
-    if (spaceName == null) {
-      throw new IllegalArgumentException("Space name cannot be null.");
+  private String getSpaceFromCoords(int xcoord, int ycoord) {
+
+    String spaceName = "";
+
+    int newy = (xcoord - buffer) / 20;
+    int newx = (ycoord - buffer) / 20;
+
+    for (Space space : allSpaces) {
+      if (space.getTopLeftX() <= newx && space.getTopLeftY() <= newy
+          && space.getBottomRightX() >= newx && space.getBottomRightY() >= newy) {
+        spaceName = space.getName();
+        break;
+      }
     }
 
-    if (spaceName.length() == 0) {
-      throw new IllegalArgumentException("Space name cannot be empty string.");
+    return spaceName;
+  }
+
+  @Override
+  public String movePlayerInWorld(int xcoord, int ycoord) throws IllegalArgumentException {
+    if (xcoord < 0 || ycoord < 0) {
+      throw new IllegalArgumentException("Coordinates cannot be negative.");
+    }
+
+    String spaceName = getSpaceFromCoords(xcoord, ycoord);
+
+    if ("".equals(spaceName)) {
+      return "";
     }
 
     Player currentPlayer = allPlayers.get(currentTurnIndex);
@@ -618,7 +640,7 @@ public final class WorldImpl implements World {
     boolean isNeighbour = isNeighbour(neighbours, spaceName);
 
     if (!isNeighbour) {
-      throw new IllegalStateException("Given space is not a neighbour of the current space");
+      throw new IllegalStateException("Clicked space is not a neighbour of the current space");
     }
 
     int spaceIndex = 0;
@@ -747,9 +769,9 @@ public final class WorldImpl implements World {
         switch (input) {
           case 1:
             List<Space> neighbours = getNeighboursAsList(currentPlayerSpace.getName());
-            String spaceName = neighbours.get(currentPlayer.chooseAction(random, neighbours.size()))
-                .getName();
-            res = movePlayerInWorld(spaceName);
+            Space space = neighbours.get(currentPlayer.chooseAction(random, neighbours.size()));
+            res = movePlayerInWorld((space.getTopLeftX() * scaleFactor) + buffer,
+                (space.getTopLeftX() * scaleFactor) + buffer);
             exit = true;
             break;
 

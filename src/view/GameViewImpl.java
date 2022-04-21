@@ -87,15 +87,25 @@ public class GameViewImpl extends JFrame implements GameView {
   }
 
   @Override
-  public void displayWelcomeScreen() {
+  public void displayWelcomeScreen(Features featuresController) throws IllegalArgumentException {
+
+    if (featuresController == null) {
+      throw new IllegalArgumentException("Features cannot be null");
+    }
+
     this.newGame.setEnabled(true);
     this.newWorld.setEnabled(true);
     add(welcomePanel);
     welcomePanel.revalidate();
+    this.welcomePanel.setFeatures(featuresController);
   }
 
   @Override
-  public void displayAddPlayerScreen() {
+  public void displayAddPlayerScreen(Features featuresController) throws IllegalArgumentException {
+    if (featuresController == null) {
+      throw new IllegalArgumentException("Features cannot be null");
+    }
+
     try {
       this.newGame.setEnabled(false);
       this.newWorld.setEnabled(false);
@@ -103,6 +113,7 @@ public class GameViewImpl extends JFrame implements GameView {
       remove(welcomePanel);
       add(addPlayerPanel);
       addPlayerPanel.revalidate();
+      this.addPlayerPanel.setFeatures(featuresController);
     } catch (IllegalStateException ie) {
       displayPopupMessage(ie.getMessage(), "Error");
     }
@@ -124,7 +135,11 @@ public class GameViewImpl extends JFrame implements GameView {
   }
 
   @Override
-  public void displayGameScreen() {
+  public void displayGameScreen(Features featuresController) throws IllegalArgumentException {
+    if (featuresController == null) {
+      throw new IllegalArgumentException("Features cannot be null");
+    }
+
     this.newGame.setEnabled(false);
     this.newWorld.setEnabled(false);
     remove(addPlayerPanel);
@@ -132,6 +147,7 @@ public class GameViewImpl extends JFrame implements GameView {
     gameViewPanel.update();
     add(gameViewPanel);
     gameViewPanel.revalidate();
+    this.gameViewPanel.setFeatures(featuresController);
 
   }
 
@@ -158,10 +174,6 @@ public class GameViewImpl extends JFrame implements GameView {
       throw new IllegalArgumentException("Features controller cannot be null");
     }
 
-    this.welcomePanel.setFeatures(featuresController);
-    this.addPlayerPanel.setFeatures(featuresController);
-    this.gameViewPanel.setFeatures(featuresController);
-
     newGame.addActionListener(event -> {
       featuresController.startGameIsClicked();
     });
@@ -181,5 +193,11 @@ public class GameViewImpl extends JFrame implements GameView {
         }
       }
     });
+  }
+
+  @Override
+  public void updateGameScreen() {
+    gameViewPanel.update();
+    gameViewPanel.repaint();
   }
 }
