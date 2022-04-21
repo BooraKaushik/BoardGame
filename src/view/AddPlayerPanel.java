@@ -129,6 +129,10 @@ public class AddPlayerPanel extends JPanel {
    */
   private void displayAddPlayerPopup() {
 
+    if (this.featuresController == null) {
+      throw new IllegalStateException("FeatureController is not set yet");
+    }
+
     JPanel myPanel = new JPanel();
     myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
 

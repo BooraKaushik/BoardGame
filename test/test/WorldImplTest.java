@@ -723,8 +723,7 @@ public class WorldImplTest {
     assertEquals("Pranith,Human,Dining,Dining", testWorld.getTurnInfo());
 
     testWorld.lookAroundByPlayer();
-    assertEquals("Tarun,Human,Dining,Master Bedroom",
-        testWorld.getTurnInfo());
+    assertEquals("Tarun,Human,Dining,Master Bedroom", testWorld.getTurnInfo());
 
     testWorld.lookAroundByPlayer();
     testWorld.lookAroundByPlayer();
@@ -1189,11 +1188,11 @@ public class WorldImplTest {
 
     testWorld.movePetByPlayer("Master Bedroom");
     assertEquals("Master Bedroom", testWorld.getCurrentSpaceOfPet());
-    assertEquals("Robot", testWorld.getTurnInfo().split(",")[0]);
+    assertEquals("Robot", testWorld.getTurnInfo().get(0));
 
     testWorld.movePetByPlayer("Garage");
     assertEquals("Garage", testWorld.getCurrentSpaceOfPet());
-    assertEquals("Pranith", testWorld.getTurnInfo().split(",")[0]);
+    assertEquals("Pranith", testWorld.getTurnInfo().get(0));
   }
 
   @Test(expected = IllegalArgumentException.class)

@@ -61,6 +61,7 @@ public class GameViewPanel extends JPanel {
       playerIcons.add(new ImageIcon(String.format("res/%d.png", player + 1)));
     }
     this.worldPanel = new JPanel();
+    this.targetLabel = new JLabel();
 
     // EAST LAYOUT
     JPanel eastLayout = new JPanel();
@@ -100,7 +101,7 @@ public class GameViewPanel extends JPanel {
    * Update the position of the players in the world.
    */
   public void update() {
-    
+
     worldLabel.remove(this.targetLabel);
     // adding Target character.
     ImageIcon targetIcon = new ImageIcon("res/TargetCharacter.png");
