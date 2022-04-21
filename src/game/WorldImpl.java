@@ -999,4 +999,19 @@ public final class WorldImpl implements World {
     return this.allSpaces.stream().map((space) -> space.getName()).toArray(String[]::new);
   }
 
+  @Override
+  public int[] getCoordinates(String spaceName) {
+    if (spaceName == null) {
+      throw new IllegalArgumentException("Space Name cant be null");
+    }
+    int spaceIndex = this.getIndexOfSpace(spaceName);
+    if (spaceIndex == -1) {
+      throw new IllegalArgumentException("Space Doesnt Exist");
+    }
+    return new int[] { this.allSpaces.get(spaceIndex).getTopLeftX(),
+        this.allSpaces.get(spaceIndex).getTopLeftY(),
+        this.allSpaces.get(spaceIndex).getBottomRightX(),
+        this.allSpaces.get(spaceIndex).getBottomRightY() };
+  }
+
 }
