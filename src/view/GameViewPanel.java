@@ -39,6 +39,11 @@ public class GameViewPanel extends JPanel {
   private JLabel targetLabel;
   private JScrollPane scrollableWorld;
   private List<JLabel> playerLabelIcons;
+  private JPanel eastLayout;
+  private JPanel eastTurnLayout;
+  private JPanel eastResultLayout;
+  private JPanel eastPlayerLayout;
+  private JLabel turnIconLabel;
 
   /**
    * Constructor for GameViewPanel to create a new Game Screen.
@@ -64,19 +69,12 @@ public class GameViewPanel extends JPanel {
     this.targetLabel = new JLabel();
 
     // EAST LAYOUT
-    JPanel eastLayout = new JPanel();
-    eastLayout.setLayout(new BoxLayout(eastLayout, BoxLayout.Y_AXIS));
-    JLabel turnInfo = new JLabel("Lorem Ipsum");
-    turnInfo.setPreferredSize(new Dimension(200, 100));
-    turnInfo.setBackground(Color.GRAY);
-    turnInfo.setBounds(0, 0, 100, 100);
-    eastLayout.add(turnInfo);
-    JLabel resultInfo = new JLabel("Lorem Ipsum");
-    resultInfo.setPreferredSize(new Dimension(200, 100));
-    resultInfo.setBackground(Color.GRAY);
-    resultInfo.setBounds(0, 0, 100, 100);
-    eastLayout.add(resultInfo);
-    this.add(eastLayout, BorderLayout.EAST);
+    this.eastLayout = new JPanel();
+    this.eastLayout.setLayout(new BoxLayout(this.eastLayout, BoxLayout.Y_AXIS));
+    this.eastTurnLayout = new JPanel();
+    this.eastResultLayout = new JPanel();
+    this.eastPlayerLayout = new JPanel();
+
     this.worldPanel = new JPanel();
     this.worldLabel = new JLabel();
     this.setFocusable(true);
@@ -175,6 +173,26 @@ public class GameViewPanel extends JPanel {
         playerIcon = new ImageIcon(newPlayerImage);
         JLabel playerIconLabel = new JLabel(playerIcon);
         playerIconLabel.setToolTipText(playerList[entry.getValue().get(player)][0]);
+        if (playerList[entry.getValue().get(player)][0].equals(turnInfo.get(0))) {
+          this.turnIconLabel = playerIconLabel;
+          this.turnIconLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+              eastLayout.remove(eastPlayerLayout);
+              String data = dataModel.getPlayerInfo(turnInfo.get(0)).replace("\n", "<br>");
+              JLabel playerInfo = new JLabel(String.format("<html>%s</html>", data));
+              playerInfo.setBackground(Color.GRAY);
+              playerInfo.setBounds(0, 0, 100, 100);
+              eastPlayerLayout = new JPanel();
+              eastPlayerLayout.setBackground(new Color(230, 232, 230));
+              eastPlayerLayout.add(playerInfo);
+              eastPlayerLayout.setMinimumSize(new Dimension(1500, 1500));
+              eastPlayerLayout.setMaximumSize(new Dimension(1500, 1500));
+              eastLayout.add(eastPlayerLayout);
+              eastLayout.revalidate();
+            }
+          });
+        }
         int refactoredx = entry.getValue().get(3) * multiplicationFactor + buffer
             - (accomodatesx * dimMultiplication);
         int refactoredy = entry.getValue().get(2) * multiplicationFactor + buffer
@@ -190,8 +208,70 @@ public class GameViewPanel extends JPanel {
 
         playerLabelIcons.add(playerIconLabel);
         worldLabel.add(playerIconLabel);
+
+        // EAST LAYOUT
+
+        this.eastLayout.remove(this.eastTurnLayout);
+        this.eastLayout.remove(this.eastResultLayout);
+        this.eastLayout.remove(this.eastPlayerLayout);
+
+        JLabel turnInformation = new JLabel(String.format(
+            "<html>Turn Info:<br> Player Name : %s<br> Location : %s<br> Type : %s </html>",
+            turnInfo.get(0), turnInfo.get(2), turnInfo.get(1)));
+        turnInformation.setBounds(0, 0, 1000, 1000);
+        this.eastTurnLayout = new JPanel();
+        this.eastTurnLayout.setBackground(new Color(253, 202, 64));
+        this.eastTurnLayout.add(turnInformation);
+        this.eastTurnLayout.setMinimumSize(new Dimension(1500, 1500));
+        this.eastTurnLayout.setMaximumSize(new Dimension(1500, 1500));
+        this.eastLayout.add(this.eastTurnLayout);
+
+        JLabel resultInfo = new JLabel("Results:");
+        resultInfo.setBackground(Color.GRAY);
+        resultInfo.setBounds(0, 0, 100, 100);
+        this.eastResultLayout = new JPanel();
+        this.eastResultLayout.setBackground(new Color(133, 218, 215));
+        this.eastResultLayout.add(resultInfo);
+        this.eastResultLayout.setMinimumSize(new Dimension(1500, 1500));
+        this.eastResultLayout.setMaximumSize(new Dimension(1500, 1500));
+        this.eastLayout.add(this.eastResultLayout);
+
+        JLabel playerInfo = new JLabel("Player Data:");
+        playerInfo.setBackground(Color.GRAY);
+        playerInfo.setBounds(0, 0, 100, 100);
+        this.eastPlayerLayout = new JPanel();
+        this.eastPlayerLayout.setBackground(new Color(230, 232, 230));
+        this.eastPlayerLayout.add(playerInfo);
+        this.eastPlayerLayout.setMinimumSize(new Dimension(1500, 1500));
+        this.eastPlayerLayout.setMaximumSize(new Dimension(1500, 1500));
+        this.eastLayout.add(this.eastPlayerLayout);
+
+        this.add(eastLayout, BorderLayout.EAST);
+        this.eastLayout.revalidate();
       }
     }
+  }
+
+  /**
+   * Changes the Result String in result section of East Layout in Game Screen.
+   * 
+   * @param message Message that should be displayed in the result section.
+   */
+  public void updateResult(String message) {
+
+    this.eastLayout.remove(this.eastResultLayout);
+    message.replace("\n", "<br>");
+    JLabel resultInfo = new JLabel(String.format("<html>Results:<br>%s</html>", message));
+    resultInfo.setBackground(Color.GRAY);
+    resultInfo.setBounds(0, 0, 100, 100);
+    this.eastResultLayout = new JPanel();
+    this.eastResultLayout.setBackground(new Color(133, 218, 215));
+    this.eastResultLayout.add(resultInfo);
+    this.eastResultLayout.setMinimumSize(new Dimension(1500, 1500));
+    this.eastResultLayout.setMaximumSize(new Dimension(1500, 1500));
+    this.eastLayout.add(this.eastResultLayout);
+    this.eastLayout.revalidate();
+
   }
 
   /**

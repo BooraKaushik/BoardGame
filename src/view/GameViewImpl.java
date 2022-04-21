@@ -145,6 +145,7 @@ public class GameViewImpl extends JFrame implements GameView {
     remove(addPlayerPanel);
     remove(gameViewPanel);
     gameViewPanel.update();
+    gameViewPanel.repaint();
     add(gameViewPanel);
     gameViewPanel.revalidate();
     this.gameViewPanel.setFeatures(featuresController);
