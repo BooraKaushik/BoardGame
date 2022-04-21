@@ -48,7 +48,7 @@ public class GameViewImpl extends JFrame implements GameView {
       throw new IllegalArgumentException("Read only data model cannot be empty");
     }
 
-    setMinimumSize(new Dimension(300, 300));
+    setMinimumSize(new Dimension(700, 700));
     setLocation(200, 200);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

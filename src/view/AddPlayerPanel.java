@@ -28,7 +28,6 @@ public class AddPlayerPanel extends JPanel {
   private final JButton addPlayers;
   private final JButton startGame;
   private JPanel center;
-  private Features featuresController;
 
   /**
    * Constructor of AddPlayerPanel to create AddPlayer Screen.
@@ -105,7 +104,6 @@ public class AddPlayerPanel extends JPanel {
     if (featuresController == null) {
       throw new IllegalArgumentException("Features controller cannot be null");
     }
-    this.featuresController = featuresController;
     this.startGame.addActionListener(event -> {
       if (this.dataModel.getAllPlayers().length > 1) {
         featuresController.showGameScreen();
@@ -116,7 +114,7 @@ public class AddPlayerPanel extends JPanel {
 
     this.addPlayers.addActionListener(event -> {
       if (this.dataModel.getAllPlayers().length < 10) {
-        this.displayAddPlayerPopup();
+        this.displayAddPlayerPopup(featuresController);
       } else {
         this.displayPopup("Cannot add more than 10 Players");
       }
@@ -127,10 +125,10 @@ public class AddPlayerPanel extends JPanel {
    * Creates a Add Player Popup that prompts user to enter the information to add
    * player.
    */
-  private void displayAddPlayerPopup() {
+  private void displayAddPlayerPopup(Features featuresController) {
 
-    if (this.featuresController == null) {
-      throw new IllegalStateException("FeatureController is not set yet");
+    if (featuresController == null) {
+      throw new IllegalArgumentException("Features controller cannot be null");
     }
 
     JPanel myPanel = new JPanel();
@@ -164,7 +162,7 @@ public class AddPlayerPanel extends JPanel {
         this.displayPopup("Invalid Name");
       } else {
         try {
-          this.featuresController.addPlayer(name.getText(), roomList.getSelectedItem().toString(),
+          featuresController.addPlayer(name.getText(), roomList.getSelectedItem().toString(),
               typeList.getSelectedItem().toString().equals("Human"));
           this.updateAddPlayers();
         } catch (IllegalArgumentException iae) {

@@ -272,7 +272,10 @@ public class GameViewPanel extends JPanel {
     this.eastResultLayout.setMaximumSize(new Dimension(1500, 1500));
     this.eastLayout.add(this.eastResultLayout);
     this.eastLayout.revalidate();
+  }
 
+  /**
+   * 
    * Creates a Pop up that lets the user select from one of the oprions.
    * 
    * @param title   String that has to be displayed in the pop up.
