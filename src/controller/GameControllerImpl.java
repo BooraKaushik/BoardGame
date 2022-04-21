@@ -170,15 +170,10 @@ public class GameControllerImpl implements GameController, Features {
     try {
       String result = executeCmd(gameModel, Command.MOVE,
           new ArrayList<String>(Arrays.asList(String.valueOf(xcoord), String.valueOf(ycoord))));
-      gameView.updateGameScreen();
+      gameView.updateGameScreen(4000);
     } catch (IllegalStateException ise) {
       gameView.displayPopupMessage(ise.getMessage(), "Error");
     }
-  }
-
-  @Override
-  public void actionIsPerformed(String actionName) throws IllegalArgumentException {
-    // TODO
   }
 
   @Override
@@ -200,9 +195,56 @@ public class GameControllerImpl implements GameController, Features {
     gameView.displayGameScreen(this);
   }
 
-//  @Override
-//  public void pickItemIsPressed() {
-//    gameView.displayInputPopup("Item", [""]);
-//  }
+  @Override
+  public void pickItem(String itemName) throws IllegalArgumentException {
+    if (itemName == null) {
+      throw new IllegalArgumentException("Item name cannot be null");
+    }
+
+    if (itemName.length() == 0) {
+      throw new IllegalArgumentException("Item name cannot be empty");
+    }
+
+    String result = executeCmd(gameModel, Command.PICK_ITEM,
+        new ArrayList<String>(Arrays.asList(itemName)));
+    gameView.updateGameScreen(4000);
+  }
+
+  @Override
+  public void lookAround() {
+    String result = executeCmd(gameModel, Command.LOOK_AROUND, new ArrayList<String>());
+    gameView.updateGameScreen(4000);
+  }
+
+  @Override
+  public void attackTarget(String itemName) throws IllegalArgumentException {
+    if (itemName == null) {
+      throw new IllegalArgumentException("Item name cannot be null");
+    }
+
+    if (itemName.length() == 0) {
+      throw new IllegalArgumentException("Item name cannot be empty");
+    }
+
+    String result = executeCmd(gameModel, Command.ATTACK_TARGET,
+        new ArrayList<String>(Arrays.asList(itemName)));
+    gameView.updateGameScreen(4000);
+  }
+
+  @Override
+  public void movePet(String spaceName) throws IllegalArgumentException {
+    if (spaceName == null) {
+      throw new IllegalArgumentException("Space name cannot be null");
+    }
+
+    if (spaceName.length() == 0) {
+      throw new IllegalArgumentException("Space name cannot be empty");
+    }
+
+    String result = executeCmd(gameModel, Command.MOVE_PET,
+        new ArrayList<String>(Arrays.asList(spaceName)));
+    gameView.updateGameScreen(4000);
+
+  }
 
 }

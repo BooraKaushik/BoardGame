@@ -54,11 +54,33 @@ public interface Features {
   public void spaceIsClicked(int xcoord, int ycoord) throws IllegalArgumentException;
 
   /**
-   * Used to perform an action based on the type of action that is triggered.
+   * Used to perform pick an item action by a player.
    * 
-   * @param actionName The name/type of the action that was triggered
+   * @param itemName The name of the item to be picked
+   * @throws IllegalArgumentException When itemName is null or empty
    */
-  public void actionIsPerformed(String actionName);
+  public void pickItem(String itemName) throws IllegalArgumentException;
+
+  /**
+   * Used to perform an attack on the target character using the selected item.
+   * 
+   * @param itemName The name of the item to be used
+   * @throws IllegalArgumentException When itemName is null or empty
+   */
+  public void attackTarget(String itemName) throws IllegalArgumentException;
+
+  /**
+   * Used to perform the action of moving a pet to a different space.
+   * 
+   * @param spaceName The name of the space to move the pet to
+   * @throws IllegalArgumentException When spaceName is null or empty
+   */
+  public void movePet(String spaceName) throws IllegalArgumentException;
+
+  /**
+   * Used to perform look around action by a player.
+   */
+  public void lookAround();
 
   /**
    * Used to tell the controller that the user has clicked on start game.
@@ -69,10 +91,5 @@ public interface Features {
    * Used to move the screen from add player screen to Game screen.
    */
   public void showGameScreen();
-
-//  /**
-//   * Performs corresponding action when the key for picking an item is pressed.
-//   */
-//  public void pickItemIsPressed();
 
 }

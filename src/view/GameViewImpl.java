@@ -15,6 +15,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -152,23 +153,6 @@ public class GameViewImpl extends JFrame implements GameView {
   }
 
   @Override
-  public String displayInputPopup(String title, String[] options) {
-    if (title == null) {
-      throw new IllegalArgumentException("Title cant be null");
-    }
-    if (options == null) {
-      throw new IllegalArgumentException("Options cant be null");
-    }
-    if (options.length < 1) {
-      throw new IllegalArgumentException("Options cant be Empty");
-    }
-    String output = (String) JOptionPane.showInputDialog(this,
-        String.format("Choose an Option for %s", title), title, JOptionPane.INFORMATION_MESSAGE,
-        null, options, options[0]);
-    return output;
-  }
-
-  @Override
   public void setFeatures(Features featuresController) throws IllegalArgumentException {
     if (featuresController == null) {
       throw new IllegalArgumentException("Features controller cannot be null");
@@ -196,8 +180,12 @@ public class GameViewImpl extends JFrame implements GameView {
   }
 
   @Override
-  public void updateGameScreen() {
-    gameViewPanel.update();
-    gameViewPanel.repaint();
+  public void updateGameScreen(int delay) {
+    Timer timer = new Timer(delay, e -> {
+      gameViewPanel.update();
+      gameViewPanel.repaint();
+    });
+    timer.setRepeats(false);
+    timer.start();
   }
 }

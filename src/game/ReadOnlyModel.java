@@ -54,4 +54,18 @@ public interface ReadOnlyModel {
    */
   public int[] getCoordinates(String spaceName);
 
+  /**
+   * Generates a List of all the items present in the current turn player's space.
+   * 
+   * @return a list of items in the space.
+   */
+  public String[] getCurrentSpaceItems();
+  
+  /**
+   * Generates a List of all the items present with the current turn player.
+   * 
+   * @return a list of items with the player.
+   */
+  public String[] getCurrentPlayerItems();
+
 }
