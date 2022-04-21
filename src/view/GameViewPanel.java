@@ -33,6 +33,7 @@ public class GameViewPanel extends JPanel {
   private JLabel worldLabel;
   private List<ImageIcon> playerIcons;
   private JPanel worldPanel;
+  private JLabel targetLabel;
 
   /**
    * Constructor for GameViewPanel to create a new Game Screen.
@@ -84,15 +85,28 @@ public class GameViewPanel extends JPanel {
     this.worldPanel.add(worldLabel);
     JScrollPane scrollableWorld = new JScrollPane(worldPanel);
     this.add(scrollableWorld, BorderLayout.CENTER);
-    update();
   }
 
   /**
    * Update the position of the players in the world.
    */
   public void update() {
+    // adding Target character.
+    ImageIcon targetIcon = new ImageIcon("res/TargetCharacter.png");
+    Image targetImage = targetIcon.getImage();
+    Image newTargetImage = targetImage.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+    targetIcon = new ImageIcon(newTargetImage);
+    this.targetLabel = new JLabel(targetIcon);
+    this.targetLabel.setToolTipText("Target Character");
+    List<String> turnInfo = this.dataModel.getTurnInfo();
+    int[] targetCharacterCoordinates = this.dataModel.getCoordinates(turnInfo.get(3));
     int buffer = 30;
     int multiplicationFactor = 20;
+    this.targetLabel.setBounds(targetCharacterCoordinates[3] * multiplicationFactor + buffer,
+        targetCharacterCoordinates[0] * multiplicationFactor + buffer, 20, 20);
+    worldLabel.add(targetLabel);
+
+    // adding players.
     Map<String, List<Integer>> roomsInfo = new HashMap<>();
     String[][] playerList = dataModel.getAllPlayers();
 

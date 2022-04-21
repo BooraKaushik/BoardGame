@@ -1,5 +1,7 @@
 package game;
 
+import java.util.List;
+
 /**
  * Defines methods used by the View to read details directly from the model.
  *
@@ -32,7 +34,7 @@ public interface ReadOnlyModel {
    * 
    * @return A string in the format: Name,Type,SpaceName,TargetSpaceName
    */
-  public String getTurnInfo();
+  public List<String> getTurnInfo();
 
   /**
    * Generates a List that contains names of all the spaces that can be used while

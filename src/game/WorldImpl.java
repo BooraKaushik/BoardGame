@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -576,14 +577,13 @@ public final class WorldImpl implements World {
   }
 
   @Override
-  public String getTurnInfo() {
+  public List<String> getTurnInfo() {
     Player currentPlayer = allPlayers.get(currentTurnIndex);
     Space currentSpace = allSpaces.get(currentPlayer.getSpaceIndexOfPlayer());
     Space currentTargetSpace = allSpaces.get(target.getCurrentSpaceIndex());
 
-    String info = String.format("%s,%s,%s,%s", currentPlayer.getName(),
-        currentPlayer.getPlayerType(), currentSpace.getName(), currentTargetSpace.getName());
-    return info;
+    return new ArrayList<String>(Arrays.asList(currentPlayer.getName(),
+        currentPlayer.getPlayerType(), currentSpace.getName(), currentTargetSpace.getName()));
   }
 
   private boolean isNeighbour(List<Space> neighbours, String spaceName) {
