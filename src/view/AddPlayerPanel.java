@@ -68,8 +68,10 @@ public class AddPlayerPanel extends JPanel {
     buttonPane.setLayout(new BorderLayout());
     buttonPane.setBackground(new Color(76, 17, 49));
     this.addPlayers = new JButton("+ Add Players");
+    this.addPlayers.setFocusPainted(false);
     buttonPane.add(this.addPlayers, BorderLayout.WEST);
     this.startGame = new JButton("Start Game >");
+    this.startGame.setFocusPainted(false);
     buttonPane.add(this.startGame, BorderLayout.EAST);
     south.add(buttonPane, BorderLayout.CENTER);
 

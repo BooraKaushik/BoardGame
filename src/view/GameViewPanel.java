@@ -325,6 +325,7 @@ public class GameViewPanel extends JPanel {
    * 
    * Used to create a popup to pick an item from a space.
    * 
+   * @param featuresController controller instance to call appropriate method.
    * @throws IllegalArgumentException When featuresContoller is null
    */
   public void displayPickItemPopup(Features featuresController) throws IllegalArgumentException {
@@ -347,6 +348,7 @@ public class GameViewPanel extends JPanel {
    * 
    * Used to create a popup to choose an item for attacking the target.
    * 
+   * @param featuresController controller instance to call appropriate method.
    * @throws IllegalArgumentException When featuresContoller is null
    */
   public void displayAttackTargetPopup(Features featuresController)
@@ -371,6 +373,7 @@ public class GameViewPanel extends JPanel {
    * 
    * Used to create a popup to pick a space for moving the pet to.
    * 
+   * @param featuresController controller instance to call appropriate method.
    * @throws IllegalArgumentException When featuresContoller is null
    */
   public void displayMovePetPopup(Features featuresController) throws IllegalArgumentException {

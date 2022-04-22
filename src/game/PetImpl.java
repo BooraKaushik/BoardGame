@@ -12,8 +12,7 @@ public class PetImpl implements Pet {
    * A constructor of the PetImpl class to create an instance of the target's pet
    * with the given name and starting space.
    * 
-   * @param name               The name of the Pet
-   * @param startingSpaceIndex The starting space index of the pet.
+   * @param name The name of the Pet
    */
   public PetImpl(String name) {
     if (name == null) {
@@ -23,7 +22,7 @@ public class PetImpl implements Pet {
     if (name.length() == 0) {
       throw new IllegalArgumentException("Pet name cannot be an empty string");
     }
-    
+
     this.name = name;
     this.currentSpaceIndex = 0;
   }

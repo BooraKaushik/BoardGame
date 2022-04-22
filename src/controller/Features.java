@@ -10,8 +10,8 @@ public interface Features {
    * Updates the path of the world specification file that must be used to build
    * the world.
    * 
-   * @param mansionReadable The readable type which contains the new world
-   *                        specifications
+   * @param worldSpecification The string type which contains the new world
+   *                           specifications
    * @throws IllegalArgumentException When file readable is null
    */
   public void updateWorldSpecification(String worldSpecification) throws IllegalArgumentException;
