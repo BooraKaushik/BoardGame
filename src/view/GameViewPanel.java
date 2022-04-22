@@ -45,8 +45,6 @@ public class GameViewPanel extends JPanel {
   private JPanel eastResultLayout;
   private JPanel eastPlayerLayout;
   private JLabel turnIconLabel;
-  private final ImageIcon petIcon;
-  private JLabel petLabel;
 
   /**
    * Constructor for GameViewPanel to create a new Game Screen.
@@ -70,10 +68,6 @@ public class GameViewPanel extends JPanel {
     }
     this.worldPanel = new JPanel();
     this.targetLabel = new JLabel();
-
-    // PET
-    this.petIcon = new ImageIcon("res/Pet.png");
-    this.petLabel = new JLabel(petIcon);
 
     // EAST LAYOUT
     this.eastLayout = new JPanel();
@@ -108,7 +102,6 @@ public class GameViewPanel extends JPanel {
   public void update() {
 
     worldLabel.remove(this.targetLabel);
-    worldLabel.remove(this.petLabel);
 
     // adding Target character.
     ImageIcon targetIcon = new ImageIcon("res/TargetCharacter.png");
@@ -221,12 +214,16 @@ public class GameViewPanel extends JPanel {
         // EAST LAYOUT
 
         this.eastLayout.remove(this.eastTurnLayout);
-//        this.eastLayout.remove(this.eastResultLayout);
         this.eastLayout.remove(this.eastPlayerLayout);
 
+        String petString = "";
+        if (turnInfo.get(2).equals(this.dataModel.getCurrentSpaceOfPet())) {
+          petString = "Pet is in the Current Room";
+        }
+
         JLabel turnInformation = new JLabel(String.format(
-            "<html>Turn Info:<br> Player Name : %s<br> Location : %s<br> Type : %s </html>",
-            turnInfo.get(0), turnInfo.get(2), turnInfo.get(1)));
+            "<html>Turn Info:<br> Player Name : %s<br> Location : %s<br> Type : %s<br>%s </html>",
+            turnInfo.get(0), turnInfo.get(2), turnInfo.get(1), petString));
         turnInformation.setBounds(0, 0, 1000, 1000);
         this.eastTurnLayout = new JPanel();
         this.eastTurnLayout.setBackground(new Color(253, 202, 64));
@@ -235,14 +232,6 @@ public class GameViewPanel extends JPanel {
         this.eastTurnLayout.setMaximumSize(new Dimension(1500, 1500));
         this.eastLayout.add(this.eastTurnLayout);
 
-//        JLabel resultInfo = new JLabel("Results:");
-//        resultInfo.setBackground(Color.GRAY);
-//        resultInfo.setBounds(0, 0, 100, 100);
-//        this.eastResultLayout = new JPanel();
-//        this.eastResultLayout.setBackground(new Color(133, 218, 215));
-//        this.eastResultLayout.add(resultInfo);
-//        this.eastResultLayout.setMinimumSize(new Dimension(1500, 1500));
-//        this.eastResultLayout.setMaximumSize(new Dimension(1500, 1500));
         this.eastLayout.add(this.eastResultLayout);
 
         JLabel playerInfo = new JLabel("Player Data:");
@@ -270,7 +259,23 @@ public class GameViewPanel extends JPanel {
 
     this.eastLayout.remove(this.eastResultLayout);
     message.replace("\n", "<br>");
-    JLabel resultInfo = new JLabel(String.format("<html>Results:<br>%s</html>", message));
+    StringBuilder strBuilder = new StringBuilder();
+    int count = 0;
+    while (message.length() > count) {
+      if (count % 15 == 0) {
+        while (message.length() > count && message.charAt(count) != ' ') {
+          strBuilder.append(message.charAt(count));
+          count++;
+        }
+        strBuilder.append(" <br>");
+      }
+      if (message.length() > count) {
+        strBuilder.append(message.charAt(count));
+        count++;
+      }
+    }
+    JLabel resultInfo = new JLabel(
+        String.format("<html>Results:<br>%s</html>", strBuilder.toString()));
     resultInfo.setBackground(Color.GRAY);
     resultInfo.setBounds(0, 0, 100, 100);
     this.eastResultLayout = new JPanel();

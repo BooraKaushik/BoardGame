@@ -152,7 +152,7 @@ public class GameControllerImpl implements GameController, Features {
         new ArrayList<String>(Arrays.asList(name, startingLocation, isHuman ? "true" : "false")));
 
   }
-  
+
   @Override
   public void spaceIsClicked(int xcoord, int ycoord) throws IllegalArgumentException {
     if (xcoord < 0 || ycoord < 0) {
@@ -162,7 +162,7 @@ public class GameControllerImpl implements GameController, Features {
     try {
       String result = executeCmd(gameModel, Command.MOVE,
           new ArrayList<String>(Arrays.asList(String.valueOf(xcoord), String.valueOf(ycoord))));
-      gameView.updateGameScreen(result, false);
+      gameView.updateGameScreen(result);
       checkNextTurn();
     } catch (IllegalStateException ise) {
       gameView.displayPopupMessage(ise.getMessage(), "Error");
@@ -201,7 +201,7 @@ public class GameControllerImpl implements GameController, Features {
     if ("Computer".equals(computerOrNot)) {
       String result = executeCmd(gameModel, Command.PERFORM_COMPUTER_ACTION,
           new ArrayList<String>());
-      gameView.updateGameScreen(result, false);
+      gameView.updateGameScreen(result);
       checkNextTurn();
     }
   }
@@ -218,14 +218,15 @@ public class GameControllerImpl implements GameController, Features {
 
     String result = executeCmd(gameModel, Command.PICK_ITEM,
         new ArrayList<String>(Arrays.asList(itemName)));
-    gameView.updateGameScreen(result, false);
+    gameView.updateGameScreen(result);
     checkNextTurn();
   }
 
   @Override
   public void lookAround() {
     String result = executeCmd(gameModel, Command.LOOK_AROUND, new ArrayList<String>());
-    gameView.updateGameScreen(result, true);
+    gameView.updateGameScreen("");
+    gameView.displayPopupMessage(result, "LookAround");
     checkNextTurn();
   }
 
@@ -241,7 +242,7 @@ public class GameControllerImpl implements GameController, Features {
 
     String result = executeCmd(gameModel, Command.ATTACK_TARGET,
         new ArrayList<String>(Arrays.asList(itemName)));
-    gameView.updateGameScreen(result, false);
+    gameView.updateGameScreen(result);
     checkNextTurn();
   }
 
@@ -257,7 +258,7 @@ public class GameControllerImpl implements GameController, Features {
 
     String result = executeCmd(gameModel, Command.MOVE_PET,
         new ArrayList<String>(Arrays.asList(spaceName)));
-    gameView.updateGameScreen(result, false);
+    gameView.updateGameScreen(result);
     checkNextTurn();
   }
 

@@ -51,12 +51,10 @@ public interface GameView {
   /**
    * Updates the game screen after a turn has been performed.
    * 
-   * @param message        The message to be displayed as result of a turn
-   * @param displayInPopup Whether to display the message in a popup or not
+   * @param message The message to be displayed as result of a turn
    * @throws IllegalArgumentException When message is null
    */
-  public void updateGameScreen(String message, boolean displayInPopup)
-      throws IllegalArgumentException;
+  public void updateGameScreen(String message) throws IllegalArgumentException;
 
   /**
    * Sets the features of the controller as call backs to event listeners that the

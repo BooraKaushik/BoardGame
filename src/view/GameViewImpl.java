@@ -15,6 +15,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -23,7 +25,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class GameViewImpl extends JFrame implements GameView {
   private static final long serialVersionUID = -2179965453492637485L;
 
-  private final ReadOnlyModel dataModel;
   private final JMenu menu;
   private final JMenuItem newGame;
   private final JMenuItem newWorld;
@@ -80,7 +81,6 @@ public class GameViewImpl extends JFrame implements GameView {
     pack();
     setVisible(true);
 
-    this.dataModel = dataModel;
     this.gameViewPanel = new GameViewPanel(dataModel);
     this.addPlayerPanel = new AddPlayerPanel(dataModel);
     this.welcomePanel = new WelcomePanel();
@@ -134,6 +134,13 @@ public class GameViewImpl extends JFrame implements GameView {
     }
     if ("Error".equals(type)) {
       JOptionPane.showMessageDialog(this, message, type, JOptionPane.ERROR_MESSAGE);
+    } else if ("LookAround".equals(type)) {
+      JTextArea data = new JTextArea(message);
+      JScrollPane dataScroll = new JScrollPane(data);
+      data.setLineWrap(true);
+      data.setWrapStyleWord(true);
+      dataScroll.setPreferredSize(new Dimension(500, 500));
+      JOptionPane.showMessageDialog(this, dataScroll, type, JOptionPane.PLAIN_MESSAGE);
     } else {
       JOptionPane.showMessageDialog(this, message, type, JOptionPane.PLAIN_MESSAGE);
     }
@@ -185,18 +192,11 @@ public class GameViewImpl extends JFrame implements GameView {
   }
 
   @Override
-  public void updateGameScreen(String message, boolean displayInPopup)
-      throws IllegalArgumentException {
+  public void updateGameScreen(String message) throws IllegalArgumentException {
     if (message == null) {
       throw new IllegalArgumentException("Message cannot be null");
     }
-
-    if (displayInPopup) {
-      gameViewPanel.updateResult("");
-      displayPopupMessage(message, "");
-    } else {
-      gameViewPanel.updateResult(message);
-    }
+    gameViewPanel.updateResult(message);
 
     gameViewPanel.update();
     gameViewPanel.repaint();
