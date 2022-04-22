@@ -60,12 +60,19 @@ public interface ReadOnlyModel {
    * @return a list of items in the space.
    */
   public String[] getCurrentSpaceItems();
-  
+
   /**
    * Generates a List of all the items present with the current turn player.
    * 
    * @return a list of items with the player.
    */
   public String[] getCurrentPlayerItems();
+
+  /**
+   * Gets the name of Space in which the pet is currently present in.
+   * 
+   * @return Name of the Space in which the pet is present
+   */
+  public String getCurrentSpaceOfPet();
 
 }

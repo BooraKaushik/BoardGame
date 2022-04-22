@@ -56,10 +56,4 @@ public interface World extends GameWorld {
   public boolean isPlayerVisible(String firstPlayername, String secondPlayerName)
       throws IllegalArgumentException;
 
-  /**
-   * Gets the name of Space in which the pet is currently present in.
-   * 
-   * @return Name of the Space in which the pet is present
-   */
-  public String getCurrentSpaceOfPet();
 }

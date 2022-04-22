@@ -45,6 +45,8 @@ public class GameViewPanel extends JPanel {
   private JPanel eastResultLayout;
   private JPanel eastPlayerLayout;
   private JLabel turnIconLabel;
+  private final ImageIcon petIcon;
+  private JLabel petLabel;
 
   /**
    * Constructor for GameViewPanel to create a new Game Screen.
@@ -68,6 +70,10 @@ public class GameViewPanel extends JPanel {
     }
     this.worldPanel = new JPanel();
     this.targetLabel = new JLabel();
+
+    // PET
+    this.petIcon = new ImageIcon("res/Pet.png");
+    this.petLabel = new JLabel(petIcon);
 
     // EAST LAYOUT
     this.eastLayout = new JPanel();
@@ -102,10 +108,14 @@ public class GameViewPanel extends JPanel {
   public void update() {
 
     worldLabel.remove(this.targetLabel);
+    worldLabel.remove(this.petLabel);
+
     // adding Target character.
     ImageIcon targetIcon = new ImageIcon("res/TargetCharacter.png");
     Image targetImage = targetIcon.getImage();
-    Image newTargetImage = targetImage.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+    int dimensions = 20;
+    Image newTargetImage = targetImage.getScaledInstance(dimensions, dimensions,
+        java.awt.Image.SCALE_SMOOTH);
     targetIcon = new ImageIcon(newTargetImage);
     this.targetLabel = new JLabel(targetIcon);
     this.targetLabel.setToolTipText("Target Character");
@@ -114,7 +124,7 @@ public class GameViewPanel extends JPanel {
     int buffer = 30;
     int multiplicationFactor = 20;
     this.targetLabel.setBounds(targetCharacterCoordinates[3] * multiplicationFactor + buffer,
-        targetCharacterCoordinates[0] * multiplicationFactor + buffer, 20, 20);
+        targetCharacterCoordinates[0] * multiplicationFactor + buffer, dimensions, dimensions);
     worldLabel.add(targetLabel);
 
     // adding players.
@@ -141,7 +151,6 @@ public class GameViewPanel extends JPanel {
     }
 
     for (Map.Entry<String, List<Integer>> entry : roomsInfo.entrySet()) {
-      int dimensions = 20;
       Double roomAreay = Math
           .ceil(((entry.getValue().get(2) - entry.getValue().get(0)) * multiplicationFactor)
               / (dimensions));
@@ -153,16 +162,14 @@ public class GameViewPanel extends JPanel {
       int accomodatesx = 0;
       int accomodatesy = 0;
       int dimMultiplication = multiplicationFactor;
+      int roomHeight = (entry.getValue().get(2) - entry.getValue().get(0)) * multiplicationFactor;
+      int roomWidth = (entry.getValue().get(3) - entry.getValue().get(1)) * multiplicationFactor;
 
       if (entry.getValue().get(4) > accomodates) {
         dimensions = dimensions / 2;
         dimMultiplication = dimMultiplication / 2;
-        roomAreay = Math
-            .ceil(((entry.getValue().get(2) - entry.getValue().get(0)) * multiplicationFactor)
-                / (dimensions));
-        roomAreax = Math
-            .ceil(((entry.getValue().get(3) - entry.getValue().get(1)) * multiplicationFactor)
-                / dimensions);
+        roomAreay = Math.ceil((roomHeight) / (dimensions));
+        roomAreax = Math.ceil((roomWidth) / dimensions);
       }
 
       for (int player = 5; player < entry.getValue().size(); player++) {
