@@ -17,11 +17,6 @@ public interface Features {
   public void updateWorldSpecification(String worldSpecification) throws IllegalArgumentException;
 
   /**
-   * Used to exit the game.
-   */
-  public void exit();
-
-  /**
    * Used to add a player into the game.
    * 
    * @param name             The name of the player to be added
@@ -33,13 +28,6 @@ public interface Features {
    */
   public void addPlayer(String name, String startingLocation, boolean isHuman)
       throws IllegalArgumentException;
-
-  /**
-   * Used to perform an action based on the key that is pressed.
-   * 
-   * @param keyName The key that is pressed by the user
-   */
-  public void keyIsPressed(String keyName);
 
   /**
    * Used to perform an action based on the mouse click.

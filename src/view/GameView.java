@@ -34,7 +34,7 @@ public interface GameView {
    * @param type    Type of pop up that has to be created (example Error, message,
    *                etc).
    * 
-   * @throws IllegalArgumentException WHen meesage or type is null or empty
+   * @throws IllegalArgumentException When message or type is null or empty
    */
   public void displayPopupMessage(String message, String type) throws IllegalArgumentException;
 
@@ -51,9 +51,12 @@ public interface GameView {
   /**
    * Updates the game screen after a turn has been performed.
    * 
-   * @param delay The time to wait for before updating the UI
+   * @param message        The message to be displayed as result of a turn
+   * @param displayInPopup Whether to display the message in a popup or not
+   * @throws IllegalArgumentException When message is null
    */
-  public void updateGameScreen(int delay);
+  public void updateGameScreen(String message, boolean displayInPopup)
+      throws IllegalArgumentException;
 
   /**
    * Sets the features of the controller as call backs to event listeners that the
@@ -63,5 +66,10 @@ public interface GameView {
    * @throws IllegalArgumentException When features controller is null
    */
   public void setFeatures(Features featuresController) throws IllegalArgumentException;
+
+  /**
+   * Used to exit the game window.
+   */
+  public void exitGame();
 
 }

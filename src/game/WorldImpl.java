@@ -517,6 +517,12 @@ public final class WorldImpl implements World {
       throw new IllegalArgumentException("Starting space name cannot be empty string.");
     }
 
+    for (Player player : allPlayers) {
+      if (player.getName().equals(name)) {
+        throw new IllegalArgumentException("A player with the same name already exists");
+      }
+    }
+
     int spaceIndex = getIndexOfSpace(startingSpaceName);
 
     if (spaceIndex == -1) {
@@ -763,14 +769,15 @@ public final class WorldImpl implements World {
         int input = currentPlayer.chooseAction(this.random, 4) + 1;
         Space currentPlayerSpace = allSpaces.get(currentPlayer.getSpaceIndexOfPlayer());
         List<Item> currentSpaceItems = currentPlayerSpace.getItemsInSpace();
-        if (currentSpaceItems.size() == 0 && input == 2) {
+        if (input == 2 && (currentSpaceItems.size() == 0
+            || currentPlayer.getPlayerItems().size() == currentPlayer.getMaxNumOfItems())) {
           continue;
         }
         switch (input) {
           case 1:
             List<Space> neighbours = getNeighboursAsList(currentPlayerSpace.getName());
             Space space = neighbours.get(currentPlayer.chooseAction(random, neighbours.size()));
-            res = movePlayerInWorld((space.getTopLeftX() * scaleFactor) + buffer,
+            res = movePlayerInWorld((space.getTopLeftY() * scaleFactor) + buffer,
                 (space.getTopLeftX() * scaleFactor) + buffer);
             exit = true;
             break;
@@ -783,13 +790,21 @@ public final class WorldImpl implements World {
             break;
 
           case 3:
-            res = lookAroundByPlayer();
+            lookAroundByPlayer();
+            res = "Looking Around...";
             exit = true;
             break;
 
           case 4:
-            String spaceNameForPetMovement = allSpaces
-                .get(currentPlayer.chooseAction(random, allSpaces.size())).getName();
+            String spaceNameForPetMovement = "";
+            while (true) {
+              spaceNameForPetMovement = allSpaces
+                  .get(currentPlayer.chooseAction(random, allSpaces.size())).getName();
+              if (!spaceNameForPetMovement
+                  .equals(allSpaces.get(pet.getCurrentSpaceIndex()).getName())) {
+                break;
+              }
+            }
             res = movePetByPlayer(spaceNameForPetMovement);
             exit = true;
             break;
@@ -906,7 +921,10 @@ public final class WorldImpl implements World {
       removeItemFromPlayer(currentPlayer, itemName);
     }
 
-    increaseTurnIndex(true);
+    if (!gameOver) {
+      increaseTurnIndex(true);
+    }
+
     return msg;
   }
 
@@ -968,8 +986,17 @@ public final class WorldImpl implements World {
   }
 
   @Override
-  public boolean isGameOver() {
-    return gameOver;
+  public String isGameOver() {
+    String message = "";
+    if (gameOver) {
+      if (numOfTurns > 0) {
+        message = String.format("Game is completed. %s has won the game!",
+            allPlayers.get(currentTurnIndex).getName());
+      } else {
+        message = "Game ended in a draw!";
+      }
+    }
+    return message;
   }
 
   @Override
