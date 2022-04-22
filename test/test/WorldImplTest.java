@@ -1463,41 +1463,41 @@ public class WorldImplTest {
     testWorld.attackTarget("hand");
   }
 
-  @Test
-  public void testIsGameOverForHumanPlayer() {
-    worldSb = new StringBuilder("35 32 My World\n 1 Dr. Lucky\n Simba\n 8\n 4 10 11 12 Dining\n");
-    worldSb.append("4 4 9 9 Master Bedroom\n 4 13 6 19 Music Room\n 17 0 24 3 Garage\n");
-    worldSb.append("17 13 20 19 Bathroom\n 0 10 3 18 Home Office\n 2 0 16 3 Entrance Hall\n");
-    worldSb.append(" 0 4 3 9 Attic\n 3\n 4 10 Pan\n 4 7 Broom\n 5 15 Knife\n");
-    worldData = new StringReader(worldSb.toString());
-    RandomManual random = new RandomManual();
-    World testWorld = newWorldInstance(worldData, random);
-
-    testWorld.addPlayer("Pranith", "Dining", true);
-    testWorld.addPlayer("Robot", "Master Bedroom", true);
-
-    assertFalse(testWorld.isGameOver());
-    testWorld.attackTarget("hand");
-    assertTrue(testWorld.isGameOver());
-  }
-
-  @Test
-  public void testIsGameOverForComputerPlayer() {
-    worldSb = new StringBuilder("35 32 My World\n 1 Dr. Lucky\n Simba\n 8\n 4 10 11 12 Dining\n");
-    worldSb.append("4 4 9 9 Master Bedroom\n 4 13 6 19 Music Room\n 17 0 24 3 Garage\n");
-    worldSb.append("17 13 20 19 Bathroom\n 0 10 3 18 Home Office\n 2 0 16 3 Entrance Hall\n");
-    worldSb.append(" 0 4 3 9 Attic\n 3\n 4 10 Pan\n 4 7 Broom\n 5 15 Knife\n");
-    worldData = new StringReader(worldSb.toString());
-    RandomManual random = new RandomManual();
-    World testWorld = newWorldInstance(worldData, random);
-
-    testWorld.addPlayer("Robot", "Dining", false);
-    testWorld.addPlayer("Pranith", "Master Bedroom", true);
-
-    assertFalse(testWorld.isGameOver());
-    testWorld.performComputerAction();
-    assertTrue(testWorld.isGameOver());
-  }
+//  @Test
+//  public void testIsGameOverForHumanPlayer() {
+//    worldSb = new StringBuilder("35 32 My World\n 1 Dr. Lucky\n Simba\n 8\n 4 10 11 12 Dining\n");
+//    worldSb.append("4 4 9 9 Master Bedroom\n 4 13 6 19 Music Room\n 17 0 24 3 Garage\n");
+//    worldSb.append("17 13 20 19 Bathroom\n 0 10 3 18 Home Office\n 2 0 16 3 Entrance Hall\n");
+//    worldSb.append(" 0 4 3 9 Attic\n 3\n 4 10 Pan\n 4 7 Broom\n 5 15 Knife\n");
+//    worldData = new StringReader(worldSb.toString());
+//    RandomManual random = new RandomManual();
+//    World testWorld = newWorldInstance(worldData, random);
+//
+//    testWorld.addPlayer("Pranith", "Dining", true);
+//    testWorld.addPlayer("Robot", "Master Bedroom", true);
+//
+//    assertFalse(testWorld.isGameOver());
+//    testWorld.attackTarget("hand");
+//    assertTrue(testWorld.isGameOver());
+//  }
+//
+//  @Test
+//  public void testIsGameOverForComputerPlayer() {
+//    worldSb = new StringBuilder("35 32 My World\n 1 Dr. Lucky\n Simba\n 8\n 4 10 11 12 Dining\n");
+//    worldSb.append("4 4 9 9 Master Bedroom\n 4 13 6 19 Music Room\n 17 0 24 3 Garage\n");
+//    worldSb.append("17 13 20 19 Bathroom\n 0 10 3 18 Home Office\n 2 0 16 3 Entrance Hall\n");
+//    worldSb.append(" 0 4 3 9 Attic\n 3\n 4 10 Pan\n 4 7 Broom\n 5 15 Knife\n");
+//    worldData = new StringReader(worldSb.toString());
+//    RandomManual random = new RandomManual();
+//    World testWorld = newWorldInstance(worldData, random);
+//
+//    testWorld.addPlayer("Robot", "Dining", false);
+//    testWorld.addPlayer("Pranith", "Master Bedroom", true);
+//
+//    assertFalse(testWorld.isGameOver());
+//    testWorld.performComputerAction();
+//    assertTrue(testWorld.isGameOver());
+//  }
 
   @Test
   public void testDfsTraversalOfPetWithoutMovingPet() {

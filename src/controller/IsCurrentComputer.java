@@ -3,17 +3,17 @@ package controller;
 import game.GameWorld;
 
 /**
- * A class which is used as a command to execute the corresponding method in
- * GameWorld model to determine if the game is completed when a player won.
+ * A class which is used as a command to return if the cureent turn player is a
+ * computer or a human.
  */
-public class IsGameOver implements GameCommand {
+public class IsCurrentComputer implements GameCommand {
 
   private String output;
 
   /**
-   * A constructor to create instance of the command class IsGameOver.
+   * A constructor to create instance of the command class IsCurrentComputer.
    */
-  public IsGameOver() {
+  public IsCurrentComputer() {
     this.output = "";
   }
 
@@ -22,13 +22,13 @@ public class IsGameOver implements GameCommand {
     if (model == null) {
       throw new IllegalArgumentException("GameWorld or Appendable cannot be null");
     }
-    String result = model.isGameOver();
+    String result = model.getTurnInfo().get(1);
     this.output = result;
   }
 
   @Override
   public String getOutput() {
-    return String.valueOf(output);
+    return output;
   }
 
 }

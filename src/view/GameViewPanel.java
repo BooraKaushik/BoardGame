@@ -181,7 +181,8 @@ public class GameViewPanel extends JPanel {
             public void mouseClicked(MouseEvent e) {
               eastLayout.remove(eastPlayerLayout);
               String data = dataModel.getPlayerInfo(turnInfo.get(0)).replace("\n", "<br>");
-              JLabel playerInfo = new JLabel(String.format("<html>%s</html>", data));
+              JLabel playerInfo = new JLabel(
+                  String.format("<html>Player Data:<br>%s</html>", data));
               playerInfo.setBackground(Color.GRAY);
               playerInfo.setBounds(0, 0, 100, 100);
               eastPlayerLayout = new JPanel();
@@ -213,7 +214,7 @@ public class GameViewPanel extends JPanel {
         // EAST LAYOUT
 
         this.eastLayout.remove(this.eastTurnLayout);
-        this.eastLayout.remove(this.eastResultLayout);
+//        this.eastLayout.remove(this.eastResultLayout);
         this.eastLayout.remove(this.eastPlayerLayout);
 
         JLabel turnInformation = new JLabel(String.format(
@@ -227,14 +228,14 @@ public class GameViewPanel extends JPanel {
         this.eastTurnLayout.setMaximumSize(new Dimension(1500, 1500));
         this.eastLayout.add(this.eastTurnLayout);
 
-        JLabel resultInfo = new JLabel("Results:");
-        resultInfo.setBackground(Color.GRAY);
-        resultInfo.setBounds(0, 0, 100, 100);
-        this.eastResultLayout = new JPanel();
-        this.eastResultLayout.setBackground(new Color(133, 218, 215));
-        this.eastResultLayout.add(resultInfo);
-        this.eastResultLayout.setMinimumSize(new Dimension(1500, 1500));
-        this.eastResultLayout.setMaximumSize(new Dimension(1500, 1500));
+//        JLabel resultInfo = new JLabel("Results:");
+//        resultInfo.setBackground(Color.GRAY);
+//        resultInfo.setBounds(0, 0, 100, 100);
+//        this.eastResultLayout = new JPanel();
+//        this.eastResultLayout.setBackground(new Color(133, 218, 215));
+//        this.eastResultLayout.add(resultInfo);
+//        this.eastResultLayout.setMinimumSize(new Dimension(1500, 1500));
+//        this.eastResultLayout.setMaximumSize(new Dimension(1500, 1500));
         this.eastLayout.add(this.eastResultLayout);
 
         JLabel playerInfo = new JLabel("Player Data:");
@@ -270,7 +271,9 @@ public class GameViewPanel extends JPanel {
     this.eastResultLayout.add(resultInfo);
     this.eastResultLayout.setMinimumSize(new Dimension(1500, 1500));
     this.eastResultLayout.setMaximumSize(new Dimension(1500, 1500));
+    this.eastLayout.add(this.eastTurnLayout);
     this.eastLayout.add(this.eastResultLayout);
+    this.eastLayout.add(this.eastPlayerLayout);
     this.eastLayout.revalidate();
   }
 

@@ -127,11 +127,12 @@ public interface GameWorld extends ReadOnlyModel {
   public String attackTarget(String itemName) throws IllegalArgumentException;
 
   /**
-   * Returns if the game is completed after a player has won the game.
+   * Returns a message if game is completed or an empty string if game is not
+   * completed.
    * 
-   * @return True/False based on if the game is completed or not
+   * @return A message that should be displayed to the user
    */
-  public boolean isGameOver();
+  public String isGameOver();
 
   /**
    * Returns the number of turns that are remaining in the game.

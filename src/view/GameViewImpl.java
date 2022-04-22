@@ -15,7 +15,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.Timer;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -67,7 +66,7 @@ public class GameViewImpl extends JFrame implements GameView {
     exit = new JMenuItem("Exit");
 
     exit.addActionListener(event -> {
-      this.dispose();
+
     });
 
     menu.add(newGame);
@@ -85,6 +84,11 @@ public class GameViewImpl extends JFrame implements GameView {
     this.gameViewPanel = new GameViewPanel(dataModel);
     this.addPlayerPanel = new AddPlayerPanel(dataModel);
     this.welcomePanel = new WelcomePanel();
+  }
+
+  @Override
+  public void exitGame() {
+    this.dispose();
   }
 
   @Override
@@ -181,12 +185,20 @@ public class GameViewImpl extends JFrame implements GameView {
   }
 
   @Override
-  public void updateGameScreen(int delay) {
-    Timer timer = new Timer(delay, e -> {
-      gameViewPanel.update();
-      gameViewPanel.repaint();
-    });
-    timer.setRepeats(false);
-    timer.start();
+  public void updateGameScreen(String message, boolean displayInPopup)
+      throws IllegalArgumentException {
+    if (message == null) {
+      throw new IllegalArgumentException("Message cannot be null");
+    }
+
+    if (displayInPopup) {
+      gameViewPanel.updateResult("");
+      displayPopupMessage(message, "");
+    } else {
+      gameViewPanel.updateResult(message);
+    }
+
+    gameViewPanel.update();
+    gameViewPanel.repaint();
   }
 }
