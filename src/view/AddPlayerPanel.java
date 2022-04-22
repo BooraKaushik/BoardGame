@@ -114,7 +114,7 @@ public class AddPlayerPanel extends JPanel {
 
     this.addPlayers.addActionListener(event -> {
       if (this.dataModel.getAllPlayers().length < 10) {
-        this.displayAddPlayerPopup(featuresController);
+        featuresController.addPlayerIsClicked();
       } else {
         this.displayPopup("Cannot add more than 10 Players");
       }
@@ -124,8 +124,11 @@ public class AddPlayerPanel extends JPanel {
   /**
    * Creates a Add Player Popup that prompts user to enter the information to add
    * player.
+   * 
+   * @param featuresController The features of the controller that the view uses
+   * @throws IllegalArgumentException When features controller is null
    */
-  private void displayAddPlayerPopup(Features featuresController) {
+  public void displayAddPlayerPopup(Features featuresController) throws IllegalArgumentException {
 
     if (featuresController == null) {
       throw new IllegalArgumentException("Features controller cannot be null");
@@ -158,16 +161,12 @@ public class AddPlayerPanel extends JPanel {
         JOptionPane.OK_CANCEL_OPTION);
 
     if (result == JOptionPane.OK_OPTION) {
-      if (name.getText().length() <= 0) {
-        this.displayPopup("Invalid Name");
-      } else {
-        try {
-          featuresController.addPlayer(name.getText(), roomList.getSelectedItem().toString(),
-              typeList.getSelectedItem().toString().equals("Human"));
-          this.updateAddPlayers();
-        } catch (IllegalArgumentException iae) {
-          this.displayPopup(iae.getMessage());
-        }
+      try {
+        featuresController.addPlayer(name.getText(), roomList.getSelectedItem().toString(),
+            typeList.getSelectedItem().toString().equals("Human"));
+        this.updateAddPlayers();
+      } catch (IllegalArgumentException iae) {
+        this.displayPopup(iae.getMessage());
       }
     }
   }

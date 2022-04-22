@@ -214,7 +214,6 @@ public class GameViewPanel extends JPanel {
         // EAST LAYOUT
 
         this.eastLayout.remove(this.eastTurnLayout);
-//        this.eastLayout.remove(this.eastResultLayout);
         this.eastLayout.remove(this.eastPlayerLayout);
 
         JLabel turnInformation = new JLabel(String.format(
@@ -227,15 +226,6 @@ public class GameViewPanel extends JPanel {
         this.eastTurnLayout.setMinimumSize(new Dimension(1500, 1500));
         this.eastTurnLayout.setMaximumSize(new Dimension(1500, 1500));
         this.eastLayout.add(this.eastTurnLayout);
-
-//        JLabel resultInfo = new JLabel("Results:");
-//        resultInfo.setBackground(Color.GRAY);
-//        resultInfo.setBounds(0, 0, 100, 100);
-//        this.eastResultLayout = new JPanel();
-//        this.eastResultLayout.setBackground(new Color(133, 218, 215));
-//        this.eastResultLayout.add(resultInfo);
-//        this.eastResultLayout.setMinimumSize(new Dimension(1500, 1500));
-//        this.eastResultLayout.setMaximumSize(new Dimension(1500, 1500));
         this.eastLayout.add(this.eastResultLayout);
 
         JLabel playerInfo = new JLabel("Player Data:");
@@ -311,6 +301,73 @@ public class GameViewPanel extends JPanel {
   }
 
   /**
+   * 
+   * Used to create a popup to pick an item from a space.
+   * 
+   * @throws IllegalArgumentException When featuresContoller is null
+   */
+  public void displayPickItemPopup(Features featuresController) throws IllegalArgumentException {
+    if (featuresController == null) {
+      throw new IllegalArgumentException("Features controller cannot be null");
+    }
+
+    String[] options = dataModel.getCurrentSpaceItems();
+    if (options.length < 1) {
+      displayErrorPopup("No items in the space");
+      return;
+    }
+    String selectedOption = displayInputPopup("Item", options);
+    if (!"".equals(selectedOption)) {
+      featuresController.pickItem(selectedOption);
+    }
+  }
+
+  /**
+   * 
+   * Used to create a popup to choose an item for attacking the target.
+   * 
+   * @throws IllegalArgumentException When featuresContoller is null
+   */
+  public void displayAttackTargetPopup(Features featuresController)
+      throws IllegalArgumentException {
+    if (featuresController == null) {
+      throw new IllegalArgumentException("Features controller cannot be null");
+    }
+
+    List<String> turnInfo = dataModel.getTurnInfo();
+
+    if (!turnInfo.get(2).equals(turnInfo.get(3))) {
+      displayErrorPopup("Target is not present in the space");
+      return;
+    }
+    String selectedOption = displayInputPopup("Item", dataModel.getCurrentPlayerItems());
+    if (!"".equals(selectedOption)) {
+      featuresController.attackTarget(selectedOption);
+    }
+  }
+
+  /**
+   * 
+   * Used to create a popup to pick a space for moving the pet to.
+   * 
+   * @throws IllegalArgumentException When featuresContoller is null
+   */
+  public void displayMovePetPopup(Features featuresController) throws IllegalArgumentException {
+    if (featuresController == null) {
+      throw new IllegalArgumentException("Features controller cannot be null");
+    }
+
+    String selectedOption = displayInputPopup("Space", dataModel.getAllSpaces());
+    if (!"".equals(selectedOption)) {
+      try {
+        featuresController.movePet(selectedOption);
+      } catch (IllegalArgumentException ie) {
+        displayErrorPopup(ie.getMessage());
+      }
+    }
+  }
+
+  /**
    * Displays Error Messages with a Pop up.
    * 
    * @param message message that has to be displayed in pop up.
@@ -345,15 +402,7 @@ public class GameViewPanel extends JPanel {
       @Override
       public void keyTyped(KeyEvent e) {
         if ("p".equals(String.valueOf(e.getKeyChar()))) {
-          String[] options = dataModel.getCurrentSpaceItems();
-          if (options.length < 1) {
-            displayErrorPopup("No items in the space");
-            return;
-          }
-          String selectedOption = displayInputPopup("Item", options);
-          if (!"".equals(selectedOption)) {
-            featuresController.pickItem(selectedOption);
-          }
+          featuresController.pickItemIsPressed();
         }
 
         if ("l".equals(String.valueOf(e.getKeyChar()))) {
@@ -361,27 +410,11 @@ public class GameViewPanel extends JPanel {
         }
 
         if ("a".equals(String.valueOf(e.getKeyChar()))) {
-          List<String> turnInfo = dataModel.getTurnInfo();
-
-          if (!turnInfo.get(2).equals(turnInfo.get(3))) {
-            displayErrorPopup("Target is not present in the space");
-            return;
-          }
-          String selectedOption = displayInputPopup("Item", dataModel.getCurrentPlayerItems());
-          if (!"".equals(selectedOption)) {
-            featuresController.attackTarget(selectedOption);
-          }
+          featuresController.attackTargetIsPressed();
         }
 
         if ("m".equals(String.valueOf(e.getKeyChar()))) {
-          String selectedOption = displayInputPopup("Space", dataModel.getAllSpaces());
-          if (!"".equals(selectedOption)) {
-            try {
-              featuresController.movePet(selectedOption);
-            } catch (IllegalArgumentException ie) {
-              displayErrorPopup(ie.getMessage());
-            }
-          }
+          featuresController.movePetIsPressed();
         }
       }
     });

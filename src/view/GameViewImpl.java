@@ -201,4 +201,41 @@ public class GameViewImpl extends JFrame implements GameView {
     gameViewPanel.update();
     gameViewPanel.repaint();
   }
+
+  @Override
+  public void displayAddPlayerPopup(Features featuresController) throws IllegalArgumentException {
+    if (featuresController == null) {
+      throw new IllegalArgumentException("Features controller cannot be null");
+    }
+
+    addPlayerPanel.displayAddPlayerPopup(featuresController);
+  }
+
+  @Override
+  public void displayPickItemPopup(Features featuresController) throws IllegalArgumentException {
+    if (featuresController == null) {
+      throw new IllegalArgumentException("Features controller cannot be null");
+    }
+
+    gameViewPanel.displayPickItemPopup(featuresController);
+  }
+
+  @Override
+  public void displayAttackTargetPopup(Features featuresController)
+      throws IllegalArgumentException {
+    if (featuresController == null) {
+      throw new IllegalArgumentException("Features controller cannot be null");
+    }
+
+    gameViewPanel.displayAttackTargetPopup(featuresController);
+  }
+
+  @Override
+  public void displayMovePetPopup(Features featuresController) throws IllegalArgumentException {
+    if (featuresController == null) {
+      throw new IllegalArgumentException("Features controller cannot be null");
+    }
+
+    gameViewPanel.displayMovePetPopup(featuresController);
+  }
 }
