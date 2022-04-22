@@ -76,6 +76,26 @@ public interface Features {
   public void startGameIsClicked();
 
   /**
+   * Used to tell the controller that the user has clicked on add player.
+   */
+  public void addPlayerIsClicked();
+
+  /**
+   * Used to tell the controller that the user choosed to pick item.
+   */
+  public void pickItemIsPressed();
+
+  /**
+   * Used to tell the controller that the user choosed to attack target.
+   */
+  public void attackTargetIsPressed();
+
+  /**
+   * Used to tell the controller that the user choosed to move pet.
+   */
+  public void movePetIsPressed();
+
+  /**
    * Used to move the screen from add player screen to Game screen.
    */
   public void showGameScreen();

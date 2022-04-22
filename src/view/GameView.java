@@ -66,6 +66,38 @@ public interface GameView {
   public void setFeatures(Features featuresController) throws IllegalArgumentException;
 
   /**
+   * Displays the add player popup in add player screen panel.
+   * 
+   * @param featuresController The features controller that the view uses
+   * @throws IllegalArgumentException When features controller is null
+   */
+  public void displayAddPlayerPopup(Features featuresController) throws IllegalArgumentException;
+
+  /**
+   * Displays the pick item popup in game view screen panel.
+   * 
+   * @param featuresController The features controller that the view uses
+   * @throws IllegalArgumentException When features controller is null
+   */
+  public void displayPickItemPopup(Features featuresController) throws IllegalArgumentException;
+
+  /**
+   * Displays the attack target popup in game view screen panel.
+   * 
+   * @param featuresController The features controller that the view uses
+   * @throws IllegalArgumentException When features controller is null
+   */
+  public void displayAttackTargetPopup(Features featuresController) throws IllegalArgumentException;
+
+  /**
+   * Displays the move pet popup in game view screen panel.
+   * 
+   * @param featuresController The features controller that the view uses
+   * @throws IllegalArgumentException When features controller is null
+   */
+  public void displayMovePetPopup(Features featuresController) throws IllegalArgumentException;
+
+  /**
    * Used to exit the game window.
    */
   public void exitGame();

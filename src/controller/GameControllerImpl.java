@@ -145,6 +145,9 @@ public class GameControllerImpl implements GameController, Features {
     if (name == null) {
       throw new IllegalArgumentException("Name Cant be null");
     }
+    if (name.length() <= 0) {
+      throw new IllegalArgumentException("Invalid name");
+    }
     if (startingLocation == null) {
       throw new IllegalArgumentException("Starting Location Cant be null");
     }
@@ -260,6 +263,27 @@ public class GameControllerImpl implements GameController, Features {
         new ArrayList<String>(Arrays.asList(spaceName)));
     gameView.updateGameScreen(result);
     checkNextTurn();
+  }
+
+  @Override
+  public void addPlayerIsClicked() {
+    gameView.displayAddPlayerPopup(this);
+  }
+
+  @Override
+  public void pickItemIsPressed() {
+    gameView.displayPickItemPopup(this);
+  }
+
+  @Override
+  public void attackTargetIsPressed() {
+    gameView.displayAttackTargetPopup(this);
+
+  }
+
+  @Override
+  public void movePetIsPressed() {
+    gameView.displayMovePetPopup(this);
   }
 
 }
