@@ -66,7 +66,7 @@ public class GameViewPanel extends JPanel {
     this.playerLabelIcons = new ArrayList<JLabel>();
     this.scrollableWorld = new JScrollPane();
     for (int player = 0; player < 10; player++) {
-      playerIcons.add(new ImageIcon(String.format("res/%d.png", player + 1)));
+      playerIcons.add(new ImageIcon(String.format("%d.png", player + 1)));
     }
     this.worldPanel = new JPanel();
     this.targetLabel = new JLabel();
@@ -91,7 +91,7 @@ public class GameViewPanel extends JPanel {
    * @throws IllegalStateException When the layout cannot be created
    */
   public void createWorldLayout() throws IllegalStateException {
-    worldLabel = new JLabel(new ImageIcon("res/TheWorld.png"));
+    worldLabel = new JLabel(new ImageIcon("TheWorld.png"));
     worldLabel.setLayout(null);
     this.worldPanel.setLayout(new GridBagLayout());
     this.worldPanel.add(worldLabel);
@@ -107,7 +107,7 @@ public class GameViewPanel extends JPanel {
     worldLabel.remove(this.targetLabel);
 
     // adding Target character.
-    ImageIcon targetIcon = new ImageIcon("res/TargetCharacter.png");
+    ImageIcon targetIcon = new ImageIcon("TargetCharacter.png");
     Image targetImage = targetIcon.getImage();
     int dimensions = 20;
     Image newTargetImage = targetImage.getScaledInstance(dimensions, dimensions,
