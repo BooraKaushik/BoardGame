@@ -13,7 +13,6 @@ import java.util.NoSuchElementException;
 public class MockGameWorld implements GameWorld {
   private StringBuffer log;
   private String code;
-  private boolean gameOver;
 
   /**
    * A contructor which constructs the instance of MockGameWorld which represents
@@ -27,7 +26,6 @@ public class MockGameWorld implements GameWorld {
   public MockGameWorld(StringBuffer log, String code) {
     this.log = log;
     this.code = code;
-    this.gameOver = false;
   }
 
   @Override
@@ -80,7 +78,6 @@ public class MockGameWorld implements GameWorld {
   public String attackTarget(String itemName) throws IllegalArgumentException {
     log.append("Input: " + itemName);
     if ("winningItem".equals(itemName)) {
-      this.gameOver = true;
       return String.format("Target died! Player has won the game, code: %s\n", code);
     }
     return String.format("Player has attacked the target with the item %s, code: %s\n", itemName,
@@ -102,6 +99,9 @@ public class MockGameWorld implements GameWorld {
   public List<String> getTurnInfo() {
     List<String> mockResult = new ArrayList<String>();
     mockResult.add("Mock result for get turn info, Code: " + code);
+    mockResult.add("Human, Code: " + code);
+    mockResult.add("Mock player space, Code: " + code);
+    mockResult.add("Mock target space, Code: " + code);
     return mockResult;
   }
 
@@ -138,7 +138,7 @@ public class MockGameWorld implements GameWorld {
   @Override
   public void setWorldSpecification(Readable worldData)
       throws IllegalArgumentException, NoSuchElementException, InputMismatchException {
-    log.append("Input: " + worldData.toString() + ", Code:" + code);
+    log.append("Mock input for world, Code:" + code);
   }
 
   @Override
