@@ -27,6 +27,10 @@ public class SetWorld implements GameCommand {
 
   @Override
   public void execute(GameWorld model) throws IllegalArgumentException {
+    if (model == null) {
+      throw new IllegalArgumentException("Model cannot be null");
+    }
+
     model.setWorldSpecification(mansionReadable);
   }
 

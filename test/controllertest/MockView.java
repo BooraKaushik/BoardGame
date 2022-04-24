@@ -11,6 +11,15 @@ public class MockView implements GameView {
   private final StringBuffer out;
   private final String uniqueCode;
 
+  /**
+   * A contructor which constructs the instance of MockView which represents a
+   * mock view used for testing purposes.
+   * 
+   * @param out        The log to append the input received by the mock methods of
+   *                   the mock view class
+   * @param uniqueCode A code which is used to verify if the mock class instance
+   *                   is the same one as expected
+   */
   public MockView(StringBuffer out, String uniqueCode) {
     this.out = out;
     this.uniqueCode = uniqueCode;

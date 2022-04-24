@@ -43,7 +43,7 @@ public class GameControllerImplTest {
   }
 
   @Test
-  public void updateGameScreenTest() {
+  public void spaceIsClickedTest() {
     this.controller.spaceIsClicked(90, 90);
     assertEquals("Mock called from setFeatures. uniqueCode: 12344" + "Input: 90, 90"
         + "Mock called from updateGameScreen. message : "
@@ -51,6 +51,11 @@ public class GameControllerImplTest {
         + "Mock called from displayPopupMessage. message: "
         + "Mock for game over, Code: 12344, type: , uniqueCode: 12344"
         + "Mock called from exitGame. uniqueCode: 12344", this.out.toString());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void spaceIsClickedTestIllegalArg() {
+    this.controller.spaceIsClicked(-90, -90);
   }
 
   @Test
@@ -93,6 +98,16 @@ public class GameControllerImplTest {
         + "Mock called from exitGame. uniqueCode: 12344", this.out.toString());
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void pickItemTestIllegalArg() {
+    this.controller.pickItem("");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void pickItemTestNullArg() {
+    this.controller.pickItem(null);
+  }
+
   @Test
   public void setFeaturesTest() {
     controller = new GameControllerImpl(mockModel, gameView);
@@ -122,5 +137,114 @@ public class GameControllerImplTest {
         "Mock called from setFeatures. uniqueCode: 12344"
             + "Mock called from displayAttackTargetPopup. " + "uniqueCode: 12344",
         this.out.toString());
+  }
+
+  @Test
+  public void updateWorldSpecification() {
+    String world = "Test world";
+    this.controller.updateWorldSpecification(world);
+    assertEquals("Mock called from setFeatures. uniqueCode: 12344", this.out.toString());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void updateWorldSpecificationIllegalArg() {
+    this.controller.updateWorldSpecification("");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void updateWorldSpecificationNullArg() {
+    this.controller.updateWorldSpecification(null);
+  }
+
+  @Test
+  public void addPlayerTest() {
+    this.controller.addPlayer("Mock name", "Mock space", true);
+    assertEquals(
+        "Mock called from setFeatures. uniqueCode: 12344Received input: "
+            + "(Name: Mock name, Starting space: Mock space, isHuman: true)\n",
+        this.out.toString());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void addPlayerTestEmptyName() {
+    this.controller.addPlayer("", "Mock space", true);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void addPlayerTestNullName() {
+    this.controller.addPlayer(null, "Mock space", true);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void addPlayerTestEmptySpace() {
+    this.controller.addPlayer("Mock name", "", true);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void addPlayerTestNullSpace() {
+    this.controller.addPlayer("Mock name", null, true);
+  }
+
+  @Test
+  public void attackTargetTest() {
+    this.controller.attackTarget("Mock item");
+    assertEquals("Mock called from setFeatures. uniqueCode: 12344Input: Mock itemMock called "
+        + "from updateGameScreen. message : Player has attacked the target with the item Mock "
+        + "item, code: 12344\n"
+        + ", UniqueCode:  12344Mock called from displayPopupMessage. message: Mock for game over, "
+        + "Code: 12344, " + "type: , uniqueCode: 12344Mock called from exitGame. uniqueCode: 12344",
+        this.out.toString());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void attacktargetTestEmptyName() {
+    this.controller.attackTarget("");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void attacktargetTestNullName() {
+    this.controller.attackTarget(null);
+  }
+
+  @Test
+  public void mpvePetTest() {
+    this.controller.attackTarget("Mock space");
+    assertEquals("Mock called from setFeatures. uniqueCode: 12344Input: Mock spaceMock called "
+        + "from updateGameScreen."
+        + " message : Player has attacked the target with the item Mock space, code: 12344\n"
+        + ", UniqueCode:  12344Mock called from displayPopupMessage. message: Mock "
+        + "for game over, Code: 12344, type: , "
+        + "uniqueCode: 12344Mock called from exitGame. uniqueCode: 12344", this.out.toString());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void movePetTestEmptyName() {
+    this.controller.movePet("");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void movePetTestNullName() {
+    this.controller.movePet(null);
+  }
+
+  @Test
+  public void newWorldIsClickedTest() {
+    this.controller.newWorldIsClicked();
+    assertEquals("Mock called from setFeatures. uniqueCode: 12344Mock called from "
+        + "displayFileChooser. uniqueCode: 12344", this.out.toString());
+  }
+
+  @Test
+  public void exitIsClicked() {
+    this.controller.exitIsClicked();
+    assertEquals("Mock called from setFeatures. uniqueCode: 12344Mock called "
+        + "from exitGame. uniqueCode: 12344", this.out.toString());
+  }
+
+  @Test
+  public void movePetIsPressed() {
+    this.controller.movePetIsPressed();
+    assertEquals("Mock called from setFeatures. uniqueCode: 12344Mock "
+        + "called from displayMovePetPopup. uniqueCode: 12344", this.out.toString());
   }
 }
