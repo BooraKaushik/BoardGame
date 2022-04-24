@@ -29,9 +29,7 @@ public class Game {
 
         System.out.println(String.format("Reading the world specifications from %s...\n", path));
 
-        Readable mansionReadable = null;
-
-        mansionReadable = new FileReader(path);
+        Readable mansionReadable = new FileReader(path);
 
         RandomManual rand = new RandomManual();
 
