@@ -18,64 +18,75 @@ public class MockView implements GameView {
 
   @Override
   public void displayWelcomeScreen(Features featuresController) throws IllegalArgumentException {
-    this.out.append(this.uniqueCode);
+    this.out.append(
+        String.format("Mock called from displayWelcomeScreen. uniqueCode: %s", this.uniqueCode));
   }
 
   @Override
   public void displayAddPlayerScreen(Features featuresController) throws IllegalArgumentException {
-    this.out.append(this.uniqueCode);
+    this.out.append(
+        String.format("Mock called from displayAddPlayerScreen. uniqueCode: %s", this.uniqueCode));
   }
 
   @Override
   public void displayPopupMessage(String message, String type) throws IllegalArgumentException {
-    this.out.append(String.format("%s, %s, %s", message, type, this.uniqueCode));
+    this.out.append(
+        String.format("Mock called from displayPopupMessage. message: %s, type: %s, uniqueCode: %s",
+            message, type, this.uniqueCode));
   }
 
   @Override
   public void displayGameScreen(Features featuresController) throws IllegalArgumentException {
-    this.out.append(this.uniqueCode);
+    this.out.append(
+        String.format("Mock called from displayGameScreen. uniqueCode: %s", this.uniqueCode));
   }
 
   @Override
   public void updateGameScreen(String message) throws IllegalArgumentException {
-    this.out.append(String.format("%s, %s", message, this.uniqueCode));
+    this.out
+        .append(String.format("Mock called from updateGameScreen. message : %s, UniqueCode:  %s",
+            message, this.uniqueCode));
   }
 
   @Override
   public void setFeatures(Features featuresController) throws IllegalArgumentException {
-    this.out.append(this.uniqueCode);
-
+    this.out.append(String.format("Mock called from setFeatures. uniqueCode: %s", this.uniqueCode));
   }
 
   @Override
   public void displayAddPlayerPopup(Features featuresController) throws IllegalArgumentException {
-    this.out.append(this.uniqueCode);
+    this.out.append(
+        String.format("Mock called from displayAddPlayerPopup. uniqueCode: %s", this.uniqueCode));
   }
 
   @Override
   public void displayPickItemPopup(Features featuresController) throws IllegalArgumentException {
-    this.out.append(this.uniqueCode);
+    this.out.append(
+        String.format("Mock called from displayPickItemPopup. uniqueCode: %s", this.uniqueCode));
   }
 
   @Override
   public void displayAttackTargetPopup(Features featuresController)
       throws IllegalArgumentException {
-    this.out.append(this.uniqueCode);
+    this.out.append(String.format("Mock called from displayAttackTargetPopup. uniqueCode: %s",
+        this.uniqueCode));
   }
 
   @Override
   public void displayMovePetPopup(Features featuresController) throws IllegalArgumentException {
-    this.out.append(this.uniqueCode);
+    this.out.append(
+        String.format("Mock called from displayMovePetPopup. uniqueCode: %s", this.uniqueCode));
   }
 
   @Override
   public void exitGame() {
-    this.out.append(this.uniqueCode);
+    this.out.append(String.format("Mock called from exitGame. uniqueCode: %s", this.uniqueCode));
   }
 
   @Override
   public void displayFileChooser(Features featuresController) throws IllegalArgumentException {
-    this.out.append(this.uniqueCode);
+    this.out.append(
+        String.format("Mock called from displayFileChooser. uniqueCode: %s", this.uniqueCode));
   }
 
 }
