@@ -73,4 +73,9 @@ public class MockView implements GameView {
     this.out.append(this.uniqueCode);
   }
 
+  @Override
+  public void displayFileChooser(Features featuresController) throws IllegalArgumentException {
+    this.out.append(this.uniqueCode);
+  }
+
 }
