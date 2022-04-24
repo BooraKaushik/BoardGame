@@ -313,15 +313,15 @@ public class GameViewPanel extends JPanel {
       throw new IllegalArgumentException("Options cant be Empty");
     }
 
-    Object output = JOptionPane.showInputDialog(this,
+    String output = JOptionPane.showInputDialog(this,
         String.format("Choose an Option for %s", title), title, JOptionPane.INFORMATION_MESSAGE,
-        null, options, options[0]);
+        null, options, options[0]).toString();
 
     if (output == null) {
       return "";
     }
 
-    return output.toString();
+    return output;
   }
 
   /**
