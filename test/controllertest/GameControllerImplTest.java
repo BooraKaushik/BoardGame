@@ -2,14 +2,12 @@ package controllertest;
 
 import static org.junit.Assert.assertEquals;
 
-import game.GameWorld;
-import view.GameView;
 import controller.GameController;
 import controller.GameControllerImpl;
-import java.io.StringReader;
-
+import game.GameWorld;
 import org.junit.Before;
 import org.junit.Test;
+import view.GameView;
 
 /**
  * A test class for testing GameControllerImpl class.
@@ -22,6 +20,9 @@ public class GameControllerImplTest {
   private GameView gameView;
   private GameController controller;
 
+  /**
+   * Initializes all the fields of GameControllerImplTest.
+   */
   @Before
   public void setup() {
     out = new StringBuffer();
@@ -31,7 +32,13 @@ public class GameControllerImplTest {
     controller = new GameControllerImpl(mockModel, gameView);
   }
 
-  @Test
-  public void invalidInput() {
+  @Test(expected = IllegalArgumentException.class)
+  public void testForNullModel() {
+    new GameControllerImpl(null, gameView);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testForNullView() {
+    new GameControllerImpl(mockModel, null);
   }
 }

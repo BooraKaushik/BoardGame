@@ -1,6 +1,7 @@
 package controllertest;
 
 import game.GameWorld;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -88,69 +89,67 @@ public class MockGameWorld implements GameWorld {
 
   @Override
   public String isGameOver() {
-    // TODO
-    return "";
+    return "Mock for game over, Code: " + code;
   }
 
   @Override
   public String[][] getAllPlayers() {
-    // TODO Auto-generated method stub
-    return null;
+    String[][] mockResult = { { "Mock result for all players, Code: " + code } };
+    return mockResult;
   }
 
   @Override
   public List<String> getTurnInfo() {
-    // TODO Auto-generated method stub
-    return null;
+    List<String> mockResult = new ArrayList<String>();
+    mockResult.add("Mock result for get turn info, Code: " + code);
+    return mockResult;
   }
 
   @Override
   public String[] getAllSpaces() {
-    // TODO Auto-generated method stub
-    return null;
+    String[] mockResult = { "Mock result for get all spaces, Code: " + code };
+    return mockResult;
   }
 
   @Override
   public int[] getCoordinates(String spaceName) {
-    // TODO Auto-generated method stub
-    return null;
+    log.append("Input: " + spaceName);
+    int[] mockResult = { 0, 0, 0, 0 };
+    return mockResult;
   }
 
   @Override
   public String[] getCurrentSpaceItems() {
-    // TODO Auto-generated method stub
-    return null;
+    String[] mockResult = { "Mock result for get current space items, Code: " + code };
+    return mockResult;
   }
 
   @Override
   public String[] getCurrentPlayerItems() {
-    // TODO Auto-generated method stub
-    return null;
+    String[] mockResult = { "Mock result for get current player items, Code: " + code };
+    return mockResult;
   }
 
   @Override
   public String getCurrentSpaceOfPet() {
-    // TODO Auto-generated method stub
-    return null;
+    return "Mock result for get current space of pet, Code: " + code;
   }
 
   @Override
   public void setWorldSpecification(Readable worldData)
       throws IllegalArgumentException, NoSuchElementException, InputMismatchException {
-    // TODO Auto-generated method stub
-
+    log.append("Input: " + worldData.toString() + ", Code:" + code);
   }
 
   @Override
   public String movePlayerInWorld(int xcoord, int ycoord) throws IllegalArgumentException {
-    // TODO Auto-generated method stub
-    return null;
+    log.append("Input: " + xcoord + ", " + ycoord);
+    return "Mock result for move player, Code: " + code;
   }
 
   @Override
   public int getNumOfTurns() {
-    // TODO Auto-generated method stub
-    return 0;
+    return Integer.parseInt(code);
   }
 
 }
