@@ -19,6 +19,10 @@ public class GameControllerImplTest {
   private GameWorld mockModel;
   private GameView gameView;
   private Features controller;
+  private Features modelExceptionController;
+  private Features viewExceptionController;
+  private GameWorld exceptionModel;
+  private GameView exceptionView;
 
   /**
    * Initializes all the fields of GameControllerImplTest.
@@ -246,5 +250,11 @@ public class GameControllerImplTest {
     this.controller.movePetIsPressed();
     assertEquals("Mock called from setFeatures. uniqueCode: 12344Mock "
         + "called from displayMovePetPopup. uniqueCode: 12344", this.out.toString());
+  }
+
+  @Test
+  public void updateWorldSpecExceptiontest() {
+    this.controller.updateWorldSpecification("World");
+    assertEquals("Mock called from setFeatures. uniqueCode: 12344", this.out.toString());
   }
 }

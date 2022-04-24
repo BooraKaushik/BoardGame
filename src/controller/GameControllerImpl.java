@@ -142,13 +142,7 @@ public class GameControllerImpl implements GameController, Features {
       throw new IllegalArgumentException("World string cannot be empty");
     }
 
-    try {
-      this.worldSpecification = worldSpecification;
-    } catch (IllegalArgumentException ise) {
-      gameView.displayPopupMessage(ise.getMessage(), "Error");
-    } catch (IllegalStateException ie) {
-      gameView.displayPopupMessage(ie.getMessage(), "Error");
-    }
+    this.worldSpecification = worldSpecification;
   }
 
   @Override
@@ -162,6 +156,9 @@ public class GameControllerImpl implements GameController, Features {
     }
     if (startingLocation == null) {
       throw new IllegalArgumentException("Starting Location Cant be null");
+    }
+    if (startingLocation.length() == 0) {
+      throw new IllegalArgumentException("Starting Location Cant be empty");
     }
 
     try {
