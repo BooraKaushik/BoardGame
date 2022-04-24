@@ -38,7 +38,7 @@ public class Game {
         System.out.println("Creating the world...\n");
 
         GameWorld world = new WorldImpl(mansionReadable, rand, numOfTurns);
-        GameView gameView = new GameViewImpl("Killing Dr. Lucky", world);
+        GameView gameView = new GameViewImpl("Killing Dr. Lucky - Board Game", world);
 
         GameController gameController = new GameControllerImpl(world, gameView);
         gameController.startGame();
