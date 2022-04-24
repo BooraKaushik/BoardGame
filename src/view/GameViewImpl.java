@@ -66,10 +66,6 @@ public class GameViewImpl extends JFrame implements GameView {
     newWorld = new JMenuItem("New World");
     exit = new JMenuItem("Exit");
 
-    exit.addActionListener(event -> {
-
-    });
-
     menu.add(newGame);
     menu.add(newWorld);
     menu.add(exit);
@@ -175,19 +171,11 @@ public class GameViewImpl extends JFrame implements GameView {
     });
 
     newWorld.addActionListener(event -> {
-      int response = worldChooser.showOpenDialog(this);
-      if (response == JFileChooser.APPROVE_OPTION) {
-        String mansionReadable;
-        try {
-          mansionReadable = Files
-              .readString(Paths.get(worldChooser.getSelectedFile().getAbsolutePath()));
-          featuresController.updateWorldSpecification(mansionReadable);
-        } catch (FileNotFoundException e) {
-          displayPopupMessage("File not found", "Error");
-        } catch (IOException ie) {
-          displayPopupMessage("Cannot read the content of file", "Error");
-        }
-      }
+      featuresController.newWorldIsClicked();
+    });
+
+    exit.addActionListener(event -> {
+      featuresController.exitIsClicked();
     });
   }
 
@@ -237,5 +225,27 @@ public class GameViewImpl extends JFrame implements GameView {
     }
 
     gameViewPanel.displayMovePetPopup(featuresController);
+  }
+
+  @Override
+  public void displayFileChooser(Features featuresController) throws IllegalArgumentException {
+    if (featuresController == null) {
+      throw new IllegalArgumentException("Features controller cannot be null");
+    }
+
+    int response = worldChooser.showOpenDialog(this);
+    if (response == JFileChooser.APPROVE_OPTION) {
+      String mansionReadable;
+      try {
+        mansionReadable = Files
+            .readString(Paths.get(worldChooser.getSelectedFile().getAbsolutePath()));
+        featuresController.updateWorldSpecification(mansionReadable);
+      } catch (FileNotFoundException e) {
+        displayPopupMessage("File not found", "Error");
+      } catch (IOException ie) {
+        displayPopupMessage("Cannot read the content of file", "Error");
+      }
+    }
+
   }
 }

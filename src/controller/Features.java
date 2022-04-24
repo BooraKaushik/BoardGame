@@ -76,6 +76,16 @@ public interface Features {
   public void startGameIsClicked();
 
   /**
+   * Used to tell the controller that the user has clicked on new world.
+   */
+  public void newWorldIsClicked();
+
+  /**
+   * Used to tell the controller that the user has clicked on exit.
+   */
+  public void exitIsClicked();
+
+  /**
    * Used to tell the controller that the user has clicked on add player.
    */
   public void addPlayerIsClicked();

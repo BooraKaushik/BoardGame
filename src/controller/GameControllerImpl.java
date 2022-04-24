@@ -278,12 +278,21 @@ public class GameControllerImpl implements GameController, Features {
   @Override
   public void attackTargetIsPressed() {
     gameView.displayAttackTargetPopup(this);
-
   }
 
   @Override
   public void movePetIsPressed() {
     gameView.displayMovePetPopup(this);
+  }
+
+  @Override
+  public void newWorldIsClicked() {
+    gameView.displayFileChooser(this);    
+  }
+
+  @Override
+  public void exitIsClicked() {
+    gameView.exitGame();
   }
 
 }

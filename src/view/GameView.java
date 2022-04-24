@@ -98,6 +98,14 @@ public interface GameView {
   public void displayMovePetPopup(Features featuresController) throws IllegalArgumentException;
 
   /**
+   * Displays the file chooser to choose a world specification file.
+   * 
+   * @param featuresController The features controller that the view uses
+   * @throws IllegalArgumentException When features controller is null
+   */
+  public void displayFileChooser(Features featuresController) throws IllegalArgumentException;
+
+  /**
    * Used to exit the game window.
    */
   public void exitGame();

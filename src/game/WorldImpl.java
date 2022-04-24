@@ -612,8 +612,8 @@ public final class WorldImpl implements World {
 
     String spaceName = "";
 
-    int newy = (xcoord - buffer) / 20;
-    int newx = (ycoord - buffer) / 20;
+    int newy = (xcoord - buffer) / scaleFactor;
+    int newx = (ycoord - buffer) / scaleFactor;
 
     for (Space space : allSpaces) {
       if (space.getTopLeftX() <= newx && space.getTopLeftY() <= newy
