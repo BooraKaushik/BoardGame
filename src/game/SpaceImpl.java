@@ -51,7 +51,7 @@ public final class SpaceImpl implements Space {
     this.bottomRightX = bottomRightX;
     this.bottomRightY = bottomRightY;
     this.name = name;
-    this.itemsInSpace = itemsInSpace;
+    this.itemsInSpace = new ArrayList<>(itemsInSpace);
   }
 
   @Override
