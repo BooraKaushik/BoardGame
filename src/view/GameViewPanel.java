@@ -16,6 +16,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -45,6 +47,7 @@ public class GameViewPanel extends JPanel {
   private JPanel eastResultLayout;
   private JPanel eastPlayerLayout;
   private JLabel turnIconLabel;
+  private Map<String, Consumer<Features>> turns;
 
   /**
    * Constructor for GameViewPanel to create a new Game Screen.
@@ -79,6 +82,7 @@ public class GameViewPanel extends JPanel {
     this.worldPanel = new JPanel();
     this.worldLabel = new JLabel();
     this.setFocusable(true);
+    this.turns = new HashMap<String, Consumer<Features>>();
   }
 
   /**
@@ -413,6 +417,12 @@ public class GameViewPanel extends JPanel {
       throw new IllegalArgumentException("Features controller cannot be null");
     }
 
+    // adding turns
+    this.turns.put(Commands.ATTACK_TARGET.toString(),
+        (features) -> features.attackTargetIsPressed());
+    turns.put(Commands.LOOK_AROUND.toString(), (features) -> features.lookAround());
+    turns.put(Commands.MOVE_PET.toString(), (features) -> features.movePetIsPressed());
+    turns.put(Commands.PICKUP_ITEM.toString(), (features) -> features.pickItemIsPressed());
     this.requestFocus();
 
     this.worldLabel.addMouseListener(new MouseAdapter() {
@@ -425,21 +435,7 @@ public class GameViewPanel extends JPanel {
     this.addKeyListener(new KeyAdapter() {
       @Override
       public void keyTyped(KeyEvent e) {
-        if ("p".equals(String.valueOf(e.getKeyChar()))) {
-          featuresController.pickItemIsPressed();
-        }
-
-        if ("l".equals(String.valueOf(e.getKeyChar()))) {
-          featuresController.lookAround();
-        }
-
-        if ("a".equals(String.valueOf(e.getKeyChar()))) {
-          featuresController.attackTargetIsPressed();
-        }
-
-        if ("m".equals(String.valueOf(e.getKeyChar()))) {
-          featuresController.movePetIsPressed();
-        }
+        turns.get(String.valueOf(e.getKeyChar())).accept(featuresController);
       }
     });
   }
