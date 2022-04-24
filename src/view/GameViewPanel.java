@@ -387,11 +387,7 @@ public class GameViewPanel extends JPanel {
 
     String selectedOption = displayInputPopup("Space", dataModel.getAllSpaces());
     if (!"".equals(selectedOption)) {
-      try {
-        featuresController.movePet(selectedOption);
-      } catch (IllegalArgumentException ie) {
-        displayErrorPopup(ie.getMessage());
-      }
+      featuresController.movePet(selectedOption);
     }
   }
 
