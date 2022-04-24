@@ -51,46 +51,41 @@ public class MockExceptionView implements GameView {
   @Override
   public void displayGameScreen(Features featuresController) throws IllegalArgumentException {
     if (Integer.parseInt(this.uniqueCode) % 2 == 0) {
-      throw new IllegalArgumentException("IllegalArgumentException for displayAddPlayerScreen");
+      throw new IllegalArgumentException("IllegalArgumentException for displayGameScreen");
     } else {
-      throw new IllegalStateException("IllegalStateException for displayAddPlayerScreen");
+      throw new IllegalStateException("IllegalStateException for displayGameScreen");
     }
   }
 
   @Override
   public void updateGameScreen(String message) throws IllegalArgumentException {
     if (Integer.parseInt(this.uniqueCode) % 2 == 0) {
-      throw new IllegalArgumentException("IllegalArgumentException for displayAddPlayerScreen");
+      throw new IllegalArgumentException("IllegalArgumentException for updateGameScreen");
     } else {
-      throw new IllegalStateException("IllegalStateException for displayAddPlayerScreen");
+      throw new IllegalStateException("IllegalStateException for updateGameScreen");
     }
   }
 
   @Override
   public void setFeatures(Features featuresController) throws IllegalArgumentException {
-    if (Integer.parseInt(this.uniqueCode) % 2 == 0) {
-      throw new IllegalArgumentException("IllegalArgumentException for displayAddPlayerScreen");
-    } else {
-      throw new IllegalStateException("IllegalStateException for displayAddPlayerScreen");
-    }
-
+    this.out.append(String.format("Mock called from setFeatures. uniqueCode: %s", this.uniqueCode));
   }
 
   @Override
   public void displayAddPlayerPopup(Features featuresController) throws IllegalArgumentException {
     if (Integer.parseInt(this.uniqueCode) % 2 == 0) {
-      throw new IllegalArgumentException("IllegalArgumentException for displayAddPlayerScreen");
+      throw new IllegalArgumentException("IllegalArgumentException for displayAddPlayerPopup");
     } else {
-      throw new IllegalStateException("IllegalStateException for displayAddPlayerScreen");
+      throw new IllegalStateException("IllegalStateException for displayAddPlayerPopup");
     }
   }
 
   @Override
   public void displayPickItemPopup(Features featuresController) throws IllegalArgumentException {
     if (Integer.parseInt(this.uniqueCode) % 2 == 0) {
-      throw new IllegalArgumentException("IllegalArgumentException for displayAddPlayerScreen");
+      throw new IllegalArgumentException("IllegalArgumentException for displayPickItemPopup");
     } else {
-      throw new IllegalStateException("IllegalStateException for displayAddPlayerScreen");
+      throw new IllegalStateException("IllegalStateException for displayPickItemPopup");
     }
   }
 
@@ -98,36 +93,36 @@ public class MockExceptionView implements GameView {
   public void displayAttackTargetPopup(Features featuresController)
       throws IllegalArgumentException {
     if (Integer.parseInt(this.uniqueCode) % 2 == 0) {
-      throw new IllegalArgumentException("IllegalArgumentException for displayAddPlayerScreen");
+      throw new IllegalArgumentException("IllegalArgumentException for displayAttackTargetPopup");
     } else {
-      throw new IllegalStateException("IllegalStateException for displayAddPlayerScreen");
+      throw new IllegalStateException("IllegalStateException for displayAttackTargetPopup");
     }
   }
 
   @Override
   public void displayMovePetPopup(Features featuresController) throws IllegalArgumentException {
     if (Integer.parseInt(this.uniqueCode) % 2 == 0) {
-      throw new IllegalArgumentException("IllegalArgumentException for displayAddPlayerScreen");
+      throw new IllegalArgumentException("IllegalArgumentException for displayMovePetPopup");
     } else {
-      throw new IllegalStateException("IllegalStateException for displayAddPlayerScreen");
+      throw new IllegalStateException("IllegalStateException for displayMovePetPopup");
     }
   }
 
   @Override
   public void displayFileChooser(Features featuresController) throws IllegalArgumentException {
     if (Integer.parseInt(this.uniqueCode) % 2 == 0) {
-      throw new IllegalArgumentException("IllegalArgumentException for displayAddPlayerScreen");
+      throw new IllegalArgumentException("IllegalArgumentException for displayFileChooser");
     } else {
-      throw new IllegalStateException("IllegalStateException for displayAddPlayerScreen");
+      throw new IllegalStateException("IllegalStateException for displayFileChooser");
     }
   }
 
   @Override
   public void exitGame() {
     if (Integer.parseInt(this.uniqueCode) % 2 == 0) {
-      throw new IllegalArgumentException("IllegalArgumentException for displayAddPlayerScreen");
+      throw new IllegalArgumentException("IllegalArgumentException for exitGame");
     } else {
-      throw new IllegalStateException("IllegalStateException for displayAddPlayerScreen");
+      throw new IllegalStateException("IllegalStateException for exitGame");
     }
   }
 

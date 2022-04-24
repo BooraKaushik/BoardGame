@@ -84,7 +84,12 @@ public class MockGameWorldExceptions implements GameWorld {
 
   @Override
   public List<String> getTurnInfo() {
-    return new ArrayList<String>();
+    List<String> mockResult = new ArrayList<String>();
+    mockResult.add("Mock name");
+    mockResult.add("Human, Code: ");
+    mockResult.add("Mock player space, Code: ");
+    mockResult.add("Mock target space, Code: ");
+    return mockResult;
   }
 
   @Override
