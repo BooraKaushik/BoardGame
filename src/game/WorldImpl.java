@@ -396,7 +396,7 @@ public final class WorldImpl implements World {
 
     theWorldGraphics.setColor(Color.black);
 
-    String path = "res/TheWorld.png";
+    String path = "TheWorld.png";
 
     for (Space space : allSpaces) {
       theWorldGraphics.drawRect(space.getTopLeftY() * scaleFactor + buffer,
