@@ -40,7 +40,8 @@ public class MockView implements GameView {
   @Override
   public void displayPopupMessage(String message, String type) throws IllegalArgumentException {
     this.out.append(
-        String.format("Mock called from displayPopupMessage. message: %s, type: %s, uniqueCode: %s",
+        String.format(
+            "Mock called from displayPopupMessage. message: %s, type: %s, uniqueCode: %s",
             message, type, this.uniqueCode));
   }
 
