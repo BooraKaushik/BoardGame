@@ -34,19 +34,19 @@ public class GameViewPanel extends JPanel {
 
   private static final long serialVersionUID = 7525139079837574057L;
 
-  private ReadOnlyModel dataModel;
+  private final ReadOnlyModel dataModel;
   private JLabel worldLabel;
-  private List<ImageIcon> playerIcons;
+  private final List<ImageIcon> playerIcons;
   private JPanel worldPanel;
   private JLabel targetLabel;
   private JScrollPane scrollableWorld;
-  private List<JLabel> playerLabelIcons;
+  private final List<JLabel> playerLabelIcons;
   private JPanel eastLayout;
   private JPanel eastTurnLayout;
   private JPanel eastResultLayout;
   private JPanel eastPlayerLayout;
   private JLabel turnIconLabel;
-  private Map<String, Consumer<Features>> turns;
+  private final Map<String, Consumer<Features>> turns;
 
   /**
    * Constructor for GameViewPanel to create a new Game Screen.

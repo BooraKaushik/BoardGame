@@ -163,13 +163,9 @@ public class AddPlayerPanel extends JPanel {
         JOptionPane.OK_CANCEL_OPTION);
 
     if (result == JOptionPane.OK_OPTION) {
-      try {
-        featuresController.addPlayer(name.getText(), roomList.getSelectedItem().toString(),
-            typeList.getSelectedItem().toString().equals("Human"));
-        this.updateAddPlayers();
-      } catch (IllegalArgumentException iae) {
-        this.displayPopup(iae.getMessage());
-      }
+      featuresController.addPlayer(name.getText(), roomList.getSelectedItem().toString(),
+          typeList.getSelectedItem().toString().equals("Human"));
+      this.updateAddPlayers();
     }
   }
 

@@ -106,18 +106,13 @@ public class GameViewImpl extends JFrame implements GameView {
     if (featuresController == null) {
       throw new IllegalArgumentException("Features cannot be null");
     }
-
-    try {
-      this.newGame.setEnabled(false);
-      this.newWorld.setEnabled(false);
-      gameViewPanel.createWorldLayout();
-      remove(welcomePanel);
-      add(addPlayerPanel);
-      addPlayerPanel.revalidate();
-      this.addPlayerPanel.setFeatures(featuresController);
-    } catch (IllegalStateException ie) {
-      displayPopupMessage(ie.getMessage(), "Error");
-    }
+    this.newGame.setEnabled(false);
+    this.newWorld.setEnabled(false);
+    gameViewPanel.createWorldLayout();
+    remove(welcomePanel);
+    add(addPlayerPanel);
+    addPlayerPanel.revalidate();
+    this.addPlayerPanel.setFeatures(featuresController);
   }
 
   @Override
