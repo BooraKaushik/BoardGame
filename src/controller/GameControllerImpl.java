@@ -123,7 +123,13 @@ public class GameControllerImpl implements GameController, Features {
 
   @Override
   public void startGame() {
-    gameView.displayWelcomeScreen(this);
+    try {
+      gameView.displayWelcomeScreen(this);
+    } catch (IllegalArgumentException ise) {
+      gameView.displayPopupMessage(ise.getMessage(), "Error");
+    } catch (IllegalStateException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    }
   }
 
   @Override
@@ -136,7 +142,13 @@ public class GameControllerImpl implements GameController, Features {
       throw new IllegalArgumentException("World string cannot be empty");
     }
 
-    this.worldSpecification = worldSpecification;
+    try {
+      this.worldSpecification = worldSpecification;
+    } catch (IllegalArgumentException ise) {
+      gameView.displayPopupMessage(ise.getMessage(), "Error");
+    } catch (IllegalStateException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    }
   }
 
   @Override
@@ -151,8 +163,15 @@ public class GameControllerImpl implements GameController, Features {
     if (startingLocation == null) {
       throw new IllegalArgumentException("Starting Location Cant be null");
     }
-    executeCmd(gameModel, Command.ADD_PLAYER,
-        new ArrayList<String>(Arrays.asList(name, startingLocation, isHuman ? "true" : "false")));
+
+    try {
+      executeCmd(gameModel, Command.ADD_PLAYER,
+          new ArrayList<String>(Arrays.asList(name, startingLocation, isHuman ? "true" : "false")));
+    } catch (IllegalArgumentException ise) {
+      gameView.displayPopupMessage(ise.getMessage(), "Error");
+    } catch (IllegalStateException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    }
 
   }
 
@@ -167,8 +186,10 @@ public class GameControllerImpl implements GameController, Features {
           new ArrayList<String>(Arrays.asList(String.valueOf(xcoord), String.valueOf(ycoord))));
       gameView.updateGameScreen(result);
       checkNextTurn();
-    } catch (IllegalStateException ise) {
+    } catch (IllegalArgumentException ise) {
       gameView.displayPopupMessage(ise.getMessage(), "Error");
+    } catch (IllegalStateException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
     }
   }
 
@@ -183,29 +204,43 @@ public class GameControllerImpl implements GameController, Features {
       gameView.displayAddPlayerScreen(this);
     } catch (IllegalArgumentException | NoSuchElementException e) {
       gameView.displayPopupMessage(e.getMessage(), "Error");
+    } catch (IllegalStateException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
     }
   }
 
   @Override
   public void showGameScreen() {
-    gameView.displayGameScreen(this);
-    checkNextTurn();
+    try {
+      gameView.displayGameScreen(this);
+      checkNextTurn();
+    } catch (IllegalArgumentException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    } catch (IllegalStateException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    }
   }
 
   private void checkNextTurn() {
-    String gameOverMessage = executeCmd(gameModel, Command.IS_GAME_OVER, new ArrayList<String>());
-    if (!"".equals(gameOverMessage)) {
-      gameView.displayPopupMessage(gameOverMessage, "");
-      gameView.exitGame();
-      return;
-    }
-    String computerOrNot = executeCmd(gameModel, Command.IS_CURRENT_COMPUTER,
-        new ArrayList<String>());
-    if ("Computer".equals(computerOrNot)) {
-      String result = executeCmd(gameModel, Command.PERFORM_COMPUTER_ACTION,
+    try {
+      String gameOverMessage = executeCmd(gameModel, Command.IS_GAME_OVER, new ArrayList<String>());
+      if (!"".equals(gameOverMessage)) {
+        gameView.displayPopupMessage(gameOverMessage, "");
+        gameView.exitGame();
+        return;
+      }
+      String computerOrNot = executeCmd(gameModel, Command.IS_CURRENT_COMPUTER,
           new ArrayList<String>());
-      gameView.updateGameScreen(result);
-      checkNextTurn();
+      if ("Computer".equals(computerOrNot)) {
+        String result = executeCmd(gameModel, Command.PERFORM_COMPUTER_ACTION,
+            new ArrayList<String>());
+        gameView.updateGameScreen(result);
+        checkNextTurn();
+      }
+    } catch (IllegalArgumentException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    } catch (IllegalStateException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
     }
   }
 
@@ -219,18 +254,30 @@ public class GameControllerImpl implements GameController, Features {
       throw new IllegalArgumentException("Item name cannot be empty");
     }
 
-    String result = executeCmd(gameModel, Command.PICK_ITEM,
-        new ArrayList<String>(Arrays.asList(itemName)));
-    gameView.updateGameScreen(result);
-    checkNextTurn();
+    try {
+      String result = executeCmd(gameModel, Command.PICK_ITEM,
+          new ArrayList<String>(Arrays.asList(itemName)));
+      gameView.updateGameScreen(result);
+      checkNextTurn();
+    } catch (IllegalArgumentException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    } catch (IllegalStateException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    }
   }
 
   @Override
   public void lookAround() {
-    String result = executeCmd(gameModel, Command.LOOK_AROUND, new ArrayList<String>());
-    gameView.updateGameScreen("");
-    gameView.displayPopupMessage(result, "LookAround");
-    checkNextTurn();
+    try {
+      String result = executeCmd(gameModel, Command.LOOK_AROUND, new ArrayList<String>());
+      gameView.updateGameScreen("");
+      gameView.displayPopupMessage(result, "LookAround");
+      checkNextTurn();
+    } catch (IllegalArgumentException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    } catch (IllegalStateException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    }
   }
 
   @Override
@@ -242,11 +289,16 @@ public class GameControllerImpl implements GameController, Features {
     if (itemName.length() == 0) {
       throw new IllegalArgumentException("Item name cannot be empty");
     }
-
-    String result = executeCmd(gameModel, Command.ATTACK_TARGET,
-        new ArrayList<String>(Arrays.asList(itemName)));
-    gameView.updateGameScreen(result);
-    checkNextTurn();
+    try {
+      String result = executeCmd(gameModel, Command.ATTACK_TARGET,
+          new ArrayList<String>(Arrays.asList(itemName)));
+      gameView.updateGameScreen(result);
+      checkNextTurn();
+    } catch (IllegalArgumentException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    } catch (IllegalStateException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    }
   }
 
   @Override
@@ -254,45 +306,86 @@ public class GameControllerImpl implements GameController, Features {
     if (spaceName == null) {
       throw new IllegalArgumentException("Space name cannot be null");
     }
-
     if (spaceName.length() == 0) {
       throw new IllegalArgumentException("Space name cannot be empty");
     }
-
-    String result = executeCmd(gameModel, Command.MOVE_PET,
-        new ArrayList<String>(Arrays.asList(spaceName)));
-    gameView.updateGameScreen(result);
-    checkNextTurn();
+    try {
+      String result = executeCmd(gameModel, Command.MOVE_PET,
+          new ArrayList<String>(Arrays.asList(spaceName)));
+      gameView.updateGameScreen(result);
+      checkNextTurn();
+    } catch (IllegalArgumentException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    } catch (IllegalStateException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    }
   }
 
   @Override
   public void addPlayerIsClicked() {
-    gameView.displayAddPlayerPopup(this);
+    try {
+      gameView.displayAddPlayerPopup(this);
+    } catch (IllegalArgumentException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    } catch (IllegalStateException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    }
   }
 
   @Override
   public void pickItemIsPressed() {
-    gameView.displayPickItemPopup(this);
+    try {
+      gameView.displayPickItemPopup(this);
+    } catch (IllegalArgumentException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    } catch (IllegalStateException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    }
   }
 
   @Override
   public void attackTargetIsPressed() {
-    gameView.displayAttackTargetPopup(this);
+    try {
+      gameView.displayAttackTargetPopup(this);
+    } catch (IllegalArgumentException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    } catch (IllegalStateException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    }
   }
 
   @Override
   public void movePetIsPressed() {
-    gameView.displayMovePetPopup(this);
+    try {
+      gameView.displayMovePetPopup(this);
+    } catch (IllegalArgumentException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    } catch (IllegalStateException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    }
+
   }
 
   @Override
   public void newWorldIsClicked() {
-    gameView.displayFileChooser(this);    
+    try {
+      gameView.displayFileChooser(this);
+    } catch (IllegalArgumentException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    } catch (IllegalStateException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    }
   }
 
   @Override
   public void exitIsClicked() {
-    gameView.exitGame();
+    try {
+      gameView.exitGame();
+    } catch (IllegalArgumentException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    } catch (IllegalStateException ie) {
+      gameView.displayPopupMessage(ie.getMessage(), "Error");
+    }
   }
 
 }
