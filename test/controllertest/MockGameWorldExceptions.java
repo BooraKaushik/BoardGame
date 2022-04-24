@@ -1,6 +1,7 @@
 package controllertest;
 
 import game.GameWorld;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -40,7 +41,7 @@ public class MockGameWorldExceptions implements GameWorld {
     }
     return "";
   }
-  
+
   @Override
   public String pickItemByPlayer(String itemName) {
     if ("stateException".equals(itemName)) {
@@ -56,7 +57,7 @@ public class MockGameWorldExceptions implements GameWorld {
   public String lookAroundByPlayer() {
     return "";
   }
-  
+
   @Override
   public String performComputerAction() {
     return "";
@@ -78,68 +79,67 @@ public class MockGameWorldExceptions implements GameWorld {
 
   @Override
   public String[][] getAllPlayers() {
-    // TODO Auto-generated method stub
-    return null;
+    return new String[1][1];
   }
 
   @Override
   public List<String> getTurnInfo() {
-    // TODO Auto-generated method stub
-    return null;
+    return new ArrayList<String>();
   }
 
   @Override
   public String[] getAllSpaces() {
-    // TODO Auto-generated method stub
-    return null;
+    return new String[2];
   }
 
   @Override
   public int[] getCoordinates(String spaceName) {
-    // TODO Auto-generated method stub
-    return null;
+    throw new IllegalArgumentException("Test of how controller handles getCoordinates exceptions");
   }
 
   @Override
   public String[] getCurrentSpaceItems() {
-    // TODO Auto-generated method stub
-    return null;
+    return new String[2];
   }
 
   @Override
   public String[] getCurrentPlayerItems() {
-    // TODO Auto-generated method stub
-    return null;
+    return new String[2];
   }
 
   @Override
   public String getCurrentSpaceOfPet() {
-    // TODO Auto-generated method stub
-    return null;
+    return "";
   }
 
   @Override
   public void setWorldSpecification(Readable worldData)
       throws IllegalArgumentException, NoSuchElementException, InputMismatchException {
-    // TODO Auto-generated method stub
-    
+    if (worldData.toString().contains("illegalArg")) {
+      throw new IllegalArgumentException("Test for how controller handles illegal "
+          + "argument exceptions from setWorldSpecififcation");
+    }
+    if (worldData.toString().contains("illegalArg")) {
+      throw new InputMismatchException("Test for how controller handles input "
+          + "mismatch exceptions from setWorldSpecififcation");
+    }
+    throw new NoSuchElementException("Test for how controller handles no "
+        + "such element exceptions from setWorldSpecififcation");
   }
 
   @Override
   public String movePlayerInWorld(int xcoord, int ycoord) throws IllegalArgumentException {
-    // TODO Auto-generated method stub
-    return null;
+    throw new IllegalArgumentException(
+        "Test for how controller handle movePlayerInWorld exception");
   }
 
   @Override
   public String isGameOver() {
-    // TODO Auto-generated method stub
-    return null;
+    return "";
   }
 
   @Override
   public int getNumOfTurns() {
-    // TODO Auto-generated method stub
     return 0;
   }
 
