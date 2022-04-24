@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
  * controller.
  */
 public class MockGameWorld implements GameWorld {
-  private StringBuilder log;
+  private StringBuffer log;
   private String code;
   private boolean gameOver;
 
@@ -23,7 +23,7 @@ public class MockGameWorld implements GameWorld {
    * @param code A code which is used to verify if the mock class instance is the
    *             same one as expected
    */
-  public MockGameWorld(StringBuilder log, String code) {
+  public MockGameWorld(StringBuffer log, String code) {
     this.log = log;
     this.code = code;
     this.gameOver = false;
