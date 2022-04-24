@@ -29,9 +29,7 @@ public class Game {
 
         System.out.println(String.format("Reading the world specifications from %s...\n", path));
 
-        Readable mansionReadable = null;
-
-        mansionReadable = new FileReader(path);
+        Readable mansionReadable = new FileReader(path);
 
         RandomManual rand = new RandomManual();
 
@@ -40,7 +38,7 @@ public class Game {
         System.out.println("Creating the world...\n");
 
         GameWorld world = new WorldImpl(mansionReadable, rand, numOfTurns);
-        GameView gameView = new GameViewImpl("Killing Dr. Lucky", world);
+        GameView gameView = new GameViewImpl("Killing Dr. Lucky - Board Game", world);
 
         GameController gameController = new GameControllerImpl(world, gameView);
         gameController.startGame();

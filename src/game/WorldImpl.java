@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Stack;
+import java.util.function.BiFunction;
 import javax.imageio.ImageIO;
 import utils.RandomManual;
 
@@ -38,6 +39,7 @@ public final class WorldImpl implements World {
   private Stack<Space> currentSpacesTrack;
   private List<Space> visitedSpaces;
   private int numOfTurns;
+  private Map<Integer, BiFunction<Space, Player, String>> computerTurn;
 
   /**
    * Constructs the instance of the world with the given data, with specified
@@ -209,6 +211,47 @@ public final class WorldImpl implements World {
     this.gameOver = false;
     this.currentSpacesTrack = new Stack<Space>();
     this.visitedSpaces = new ArrayList<Space>();
+
+    this.computerTurn = new HashMap<Integer, BiFunction<Space, Player, String>>();
+    
+    this.computerTurn.put(Integer.valueOf(1), (currentPlayerSpace, currentPlayer) -> {
+      List<Space> neighbours = getNeighboursAsList(currentPlayerSpace.getName());
+      Space space = neighbours.get(currentPlayer.chooseAction(random, neighbours.size()));
+      return movePlayerInWorld((space.getTopLeftY() * scaleFactor) + buffer,
+          (space.getTopLeftX() * scaleFactor) + buffer);
+    });
+
+    this.computerTurn.put(Integer.valueOf(2), (currentPlayerSpace, currentPlayer) -> {
+      List<Item> currentSpaceItems = currentPlayerSpace.getItemsInSpace();
+      String itemName = currentSpaceItems
+          .get(currentPlayer.chooseAction(random, currentSpaceItems.size())).getName();
+      return pickItemByPlayer(itemName);
+    });
+
+    this.computerTurn.put(Integer.valueOf(3), (currentPlayerSpace, currentPlayer) -> {
+      lookAroundByPlayer();
+      return "Looking Around...";
+    });
+
+    this.computerTurn.put(Integer.valueOf(4), (currentPlayerSpace, currentPlayer) -> {
+      String spaceNameForPetMovement = "";
+      while (true) {
+        spaceNameForPetMovement = allSpaces
+            .get(currentPlayer.chooseAction(random, allSpaces.size())).getName();
+        if (!spaceNameForPetMovement.equals(allSpaces.get(pet.getCurrentSpaceIndex()).getName())) {
+          break;
+        }
+      }
+      return movePetByPlayer(spaceNameForPetMovement);
+    });
+
+    this.computerTurn.put(Integer.valueOf(5), (currentPlayerSpace, currentPlayer) -> {
+      List<Item> currentSpaceItems = currentPlayerSpace.getItemsInSpace();
+      String itemName = currentSpaceItems
+          .get(currentPlayer.chooseAction(random, currentSpaceItems.size())).getName();
+      return pickItemByPlayer(itemName);
+    });
+
   }
 
   @Override
@@ -765,7 +808,6 @@ public final class WorldImpl implements World {
 
     } else {
       while (true) {
-        boolean exit = false;
         int input = currentPlayer.chooseAction(this.random, 4) + 1;
         Space currentPlayerSpace = allSpaces.get(currentPlayer.getSpaceIndexOfPlayer());
         List<Item> currentSpaceItems = currentPlayerSpace.getItemsInSpace();
@@ -773,49 +815,8 @@ public final class WorldImpl implements World {
             || currentPlayer.getPlayerItems().size() == currentPlayer.getMaxNumOfItems())) {
           continue;
         }
-        switch (input) {
-          case 1:
-            List<Space> neighbours = getNeighboursAsList(currentPlayerSpace.getName());
-            Space space = neighbours.get(currentPlayer.chooseAction(random, neighbours.size()));
-            res = movePlayerInWorld((space.getTopLeftY() * scaleFactor) + buffer,
-                (space.getTopLeftX() * scaleFactor) + buffer);
-            exit = true;
-            break;
-
-          case 2:
-            String itemName = currentSpaceItems
-                .get(currentPlayer.chooseAction(random, currentSpaceItems.size())).getName();
-            res = pickItemByPlayer(itemName);
-            exit = true;
-            break;
-
-          case 3:
-            lookAroundByPlayer();
-            res = "Looking Around...";
-            exit = true;
-            break;
-
-          case 4:
-            String spaceNameForPetMovement = "";
-            while (true) {
-              spaceNameForPetMovement = allSpaces
-                  .get(currentPlayer.chooseAction(random, allSpaces.size())).getName();
-              if (!spaceNameForPetMovement
-                  .equals(allSpaces.get(pet.getCurrentSpaceIndex()).getName())) {
-                break;
-              }
-            }
-            res = movePetByPlayer(spaceNameForPetMovement);
-            exit = true;
-            break;
-
-          default:
-            continue;
-
-        }
-        if (exit) {
-          break;
-        }
+        res = this.computerTurn.get(input).apply(currentPlayerSpace, currentPlayer);
+        break;
       }
     }
 
