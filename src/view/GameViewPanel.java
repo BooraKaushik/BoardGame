@@ -20,10 +20,12 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.border.EmptyBorder;
 
 /**
  * Creates a Panel which Displays Game Layout, Results of a turn and turn
@@ -313,15 +315,22 @@ public class GameViewPanel extends JPanel {
       throw new IllegalArgumentException("Options cant be Empty");
     }
 
-    String output = JOptionPane.showInputDialog(this,
-        String.format("Choose an Option for %s", title), title, JOptionPane.INFORMATION_MESSAGE,
-        null, options, options[0]).toString();
+    JPanel myPanel = new JPanel();
+    myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
+    JLabel landingLocationLabel = new JLabel(String.format("Choose an Option for %s", title));
+    landingLocationLabel.setBorder(new EmptyBorder(10, 0, 10, 0));
+    JComboBox<String> roomList = new JComboBox<String>(options);
+    roomList.setSelectedIndex(0);
+    myPanel.add(landingLocationLabel);
+    myPanel.add(roomList);
 
-    if (output == null) {
-      return "";
+    int result = JOptionPane.showConfirmDialog(this, myPanel, "", JOptionPane.OK_CANCEL_OPTION);
+
+    if (result == JOptionPane.OK_OPTION) {
+      return roomList.getSelectedItem().toString();
     }
 
-    return output;
+    return "";
   }
 
   /**
