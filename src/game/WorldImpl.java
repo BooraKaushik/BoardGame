@@ -1072,7 +1072,7 @@ public final class WorldImpl implements World {
       itemsNames[i] = names[i];
     }
 
-    itemsNames[itemsNames.length - 1] = "Poke in eye";
+    itemsNames[itemsNames.length - 1] = "hand";
 
     return itemsNames;
   }

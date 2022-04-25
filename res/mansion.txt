@@ -39,7 +39,7 @@ Simba
 0 3 Revolver
 15 3 Civil War Cannon
 2 4 Chain Saw
-16 2 Broom Stick
+2 2 Broom Stick
 1 2 Billiard Cue
 19 2 Rat Poison
 6 2 Trowel
